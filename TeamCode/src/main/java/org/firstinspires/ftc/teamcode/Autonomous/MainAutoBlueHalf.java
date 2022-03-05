@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRunHalf;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
@@ -17,20 +18,20 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
-@Autonomous(name = "Main Auto Red")
-public class MainAutoRed extends LinearOpMode {
+@Autonomous(name = "Main Auto Blue")
+public class MainAutoBlueHalf extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDriveCancelable sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap);
         Initializations.AutoInitialization(telemetry, hardwareMap);
-        PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.RED);
+        PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.BLUE);
         Trajectories.InitTrajectories();
         sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
         Trajectories.setDrive(sampleMecanumDrive);
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
-        Thread linearAuto = new Thread(new AutoRun(sampleMecanumDrive, this));
+        Thread linearAuto = new Thread(new AutoRunHalf(sampleMecanumDrive, this));
 
         waitForStart();
 

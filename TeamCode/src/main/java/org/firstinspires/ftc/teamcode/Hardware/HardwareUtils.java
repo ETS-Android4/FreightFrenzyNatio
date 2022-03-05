@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerAngleInit;
+import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerBaseInit;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,20 +19,12 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 @Config
 public class HardwareUtils {
 
-    public static double ArmVelKp = 25;
-    public static double ArmVelKi = 0.2;
-    public static double ArmVelKd = 6;
-    public static double ArmVelKf = 15;
-    public static double KP = 0.2, KI = 0.0035, KD = 0.35, MaxVelocity = 110; ///0.3, 0, 0.3, 110
+    public static double ArmVelKp = 25, ArmVelKi = 0.2, ArmVelKd = 6, ArmVelKf = 15;
+    public static double ArmPositionKp = 0.2, ArmPositionKi = 0.0035, ArmPositionKd = 0.35, armMaxVelocity = 110;
 
-    public static double CarouselKp = 0.1;
-    public static double CarouselKi = 0.01;
-    public static double CarouselKd = 0;
-    public static double CarouselKf = 1;
+    public static double CarouselKp = 0.1, CarouselKi = 0.01, CarouselKd = 0, CarouselKf = 1;
 
-    public static double rulerBaseInit = 0.95;
-    public static double rulerAngleInit = 0.5;
-
+    public static double SliderKp = 1.2, SliderKi = 0.12, SliderKd = 0, SliderKf = 12;
 
     public static DcMotor getDc(String name) {
         return Hardware.hardwareMap.get(DcMotor.class, name);
@@ -92,7 +87,7 @@ public class HardwareUtils {
     }
 
     public static void SetPIDCoefficients() {
-        ((DcMotorEx) Hardware.slider_left).setVelocityPIDFCoefficients(1.2, 0.12, 0, 12);
+        ((DcMotorEx) Hardware.slider_left).setVelocityPIDFCoefficients(SliderKp, SliderKi, SliderKd, SliderKf);
         ((DcMotorEx) Hardware.slider_right).setVelocityPIDFCoefficients(1.2, 0.12, 0, 12);
 
         ((DcMotorEx) Hardware.slider_left).setTargetPositionTolerance(10);
@@ -104,7 +99,6 @@ public class HardwareUtils {
     }
 
     public static void InitializePositions() {
-        Positions.update();
         changeDirection(Hardware.slider_right);
         Hardware.slider_right.setTargetPosition(0);
         Hardware.slider_left.setTargetPosition(0);
@@ -124,7 +118,6 @@ public class HardwareUtils {
     }
 
     public static void initializePositionsAuto() {
-        Positions.update();
         changeDirection(Hardware.slider_right);
         Hardware.slider_right.setTargetPosition(0);
         Hardware.slider_left.setTargetPosition(0);

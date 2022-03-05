@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous.AutoUtils;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
@@ -25,7 +23,7 @@ public class TestAuto extends LinearOpMode {
         sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
         Trajectories.setDrive(sampleMecanumDrive);
         ImageDetection.initialize();
-        CustomPid armPid = new CustomPid(HardwareUtils.KP, HardwareUtils.KI, HardwareUtils.KD, HardwareUtils.MaxVelocity);
+        CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
         Thread linearAuto = new Thread(new TestAutoRun(sampleMecanumDrive, this));
 

@@ -9,25 +9,39 @@ import org.firstinspires.ftc.teamcode.Utilities.OneTapTimer;
 
 public class IntakeSensor {
 
-    private static final OneTapTimer intakeUp = new OneTapTimer(100);
+    //se asigura ca bratul si cutia sunt la pozitia de colectare iar freight ul este colectat pentru cel putin 100 ms
+    private static final OneTapTimer intake = new OneTapTimer(100);
+    //se asigura bratul si cutia sunt la pozitia de sus si freight ul a cazut de cel putin 100ms
     private static final OneTapTimer outtakeUp = new OneTapTimer(100);
-    private static final OneTapTimer intakeBelow = new OneTapTimer(100);
+    //se asigura bratul si cutia sunt la pozitia de below si freight ul a cazut de cel putin 100ms
     private static final OneTapTimer outtakeBelow = new OneTapTimer(100);
 
+    //asteapta sa fie freight ul colectat ca sa poata porni low power intake
     private static final DelayedAction lowPowerIntake = new DelayedAction(200);
-    private static final DelayedAction stopIntake = new DelayedAction(200);
-    private static final double maxDistance = 5;
 
+    //il opreste outtake ul dupa ce lasa cubul
+    private static final DelayedAction stopOutake = new DelayedAction(200);
+
+    //se ocupa de sincronizarea cutiei si a glisierelor pentru a nu cadea freight ul, se intampla dupa colectare si trb sa pui sus
     private static final DelayedAction delayedActionBoxDown = new DelayedAction(300);
-    private static final DelayedAction delayedActionGoUnderShared = new DelayedAction(500);
-    private static final DelayedAction delayedActionArmReturn = new DelayedAction(350);
-    private static final DelayedAction delayedActionReturnSliders = new DelayedAction(600);
-    private static final DelayedAction delayedActionReturnSlidersQuick = new DelayedAction(500);
 
+    //asteapta sa se ridice glisierele pentru a trece bratul pe sub (pozitia de shared)
+    private static final DelayedAction delayedActionGoUnderShared = new DelayedAction(500);
+
+    //asteapta sa se duca cutia intr o pozitie in care bratul poate sa treaca pe sub robot. apeleaza delayedActionReturnSlidersArmBelow pentru a cobori glisierele dupa trecerea bratului
+    private static final DelayedAction delayedActionArmReturnBelow = new DelayedAction(350);
+
+    // asteapta sa treaca bratul pe sub robot pentru coborarea glisierelor
+    private static final DelayedAction delayedActionReturnSlidersArmBelow = new DelayedAction(600);
+
+    //se apeleaza call action a lasat cubul si aveam brartul sus pe nivelu 3 si glisierele putin ridicate. Asteapta ca bratul sa se intoarca de deasupra shipping hub
+    private static final DelayedAction delayedActionReturnSlidersArmUp = new DelayedAction(500);
+
+    //variabila updatata la fiecare frame
     public static double distance = 0;
 
     public static void detectTeleOp() {
-        if (delayedActionReturnSlidersQuick.runAction()) {
+        if (delayedActionReturnSlidersArmUp.runAction()) {
             Hardware.slider_right.setTargetPosition(0);
             Hardware.slider_left.setTargetPosition(0);
         }
@@ -35,11 +49,12 @@ public class IntakeSensor {
             Hardware.intake.setPower(-0.1);
             Box.power = 0;
         }
-        if (stopIntake.runAction()) {
+        if (stopOutake.runAction()) {
             Hardware.intake.setPower(0);
             Box.power = 0;
         }
         if (delayedActionBoxDown.runAction()) {
+            //se ridica glisierele pentru a ajunge in pozitita de pus sus
             Hardware.slider_right.setTargetPosition(150);
             Hardware.slider_left.setTargetPosition(150);
             Hardware.boxAngle.setPosition(Positions.Box.Down);
@@ -47,23 +62,23 @@ public class IntakeSensor {
         if (delayedActionGoUnderShared.runAction()) {
             Arm.armPid.setTarget((int) Positions.Arm.Shared);
         }
-        if (delayedActionArmReturn.runAction()) {
+        if (delayedActionArmReturnBelow.runAction()) {
             Arm.armPid.setTarget((int) Positions.Arm.Down);
-            delayedActionReturnSliders.callAction();
+            delayedActionReturnSlidersArmBelow.callAction();
         }
-        if (delayedActionReturnSliders.runAction()) {
+        if (delayedActionReturnSlidersArmBelow.runAction()) {
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
-        if (intakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {
+        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             if (Arm.armGoUpAfterColect) {
                 Arm.armPid.setTarget((int) Positions.Arm.Up);
                 delayedActionBoxDown.callAction();
                 lowPowerIntake.callAction();
             } else {
-                Arm.isBelow=true;
+                Arm.isBelow = true;
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
                 Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up + 15);
                 Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
@@ -75,18 +90,14 @@ public class IntakeSensor {
         if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 9)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             Arm.armPid.setTarget((int) Positions.Arm.Down + 60);
-            delayedActionReturnSlidersQuick.callAction();
-            stopIntake.callAction();
+            delayedActionReturnSlidersArmUp.callAction();
+            stopOutake.callAction();
         }
         if (outtakeBelow.onActionRun(Arm.isBelow && distance > 9)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
-            delayedActionArmReturn.callAction();
-            stopIntake.callAction();
+            delayedActionArmReturnBelow.callAction();
+            stopOutake.callAction();
         }
     }
 
-    public static boolean detectAuto() {
-
-        return false;
-    }
 }

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.KD;
-import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.KI;
-import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.MaxVelocity;
+import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.ArmPositionKd;
+import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.ArmPositionKi;
+import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.armMaxVelocity;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Utilities.DelayedAction;
 
 @Config
 public class Arm {
-    public static CustomPid armPid = new CustomPid(HardwareUtils.KP, KI, KD, MaxVelocity);
+    public static CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, ArmPositionKi, ArmPositionKd, armMaxVelocity);
     private static final DelayedAction delayedActionBoxAngleChange = new DelayedAction(300);
     private static final DelayedAction delayedActionGoUnder = new DelayedAction(500);
     private static final DelayedAction delayedActionGoUnderShared = new DelayedAction(500);
