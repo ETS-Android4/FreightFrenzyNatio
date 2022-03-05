@@ -55,8 +55,7 @@ public class AutoRunHalf implements Runnable {
         detectedCase.goToShippingHub(sampleMecanumDrive);
         opMode.sleep(350);
 
-
-        detectedCase.park(sampleMecanumDrive);
+        detectedCase.sharedPark(sampleMecanumDrive);
     }
 }
 

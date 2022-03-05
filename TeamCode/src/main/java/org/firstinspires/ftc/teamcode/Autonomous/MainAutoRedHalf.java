@@ -5,17 +5,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRunHalf;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.TestAutoRun;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.TeleOp.IntakeSensor;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
 @Autonomous(name = "Main Auto Red")
@@ -31,7 +35,7 @@ public class MainAutoRedHalf extends LinearOpMode {
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
-        Thread linearAuto = new Thread(new AutoRunHalf(sampleMecanumDrive, this));
+        Thread linearAuto = new Thread(new AutoRun(sampleMecanumDrive, this));
 
         waitForStart();
 
