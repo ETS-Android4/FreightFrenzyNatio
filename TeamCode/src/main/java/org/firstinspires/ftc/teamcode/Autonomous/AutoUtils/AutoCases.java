@@ -51,4 +51,11 @@ public abstract class AutoCases {
         drive.followTrajectory(Trajectories.returnOverBarriers(drive.getPoseEstimate()));
     }
 
+    public void sharedPark(SampleMecanumDriveCancelable drive){
+        drive.followTrajectory(Trajectories.WarehouseTrajectory1(drive.getPoseEstimate()));
+        drive.followTrajectory(Trajectories.ParkTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectory(Trajectories.sharedWarehouseTrajectory1(drive.getPoseEstimate()));
+        drive.followTrajectory(Trajectories.sharedWarehouseTrajectory2(drive.getPoseEstimate()));
+    }
+
 }

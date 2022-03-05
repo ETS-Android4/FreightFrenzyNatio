@@ -18,6 +18,8 @@ public class Trajectories {
     public static Pose2d parkPose;
     public static Pose2d shippingHubReturnPose;
     public static Pose2d secondIntakeIncrementer;
+    public static Pose2d warehouseParkSharedPose1;
+    public static Pose2d warehouseParkSharedPose2;
     public static int incrementer = 0;
     ////
     public static Pose2d goOverPose;
@@ -36,6 +38,8 @@ public class Trajectories {
         shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(8.4, -39.6, Math.toRadians(180 + 135)));
         secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6.5, 0, 0));
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
+        warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
+        warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(55, -37, Math.toRadians(270)));
         /////
 
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -40, Math.toRadians(0)));
@@ -164,6 +168,18 @@ public class Trajectories {
         return drive.trajectoryBuilder(pose2d, true)
                 .lineToLinearHeading(goOverPose,SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(20))
+                .build();
+    }
+
+    public static Trajectory sharedWarehouseTrajectory1(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(warehouseParkSharedPose1)
+                .build();
+    }
+
+    public static Trajectory sharedWarehouseTrajectory2(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(warehouseParkSharedPose2)
                 .build();
     }
 }
