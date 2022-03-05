@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
@@ -35,7 +33,7 @@ public class Box {
             Hardware.intake.setPower(0.25);
             power = 1;
         }
-        if (Gamepads.boxUp()) {
+        if (Gamepads.releaseFreight()) {
             Hardware.intake.setPower(0);
             power = 0;
             if (Hardware.potentiometer.getVoltage()*1000 > Positions.Arm.Below - 100){

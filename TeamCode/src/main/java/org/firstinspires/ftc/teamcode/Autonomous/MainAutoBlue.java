@@ -28,7 +28,7 @@ public class MainAutoBlue extends LinearOpMode {
         sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
         Trajectories.setDrive(sampleMecanumDrive);
         ImageDetection.initialize();
-        CustomPid armPid = new CustomPid(HardwareUtils.KP, HardwareUtils.KI, HardwareUtils.KD, HardwareUtils.MaxVelocity);
+        CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
         Thread linearAuto = new Thread(new AutoRun(sampleMecanumDrive, this));
 

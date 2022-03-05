@@ -97,143 +97,146 @@ public class Gamepads {
         gp2Touchpad = gamepad2.touchpad;
     }
 
-    public static boolean slidersUp() {
+    //-----------------SLIDERS---------------------
+        //NOT IMPLEMENTED
+        public static boolean slidersUp() {
+            return false;
+        }
+
+        //NOT IMPLEMENTED
+        public static boolean slidersMid() {
+            return false;
+        }
+
+        //NOT IMPLEMENTED
+        public static boolean slidersDown() {
+            return false;
+        }
+
+        //NOT IMPLEMENTED
+        public static boolean resetSlidersPosition(){
+        //return gp2Back;
         return false;
-    }
+        }
+    //----------------------------------------------
 
-    public static boolean slidersMid() {
-        return false;
-    }
 
-    public static boolean slidersDown() {
-        return false;
-    }
+    //-----------------ARM-------------------------
+        public static boolean armUp() { return gp1Y; }
 
-    public static boolean armUp() {
-        return gp1Y;
-    }
+        public static boolean armShared() {return gp1B && !gp1Start;}
 
-    public static boolean armShared() {return gp1B && !gp1Start;}
+        public static boolean armDown() { return gp1A && !gp1Start; }
 
-    public static boolean armDown() {
-        return gp1A && !gp1Start;
-    }
+        public static boolean armBelow() { return gp1X; }
 
-    public static boolean armBelow() {
-        return gp1X;
-    }
+        //NOT IMPLEMENTED
+        public static boolean manualIncrement(){ return false; }
 
-    public static boolean boxUp() {
-        return gp2X || gp1DpDown;
-    }
+        //NOT IMPLEMENTED
+        public static boolean manualDecrement(){ return false; }
+    //----------------------------------------------
 
-    public static boolean boxMid() {
-        return gp2A && !gp2Start;
-    }
 
-    public static boolean boxDown() {
-        return gp2B && !gp2Start;
-    }
+    //------------------BOX------------------------
+        public static boolean releaseFreight() { return gp2X || gp1DpDown; }
 
-    public static boolean boxIntake() {
-        return gp2Y;
-    }
+        public static boolean boxIntake() { return gp2Y; }
 
-    public static boolean boxOutake() {
-        return gp2BmpLeft;
-    }
+        public static boolean boxOutake() { return gp2BmpLeft; }
 
-    public static boolean carusel() {
-        return gp1DpLeft;
-    }
+        public static boolean overrideDistanceSensor(){ return gp1Back; }
 
-    public static boolean slowMovement() {
-        return gp1TrgRight > 0.01;
-    }
+        public static boolean boxSharedAdjustPlus(){return gp1RightStickDown;}
 
-    public static double getGp1StickRightY() {
-        return gp1StickRightY;
-    }
+        public static boolean boxSharedAdjustMinus(){return gp1LeftStickDown;}
 
-    public static double getGp1StickRightX() {
-        return gp1StickRightX;
-    }
+        //NOT IMPLEMENTED
+        public static boolean boxMid() {
+            return false;
+            //return gp2A && !gp2Start;
+        }
 
-    public static double getGp1StickLeftX() {
-        return gp1StickLeftX;
-    }
+        //NOT IMPLEMENTED
+        public static boolean boxDown() {
+            return false;
+            //return gp2B && !gp2Start;
+        }
+    //-----------------------------------------------
 
-    public static double getGp1StickLeftY() {
-        return gp1StickLeftY;
-    }
 
-    public static boolean rulerBaseLeft() {
-        return gp2DpLeft;
-    }
+    //-------------------CARUSUL--------------------
+         public static boolean carusel() { return gp1DpLeft; }
+    //----------------------------------------------
 
-    public static boolean rulerBaseRight() {
-        return gp2DpRight;
-    }
 
-    public static boolean rulerAngleUp() {
-        return gp2DpUp;
+    //--------------MOVEMENT------------------------
+        public static boolean slowMovement() { return gp1TrgRight > 0.01; }
 
-    }
+        public static double getGp1StickRightY() { return gp1StickRightY; }
 
-    public static boolean rulerAngleRight() {
-        return gp2DpDown;
+        public static double getGp1StickRightX() { return gp1StickRightX; }
 
-    }
+        public static double getGp1StickLeftX() { return gp1StickLeftX; }
 
-    public static double rulerExtend() {
-        return gp2TrgLeft;
-    }
+        //NOT IMPLEMENTED
+        public static double getGp1StickLeftY() {
+            return gp1StickLeftY;
+        }
+    //----------------------------------------------
 
-    public static double rulerRetract() {
-        return gp2TrgRight;
 
-    }
+    //-------------------RULER-------------------
+    public static boolean rulerBaseLeft() { return gp2DpLeft; }
 
+    public static boolean rulerBaseRight() { return gp2DpRight; }
+
+    public static boolean rulerAngleUp() { return gp2DpUp; }
+
+    public static boolean rulerAngleRight() { return gp2DpDown; }
+
+    public static double rulerExtend() { return gp2TrgLeft; }
+
+    public static double rulerRetract() { return gp2TrgRight; }
+
+    public static boolean reInitRuler(){ return gp2Touchpad; }
+
+    //NOT IMPLEMENTED IMPORTANT
     public static boolean deliverTM() {
-        return gp2BmpRight;
+        return false;
+        //return gp2BmpRight;
     }
 
-    public static boolean rulerSlow() {
-        return false; //return gp2rightBmp;
-    }
-
-    public static double joystickXRulerControl(){
-        return gp2StickLeftX;
-    }
-    public static double joystickYRulerControl(){
-        return gp2StickLeftY;
-    }
-
-    public static boolean manualIncrement(){
-        return gp1BmpLeft;
-    }
-    public static boolean manualDecrement(){
-        return gp1BmpRight;
-    }
-    public static boolean overrideDistanceSensor(){
-        return gp1Back;
-    }
-
-    public static boolean resetSlidersPosition(){
-        return gp2Back;
-    }
-
+    //NOT IMPLEMENTED IMPORTANT
     public static boolean rulerAngleColectPose(){
-        return gp2LeftStickDown;
-    }
-    public static boolean rulerAngleScorePose(){
-        return gp2RightStickDown;
-    }
-    public static boolean reInitRuler(){
-        return gp2Touchpad;
+        return false;
+        //return gp2LeftStickDown;
     }
 
-    public static boolean boxSharedAdjustPlus(){return gp1RightStickDown;}
-    public static boolean boxSharedAdjustMinus(){return gp1LeftStickDown;}
+    //NOT IMPLEMENTED IMPORTANT
+    public static boolean rulerAngleScorePose(){
+        return false;
+        //return gp2RightStickDown;
+    }
+
+    //NOT IMPLEMENTED
+    public static boolean rulerSlow() {
+        return false;
+        //return gp2rightBmp;
+    }
+
+    //NOT IMPLEMENTED
+    public static double joystickXRulerControl(){
+        return 0;
+        //return gp2StickLeftX;
+    }
+
+    //NOT IMPLEMENTED
+    public static double joystickYRulerControl(){
+        return 0;
+        //return gp2StickLeftY;
+    }
+    //-------------------------------------------
+
 }
 

@@ -20,40 +20,40 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Rumble;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
+// dev init
 
 @TeleOp(name = "MainTeleOp")
 public class MAIN extends LinearOpMode {
 
-    // dev init
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Initializations.TeleOpInitialization(drive, telemetry, hardwareMap);
         ControlsDebug.getControls(true);
-        while (!isStarted()){
-            ((DcMotorEx)Hardware.arm).setVelocity(Arm.armPid.control((int)(Hardware.potentiometer.getVoltage()*1000)), AngleUnit.RADIANS);
+        while (!isStarted()) {
+            ((DcMotorEx) Hardware.arm).setVelocity(Arm.armPid.control((int) (Hardware.potentiometer.getVoltage() * 1000)), AngleUnit.RADIANS);
         }
         Rumble.timer.reset();
         Rumble.timer.startTime();
         SafetyFeatures.isOk = true;
         SafetyFeatures.isSensorOverriden = false;
         while (!isStopRequested() && opModeIsActive()) {
-            if (!SafetyFeatures.isOk){
+            if (!SafetyFeatures.isOk) {
                 Hardware.telemetry.addData("Robotu si-a luat zilele", "");
                 Hardware.telemetry.update();
                 SafetyFeatures.setZeroPower();
                 continue;
             }
-            if (Gamepads.resetSlidersPosition()){
-                telemetry.addData("pulaaaaa","");
+            if (Gamepads.resetSlidersPosition()) {
+                telemetry.addData("pulaaaaa", "");
             }
-            telemetry.addData("back_right",Hardware.back_right.getCurrentPosition());
-            telemetry.addData("back_left",Hardware.back_left.getCurrentPosition());
+            telemetry.addData("back_right", Hardware.back_right.getCurrentPosition());
+            telemetry.addData("back_left", Hardware.back_left.getCurrentPosition());
 
 
-            telemetry.addData("front_left",Hardware.front_left.getCurrentPosition());
-            telemetry.addData("front_right",Hardware.front_right.getCurrentPosition());
+            telemetry.addData("front_left", Hardware.front_left.getCurrentPosition());
+            telemetry.addData("front_right", Hardware.front_right.getCurrentPosition());
             telemetry.addData("ServoRulerBase", Hardware.rulerBase.getPosition());
             telemetry.addData("ServoRulerAngle", Hardware.rulerAngle.getPosition());
             telemetry.addData("BOXANGLE!!!!!", Hardware.boxAngle.getPosition());

@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 
+import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerAngleInit;
+import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerBaseInit;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareDeviceCloseOnTearDown;
@@ -37,8 +40,8 @@ public class Ruler {
         power = Math.pow(timer.seconds() + 3.5, exponent);
 
         if(Gamepads.reInitRuler()){
-            Hardware.rulerAngle.setPosition(HardwareUtils.rulerAngleInit);
-            Hardware.rulerBase.setPosition(HardwareUtils.rulerBaseInit);
+            Hardware.rulerAngle.setPosition(rulerAngleInit);
+            Hardware.rulerBase.setPosition(rulerBaseInit);
         }
 
         if (Gamepads.rulerAngleColectPose()){

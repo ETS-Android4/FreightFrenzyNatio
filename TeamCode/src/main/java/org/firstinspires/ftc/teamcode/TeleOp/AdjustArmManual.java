@@ -9,6 +9,7 @@ public class AdjustArmManual {
     private static OneTap oneTapDown = new OneTap();
     private static final int adjustedBy = 20;
 
+    ///NOT IMPLEMENTED
     public static void adjust() {
         if (oneTapUp.onPress(Gamepads.manualIncrement())) {
             Arm.armPid.setTarget(Arm.armPid.getTargetPosition() + adjustedBy);
