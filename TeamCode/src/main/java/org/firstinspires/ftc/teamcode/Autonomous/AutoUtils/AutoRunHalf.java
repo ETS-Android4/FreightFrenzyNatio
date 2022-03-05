@@ -52,6 +52,7 @@ public class AutoRunHalf implements Runnable {
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
         detectedCase.spinCarusel(sampleMecanumDrive);
+        PoseStorage.armPosition=detectedCase.getArmPosition();
         detectedCase.goToShippingHub(sampleMecanumDrive);
         opMode.sleep(350);
 

@@ -9,8 +9,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
-public class AutoRun implements Runnable {
+public class AutoRunCollectDuck implements Runnable {
 
     private SampleMecanumDriveCancelable sampleMecanumDrive;
     AutoCases detectedCase;
@@ -19,7 +20,7 @@ public class AutoRun implements Runnable {
     public static double rulerAngle;
     public static double rulerBase;
 
-    public AutoRun(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
+    public AutoRunCollectDuck(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         this.sampleMecanumDrive = sampleMecanumDrive;
         this.opMode = opMode;
     }
@@ -51,18 +52,15 @@ public class AutoRun implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-        detectedCase.spinCarusel(sampleMecanumDrive);
-        PoseStorage.armPosition=detectedCase.getArmPosition();
-        detectedCase.goToShippingHub(sampleMecanumDrive);
+        detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
-
-        for (int i = 0; i < 2; i++) {
-            detectedCase.intake(sampleMecanumDrive);
-            opMode.sleep(1000);
-            detectedCase.place(sampleMecanumDrive);
-            opMode.sleep(1300);
-        }
-        detectedCase.park(sampleMecanumDrive);
+        detectedCase.spinCarusel(sampleMecanumDrive);
+        detectedCase.collectDuck(sampleMecanumDrive);
+        opMode.sleep(500);
+        detectedCase.placeDuck(sampleMecanumDrive);
+        opMode.sleep(350);
+        opMode.sleep(500);
+        detectedCase.parkAfterDuck(sampleMecanumDrive);
     }
 }
 
