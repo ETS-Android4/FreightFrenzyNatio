@@ -51,15 +51,17 @@ public class AutoRun implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-        detectedCase.spinCarusel(sampleMecanumDrive);
+
+        opMode.sleep(1500);
         detectedCase.goToShippingHub(sampleMecanumDrive);
+        detectedCase.spinCarusel(sampleMecanumDrive);
         opMode.sleep(350);
 
         for (int i = 0; i < 2; i++) {
             detectedCase.intake(sampleMecanumDrive);
-            opMode.sleep(1000);
+            opMode.sleep(500);
             detectedCase.place(sampleMecanumDrive);
-            opMode.sleep(1300);
+            opMode.sleep(500);
         }
         detectedCase.park(sampleMecanumDrive);
     }

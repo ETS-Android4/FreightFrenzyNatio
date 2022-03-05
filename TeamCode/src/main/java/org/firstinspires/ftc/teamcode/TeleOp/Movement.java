@@ -22,7 +22,7 @@ public class Movement {
     }
 
     public static void driving() {
-        slowMovement(4);
+        slowMovement(3);
         drive.setWeightedDrivePower(
                 new Pose2d(
                         -Gamepads.getGp1StickRightY() / slowFactor,
