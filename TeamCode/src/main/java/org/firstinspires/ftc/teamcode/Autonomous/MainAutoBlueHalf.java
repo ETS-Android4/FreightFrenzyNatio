@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRunHalf;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
@@ -30,7 +31,7 @@ public class MainAutoBlueHalf extends LinearOpMode {
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
-        Thread linearAuto = new Thread(new AutoRun(sampleMecanumDrive, this));
+        Thread linearAuto = new Thread(new AutoRunHalf(sampleMecanumDrive, this));
 
         waitForStart();
 
