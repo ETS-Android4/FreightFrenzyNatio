@@ -54,7 +54,7 @@ public class Box {
                 Hardware.intake.setPower(-1);
                 power = 1;
             }
-        } else if (Gamepads.boxMid()) {
+        } else if (Gamepads.boxCollect()) {
             Hardware.boxAngle.setPosition(Positions.Box.Mid);
             if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Mid + 200 && Hardware.potentiometer.getVoltage() * 1000 < Positions.Arm.Down + 30) {
                 Hardware.intake.setPower(-1);

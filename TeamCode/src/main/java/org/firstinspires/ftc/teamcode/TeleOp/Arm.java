@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.Utilities.DelayedAction;
+import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 
 @Config
 public class Arm {
@@ -25,6 +26,7 @@ public class Arm {
     private static final DelayedAction delayedActionArmReturn = new DelayedAction(1000);
     public static boolean armGoUpAfterColect = true;
     public static boolean isBelow = false;
+    private static OneTap oneTap = new OneTap();
 
     public static void toPosition() {
         ((DcMotorEx) Hardware.arm).setVelocity(armPid.control((int) (Hardware.potentiometer.getVoltage() * 1000)), AngleUnit.RADIANS);
@@ -95,6 +97,11 @@ public class Arm {
             Box.power = 1;
             isBelow = true;
             delayedActionGoUnder.callAction();
+        }
+    }
+    public static void checkUpOrBelow(){
+        if(oneTap.onPress(Gamepads.changeArmGoUpAfterCollect())){
+            Arm.armGoUpAfterColect=!Arm.armGoUpAfterColect;
         }
     }
 

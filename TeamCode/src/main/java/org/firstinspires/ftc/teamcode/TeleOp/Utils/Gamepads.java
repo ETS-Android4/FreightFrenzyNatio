@@ -96,7 +96,9 @@ public class Gamepads {
         gp2LeftStickDown = gamepad2.left_stick_button;
         gp2Touchpad = gamepad2.touchpad;
     }
-
+    public static boolean changeArmGoUpAfterCollect(){
+        return gp1DpUp;
+    }
     //-----------------SLIDERS---------------------
         //NOT IMPLEMENTED
         public static boolean slidersUp() {
@@ -151,10 +153,8 @@ public class Gamepads {
 
         public static boolean boxSharedAdjustMinus(){return gp1LeftStickDown;}
 
-        //NOT IMPLEMENTED
-        public static boolean boxMid() {
-            return false;
-            //return gp2A && !gp2Start;
+        public static boolean boxCollect() {
+            return gp2A && !gp2Start;
         }
 
         //NOT IMPLEMENTED

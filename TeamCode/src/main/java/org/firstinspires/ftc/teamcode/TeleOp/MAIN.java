@@ -38,7 +38,11 @@ public class MAIN extends LinearOpMode {
         Rumble.timer.startTime();
         SafetyFeatures.isOk = true;
         SafetyFeatures.isSensorOverriden = false;
+
         while (!isStopRequested() && opModeIsActive()) {
+
+            Arm.checkUpOrBelow();
+
             if (!SafetyFeatures.isOk) {
                 Hardware.telemetry.addData("Robotu si-a luat zilele", "");
                 Hardware.telemetry.update();
@@ -48,6 +52,7 @@ public class MAIN extends LinearOpMode {
             if (Gamepads.resetSlidersPosition()) {
                 telemetry.addData("pulaaaaa", "");
             }
+            telemetry.addData("armGoUpAfterCollectState",Arm.armGoUpAfterColect);
             telemetry.addData("back_right", Hardware.back_right.getCurrentPosition());
             telemetry.addData("back_left", Hardware.back_left.getCurrentPosition());
 

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
-@Autonomous(name = "Main Auto Blue")
+@Autonomous(name = "Main Auto Blue Half")
 public class MainAutoBlueHalf extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
