@@ -96,7 +96,7 @@ public class IntakeSensor {
             delayedActionReturnSlidersArmUp.callAction();
             stopOutake.callAction();
         }
-        if (outtakeBelow.onActionRun(Arm.isBelow && distance > 9)) {
+        if (outtakeBelow.onActionRun(Arm.isBelow && TeleUtils.isBoxAtPosition(Positions.Box.Shared) && distance > 9)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             delayedActionArmReturnBelow.callAction();
             stopOutake.callAction();

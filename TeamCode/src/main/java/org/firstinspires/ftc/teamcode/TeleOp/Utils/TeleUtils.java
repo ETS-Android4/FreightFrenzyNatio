@@ -11,6 +11,6 @@ public class TeleUtils {
     }
 
     public static boolean isBoxAtPosition(double position) {
-        return (int) (Hardware.boxAngle.getPosition() * 1000) == (int) (position * 1000);
+        return (int) (Hardware.boxAngle.getPosition() * 100) == (int) (position * 100);
     }
 }
