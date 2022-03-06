@@ -63,12 +63,15 @@ public class IntakeSensor {
             Arm.armPid.setTarget((int) Positions.Arm.Shared);
         }
         if (delayedActionArmReturnBelow.runAction()) {
-            Arm.armPid.setTarget((int) Positions.Arm.Down);
+            Arm.armPid.setTarget((int) Positions.Arm.Down - 30);
             delayedActionReturnSlidersArmBelow.callAction();
         }
         if (delayedActionReturnSlidersArmBelow.runAction()) {
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
+            Hardware.boxAngle.setPosition(Positions.Box.Mid);
+            Hardware.intake.setPower(-1);
+            Box.power = 1;
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
         if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {

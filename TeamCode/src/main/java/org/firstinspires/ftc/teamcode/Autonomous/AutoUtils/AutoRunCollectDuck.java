@@ -54,12 +54,12 @@ public class AutoRunCollectDuck implements Runnable {
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
         detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
-        detectedCase.spinCarusel(sampleMecanumDrive);
+        detectedCase.spinCaruselWithDuckCollect(sampleMecanumDrive);
         detectedCase.collectDuck(sampleMecanumDrive);
         opMode.sleep(500);
         detectedCase.placeDuck(sampleMecanumDrive);
         opMode.sleep(350);
-        opMode.sleep(500);
+        opMode.sleep(4000);//sa nu dea robotu in delta
         detectedCase.parkAfterDuck(sampleMecanumDrive);
     }
 }
