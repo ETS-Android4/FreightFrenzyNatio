@@ -37,7 +37,7 @@ public class Trajectories {
             caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
-        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-19, -43, java.lang.Math.toRadians(70)));
+        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-20, -42, java.lang.Math.toRadians(70)));
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.3, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.3, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(42.5, -60.3, Math.toRadians(0)));
@@ -46,13 +46,13 @@ public class Trajectories {
         secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6.5, 0, 0));
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
         warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
-        warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(55, -37, Math.toRadians(270)));
+        warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(57, -37, Math.toRadians(270)));
         duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-55.71, -60, Math.toRadians(226)));
-        duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-45, -45, Math.toRadians(226)));
+        duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-47, -47, Math.toRadians(226)));
         /////
 
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -43, Math.toRadians(0)));
-        warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(50, -43, Math.toRadians(0)));
+        warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(53, -43, Math.toRadians(0)));
 
         ////
         incrementer = 0;
@@ -74,7 +74,7 @@ public class Trajectories {
     }
     public static Trajectory CaruselTrajectoryWithDuckCollect(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d, true)
-                .splineToLinearHeading(caruselPositionWithDuckCollect, Math.toRadians(PoseColorNormalizer.calculateAngleDegrees(180)))
+                .splineToLinearHeading(caruselPositionWithDuckCollect, Math.toRadians(PoseColorNormalizer.calculateAngleDegrees(220)))
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(-1);
                 })
@@ -204,7 +204,7 @@ public class Trajectories {
     public static Trajectory ShippingHubTrajectoryCaruselSide(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubCaruselSidePose)
-                .addTemporalMarker(0.8, () -> {
+                .addTemporalMarker(1.2, () -> {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.0, () -> {
@@ -230,7 +230,7 @@ public class Trajectories {
                     PoseStorage.armPosition = (int) Positions.Arm.Down - 510;
                     Hardware.boxAngle.setPosition(Positions.Box.Mid + 0.25);
                 })
-                .addTemporalMarker(1.2, () ->{
+                .addTemporalMarker(2, () ->{
                     Hardware.intake.setPower(1);
                 })
                 .build();
@@ -238,7 +238,7 @@ public class Trajectories {
     public static Trajectory GoOverBarriers1(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToSplineHeading(goOverPose)
-                .addTemporalMarker(0.2, ()->{
+                .addDisplacementMarker(()->{
                     PoseStorage.armPosition=(int)Positions.Arm.Down-200;
                     Hardware.boxAngle.setPosition(Positions.Box.Up);
                     Hardware.intake.setPower(0);
