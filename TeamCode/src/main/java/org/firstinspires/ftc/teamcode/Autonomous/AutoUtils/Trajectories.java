@@ -32,12 +32,12 @@ public class Trajectories {
 
     public static void InitTrajectories() {
         caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-58.6, -53.9, java.lang.Math.toRadians(90)));
-        caruselPositionWithDuckCollect = PoseColorNormalizer.calculate(new Pose2d(-54.6, -60.8, java.lang.Math.toRadians(55.75)));
+        caruselPositionWithDuckCollect = PoseColorNormalizer.calculate(new Pose2d(-54.6, -59, java.lang.Math.toRadians(55.75)));
         if (PoseColorNormalizer.getColorCase()== PoseColorNormalizer.Color.BLUE){
             caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
-        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-20, -42, java.lang.Math.toRadians(70)));
+        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-18, -42, java.lang.Math.toRadians(70)));
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.3, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.3, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(42.5, -60.3, Math.toRadians(0)));
@@ -248,6 +248,10 @@ public class Trajectories {
     public static Trajectory GoOverBarriers2(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(warehouseOverPose)
+                .addDisplacementMarker(()->{
+                    PoseStorage.armPosition=(int)Positions.Arm.Down;
+                    Hardware.boxAngle.setPosition(Positions.Box.Mid);
+                })
                 .build();
     }
 }

@@ -19,16 +19,18 @@ public class TrajectoryVisualizer {
     public static Pose2d shippingHubCaruselSidePose;
     public static Pose2d duckCollectPose;
     public static Pose2d duckCollectPoseIntermediary;
+    public static Pose2d shippingHubWarehouseSidePose;
     public static Pose2d wallPose;
     public static int incrementer = 0;
     ////
     public static Pose2d goOverPose;
     public static Pose2d warehouseOverPose;
     public static void main(String[] args) {
-        Pose2d startPosition = new Pose2d(-36, -60.5,Math.toRadians(90));
+        Pose2d startPosition = new Pose2d(11.5, -60.5,Math.toRadians(90));
         caruselPosition = new Pose2d(-54.6, -60.8, java.lang.Math.toRadians(55.75));
         shippingHubPose = new Pose2d(-11, -44, java.lang.Math.toRadians(90)); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
         shippingHubCaruselSidePose = new Pose2d(-20, -44, java.lang.Math.toRadians(70));
+        shippingHubWarehouseSidePose = new Pose2d( -1, -41, Math.toRadians(125));
         gapPose = new Pose2d(12, -60.3, Math.toRadians(0));
         warehousePose = new Pose2d(25, -60.3, Math.toRadians(0));
         intakePose = new Pose2d(42.5, -60.3, Math.toRadians(0));
@@ -52,22 +54,9 @@ public class TrajectoryVisualizer {
                 .setConstraints(55, 50, Math.toRadians(360), Math.toRadians(360), 10)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(startPosition)
-                                .lineToLinearHeading(shippingHubCaruselSidePose)
+                                .lineToLinearHeading(shippingHubWarehouseSidePose)
                                 .waitSeconds(0.35)
-                                .setReversed(true)
-                                .splineToLinearHeading(caruselPosition, Math.toRadians(220))
-                                .setReversed(false)
-                                .waitSeconds(2.050)
-                                .lineToSplineHeading(duckCollectPoseIntermediary)
-                                .lineToLinearHeading(duckCollectPose)
-                                .turn(Math.toRadians(-25), 5, 4)
-                                .turn(Math.toRadians(50), 5, 4)
-                                .lineToLinearHeading(shippingHubCaruselSidePose)
-                                .waitSeconds(0.35)
-                                .waitSeconds(4)
-                                .lineToSplineHeading(goOverPose)
-                                .lineToLinearHeading(warehouseOverPose)
-                                .lineToLinearHeading(warehouseParkSharedPose2)
+                                .lineToLinearHeading(gapPose)
 
 //                                .lineToLinearHeading(caruselPosition)
 //
