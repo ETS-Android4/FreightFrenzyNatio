@@ -25,6 +25,7 @@ public abstract class AutoCases {
     public void spinCaruselWithDuckCollect(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(Trajectories.CaruselTrajectoryWithDuckCollect(drive.getPoseEstimate()));
         PoseStorage.armPosition=(int)Positions.Arm.Down;
+        Hardware.boxAngle.setPosition(Positions.Box.Up);
         long firstTime = System.currentTimeMillis();
         while (System.currentTimeMillis()-firstTime<300){}
         AutoUtil.spinCarusel();
