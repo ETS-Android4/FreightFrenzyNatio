@@ -27,7 +27,7 @@ public class AutoRunCollectDuck implements Runnable {
 
     @Override
     public void run() {
-        switch (ImageDetection.duckPosition){
+        switch (ImageDetection.duckPosition) {
             case Left:
                 detectedCase = new A();
                 TMPosition = 1;
@@ -52,15 +52,17 @@ public class AutoRunCollectDuck implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-        detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
-        opMode.sleep(350);
-        detectedCase.spinCarusel(sampleMecanumDrive);
-        detectedCase.collectDuck(sampleMecanumDrive);
-        opMode.sleep(500);
-        detectedCase.placeDuck(sampleMecanumDrive);
-        opMode.sleep(350);
-        opMode.sleep(500);
-        detectedCase.parkAfterDuck(sampleMecanumDrive);
+   //     detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
+///        opMode.sleep(350);
+
+        detectedCase.spinCaruselDuckCollect(sampleMecanumDrive);
+
+//        detectedCase.collectDuck(sampleMecanumDrive);
+//        opMode.sleep(500);
+//        detectedCase.placeDuck(sampleMecanumDrive);
+//        opMode.sleep(350);
+//        opMode.sleep(500);
+//        detectedCase.parkAfterDuck(sampleMecanumDrive);
     }
 }
 

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.TestAuto;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.TestAutoRun;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
@@ -38,6 +39,7 @@ public class MAIN extends LinearOpMode {
         Rumble.timer.startTime();
         SafetyFeatures.isOk = true;
         SafetyFeatures.isSensorOverriden = false;
+        drive.setPoseEstimate(PoseStorage.startPosition);
 
         while (!isStopRequested() && opModeIsActive()) {
 

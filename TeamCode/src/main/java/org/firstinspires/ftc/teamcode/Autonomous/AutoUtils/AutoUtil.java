@@ -26,6 +26,22 @@ public class AutoUtil {
         Hardware.carusel.setPower(0);
     }
 
+    public static void spinCaruselDuckColect() {
+        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            maxVelCarusel = -40;
+        }
+
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime <= 2250) {
+            if (System.currentTimeMillis() - startTime < 1000) {
+                ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel, AngleUnit.RADIANS);
+            } else {
+                ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel , AngleUnit.RADIANS);
+            }
+        }
+        Hardware.carusel.setPower(0);
+    }
+
     public static double normalizeVelocity(double velocity) {
         if (velocity > maxVelCarusel) {
             return maxVelCarusel;

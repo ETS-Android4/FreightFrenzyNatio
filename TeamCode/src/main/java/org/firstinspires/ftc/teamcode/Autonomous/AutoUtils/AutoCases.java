@@ -21,6 +21,14 @@ public abstract class AutoCases {
         AutoUtil.spinCarusel();
     }
 
+    public void spinCaruselDuckCollect(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectory(Trajectories.CaruselTrajectory(drive.getPoseEstimate()));
+        PoseStorage.armPosition=(int)Positions.Arm.Down;
+        long firstTime = System.currentTimeMillis();
+        while (System.currentTimeMillis()-firstTime<300){}
+        AutoUtil.spinCaruselDuckColect();
+    }
+
     public void intake(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(Trajectories.WarehouseTrajectory1(drive.getPoseEstimate()));
         drive.followTrajectory(Trajectories.WarehouseTrajectory2(drive.getPoseEstimate()));
