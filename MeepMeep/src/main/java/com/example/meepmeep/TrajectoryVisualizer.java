@@ -27,7 +27,7 @@ public class TrajectoryVisualizer {
     public static Pose2d warehouseOverPose;
     public static void main(String[] args) {
         Pose2d startPosition = new Pose2d(11.5, -60.5,Math.toRadians(90));
-        caruselPosition = new Pose2d(-54.6, -60.8, java.lang.Math.toRadians(55.75));
+        caruselPosition = new Pose2d(-54.6, -59, java.lang.Math.toRadians(55.75));
         shippingHubPose = new Pose2d(-11, -44, java.lang.Math.toRadians(90)); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
         shippingHubCaruselSidePose = new Pose2d(-20, -44, java.lang.Math.toRadians(70));
         shippingHubWarehouseSidePose = new Pose2d( -1, -41, Math.toRadians(125));
@@ -57,7 +57,29 @@ public class TrajectoryVisualizer {
                                 .lineToLinearHeading(shippingHubWarehouseSidePose)
                                 .waitSeconds(0.35)
                                 .lineToLinearHeading(gapPose)
-
+                                .lineToLinearHeading(warehousePose)
+                                .lineToLinearHeading(intakePose)
+                                .waitSeconds(0.8)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(shippingHubReturnPose)
+                                .waitSeconds(0.35)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(warehousePose)
+                                .lineToLinearHeading(intakePose)
+                                .waitSeconds(0.8)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(shippingHubReturnPose)
+                                .waitSeconds(0.35)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(warehousePose)
+                                .lineToLinearHeading(intakePose)
+                                .waitSeconds(0.8)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(shippingHubReturnPose)
+                                .waitSeconds(0.35)
+                                .lineToLinearHeading(gapPose)
+                                .lineToLinearHeading(warehousePose)
+                                .lineToLinearHeading(intakePose)
 //                                .lineToLinearHeading(caruselPosition)
 //
 //                                .lineToLinearHeading(shippingHubPose)
