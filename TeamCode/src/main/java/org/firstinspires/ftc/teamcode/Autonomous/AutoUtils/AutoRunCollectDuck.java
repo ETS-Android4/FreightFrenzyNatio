@@ -52,17 +52,15 @@ public class AutoRunCollectDuck implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-   //     detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
-///        opMode.sleep(350);
-
-        detectedCase.spinCaruselDuckCollect(sampleMecanumDrive);
-
-//        detectedCase.collectDuck(sampleMecanumDrive);
-//        opMode.sleep(500);
-//        detectedCase.placeDuck(sampleMecanumDrive);
-//        opMode.sleep(350);
-//        opMode.sleep(500);
-//        detectedCase.parkAfterDuck(sampleMecanumDrive);
+        detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
+        opMode.sleep(350);
+        detectedCase.spinCaruselWithDuckCollect(sampleMecanumDrive);
+        detectedCase.collectDuck(sampleMecanumDrive);
+        opMode.sleep(500);
+        detectedCase.placeDuck(sampleMecanumDrive);
+        opMode.sleep(350);
+        opMode.sleep(4000);//sa nu dea robotu in delta
+        detectedCase.parkAfterDuck(sampleMecanumDrive);
     }
 }
 

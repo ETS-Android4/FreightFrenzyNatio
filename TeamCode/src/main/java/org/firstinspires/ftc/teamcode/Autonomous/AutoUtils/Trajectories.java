@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class Trajectories {
@@ -22,6 +23,8 @@ public class Trajectories {
     public static Pose2d warehouseParkSharedPose2;
     public static Pose2d shippingHubCaruselSidePose;
     public static Pose2d duckCollectPose;
+    public static Pose2d caruselPositionWithDuckCollect;
+    public static Pose2d duckCollectPoseIntermediary;
     public static int incrementer = 0;
     ////
     public static Pose2d goOverPose;
@@ -29,11 +32,12 @@ public class Trajectories {
 
     public static void InitTrajectories() {
         caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-58.6, -53.9, java.lang.Math.toRadians(90)));
+        caruselPositionWithDuckCollect = PoseColorNormalizer.calculate(new Pose2d(-54.6, -60.8, java.lang.Math.toRadians(55.75)));
         if (PoseColorNormalizer.getColorCase()== PoseColorNormalizer.Color.BLUE){
             caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
-        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-25, -40, java.lang.Math.toRadians(45)));
+        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-19, -43, java.lang.Math.toRadians(70)));
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.3, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.3, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(42.5, -60.3, Math.toRadians(0)));
@@ -43,7 +47,8 @@ public class Trajectories {
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
         warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
         warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(55, -37, Math.toRadians(270)));
-        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-50, -50, Math.toRadians(230)));
+        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-55.71, -60, Math.toRadians(226)));
+        duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-45, -45, Math.toRadians(226)));
         /////
 
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -43, Math.toRadians(0)));
@@ -67,6 +72,16 @@ public class Trajectories {
                 })
                 .build();
     }
+    public static Trajectory CaruselTrajectoryWithDuckCollect(Pose2d pose2d) {
+        return drive.trajectoryBuilder(pose2d, true)
+                .splineToLinearHeading(caruselPositionWithDuckCollect, Math.toRadians(PoseColorNormalizer.calculateAngleDegrees(180)))
+                .addTemporalMarker(0, () -> {
+                    Hardware.intake.setPower(-1);
+                })
+                .build();
+    }
+
+
 
     public static Trajectory ShippingHubTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
@@ -198,20 +213,22 @@ public class Trajectories {
                 })
                 .build();
     }
-    public static Trajectory CollectDuckTrajectory(Pose2d pose2d){
-        return drive.trajectoryBuilder(pose2d)
+    public static TrajectorySequence CollectDuckTrajectory(Pose2d pose2d){
+        return drive.trajectorySequenceBuilder(pose2d)
                 .lineToLinearHeading(duckCollectPose)
                 .addTemporalMarker(0.1, () -> {
                     Hardware.boxAngle.setPosition(Positions.Box.Mid);
                     Hardware.intake.setPower(-1);
                 })
+                .turn(Math.toRadians(-25), 5, 4)
+                .turn(Math.toRadians(50), 5, 4)
                 .build();
     }
     public static Trajectory PlaceDuckTrajectory(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubCaruselSidePose)
                 .addTemporalMarker(0.3, () -> {
-                    PoseStorage.armPosition = (int) Positions.Arm.Down-510;
+                    PoseStorage.armPosition = (int) Positions.Arm.Down - 510;
                     Hardware.boxAngle.setPosition(Positions.Box.Mid + 0.25);
                 })
                 .addTemporalMarker(1.2, () ->{
@@ -221,9 +238,9 @@ public class Trajectories {
     }
     public static Trajectory GoOverBarriers1(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
-                .lineToLinearHeading(goOverPose)
-                .addTemporalMarker(0.5, ()->{
-                    PoseStorage.armPosition=(int)Positions.Arm.Down;
+                .lineToSplineHeading(goOverPose)
+                .addTemporalMarker(0.2, ()->{
+                    PoseStorage.armPosition=(int)Positions.Arm.Down-200;
                     Hardware.boxAngle.setPosition(Positions.Box.Up);
                     Hardware.intake.setPower(0);
                 })
