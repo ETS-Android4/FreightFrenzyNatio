@@ -11,7 +11,7 @@ public class Movement {
 
     private static SampleMecanumDrive drive;
     private static Telemetry telemetry;
-    public static int slowFactor = 1;
+    public static double slowFactor = 1;
 
     public static void setDrive(SampleMecanumDrive drive) {
         Movement.drive = drive;
@@ -22,7 +22,7 @@ public class Movement {
     }
 
     public static void driving() {
-        slowMovement(3);
+        slowMovement(2.5);
         drive.setWeightedDrivePower(
                 new Pose2d(
                         -Gamepads.getGp1StickRightY() / slowFactor,
@@ -45,7 +45,7 @@ public class Movement {
         }
     }
 
-    public static void slowMovement(int factor) {
+    public static void slowMovement(double factor) {
         slowFactor = 1;
         if (Gamepads.slowMovement()) {
             slowFactor = factor;

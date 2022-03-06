@@ -22,7 +22,7 @@ public class Positions {
     ///-----------------------------------------------------
 
     ///---------------RULER----------------------------------
-    public static double rulerBaseInit = 0.95;
+    public static double rulerBaseInit = 0.985; // 0.95
     public static double rulerAngleInit = 0.5;
 
 }

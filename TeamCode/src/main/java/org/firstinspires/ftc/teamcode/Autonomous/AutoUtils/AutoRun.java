@@ -52,7 +52,6 @@ public class AutoRun implements Runnable {
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
 
-        opMode.sleep(1500);
         detectedCase.goToShippingHub(sampleMecanumDrive);
         detectedCase.spinCarusel(sampleMecanumDrive);
         opMode.sleep(350);
@@ -61,7 +60,7 @@ public class AutoRun implements Runnable {
             detectedCase.intake(sampleMecanumDrive);
             opMode.sleep(500);
             detectedCase.place(sampleMecanumDrive);
-            opMode.sleep(500);
+            opMode.sleep(800);
         }
         detectedCase.park(sampleMecanumDrive);
     }
