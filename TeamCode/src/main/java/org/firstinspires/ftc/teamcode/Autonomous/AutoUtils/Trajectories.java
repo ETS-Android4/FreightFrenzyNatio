@@ -82,7 +82,6 @@ public class Trajectories {
     }
 
 
-
     public static Trajectory ShippingHubTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubPose)
@@ -205,7 +204,7 @@ public class Trajectories {
     public static Trajectory ShippingHubTrajectoryCaruselSide(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubCaruselSidePose)
-                .addTemporalMarker(0.3, () -> {
+                .addTemporalMarker(0.8, () -> {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.0, () -> {
