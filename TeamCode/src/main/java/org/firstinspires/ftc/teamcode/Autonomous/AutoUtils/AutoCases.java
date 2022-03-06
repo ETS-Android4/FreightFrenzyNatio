@@ -95,4 +95,8 @@ public abstract class AutoCases {
         drive.followTrajectory(Trajectories.sharedWarehouseTrajectory2(drive.getPoseEstimate()));
     }
 
+    public void goToShippingHubWarehouseSide(SampleMecanumDriveCancelable drive){
+        drive.followTrajectory(Trajectories.ShippingHubTrajectoryWarehouseSide(drive.getPoseEstimate()));
+    }
+
 }
