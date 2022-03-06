@@ -32,7 +32,7 @@ public class IntakeSensor {
     private static final DelayedAction delayedActionArmReturnBelow = new DelayedAction(350);
 
     // asteapta sa treaca bratul pe sub robot pentru coborarea glisierelor
-    private static final DelayedAction delayedActionReturnSlidersArmBelow = new DelayedAction(600);
+    private static final DelayedAction delayedActionReturnSlidersArmBelow = new DelayedAction(700); ///TODO:
 
     //se apeleaza call action a lasat cubul si aveam brartul sus pe nivelu 3 si glisierele putin ridicate. Asteapta ca bratul sa se intoarca de deasupra shipping hub
     private static final DelayedAction delayedActionReturnSlidersArmUp = new DelayedAction(500);

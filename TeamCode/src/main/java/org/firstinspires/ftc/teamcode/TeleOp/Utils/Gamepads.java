@@ -201,17 +201,10 @@ public class Gamepads {
 
     public static boolean reInitRuler(){ return gp2Touchpad; }
 
-    //NOT IMPLEMENTED IMPORTANT
-    public static boolean deliverTM() {
-        return false;
-        //return gp2BmpRight;
-    }
 
-    //NOT IMPLEMENTED IMPORTANT
-    public static boolean rulerAngleColectPose(){
-        return false;
-        //return gp2LeftStickDown;
-    }
+    public static boolean deliverTM() { return gp2BmpRight; }
+
+    public static boolean rulerAngleColectPose(){ return gp2LeftStickDown; }
 
     //NOT IMPLEMENTED IMPORTANT
     public static boolean rulerAngleScorePose(){

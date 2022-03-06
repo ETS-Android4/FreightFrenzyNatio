@@ -16,6 +16,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public class  ImageDetection {
+    //TODO: REFACTOOOOOR
     public static OpenCvCamera camera;
     public enum DuckPosition{
         Left,

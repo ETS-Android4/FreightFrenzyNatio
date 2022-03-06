@@ -44,26 +44,22 @@ public class Ruler {
             Hardware.rulerBase.setPosition(rulerBaseInit);
         }
 
-        if (Gamepads.rulerAngleColectPose()){
-            Hardware.rulerAngle.setPosition(0.93);
-        }
+//        if (Gamepads.rulerAngleColectPose()){
+//            Hardware.rulerAngle.setPosition(0.93);
+//        }
 
         //TODO onetap REFACTOOOOOR
         if (Gamepads.deliverTM()) {
-            Hardware.rulerAngle.setPosition(DeliverTMPosition);
-            opMode.sleep(500);
-            Hardware.rulerSpin.setPower(0.3);
-            opMode.sleep(500);
-            Hardware.rulerSpin.setPower(0.5);
-            opMode.sleep(600);
-            Hardware.rulerSpin.setPower(0);
-            while (Hardware.rulerAngle.getPosition() > 0.002)
-                Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() - 0.0004);
-            while (Hardware.rulerBase.getPosition() < 0.6572)
-                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + 0.0004);
+
+            if (Hardware.rulerAngle.getPosition() > 0)
+                Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() - 0.09);
+
+            if (Hardware.rulerBase.getPosition() < 0.65 && Hardware.rulerAngle.getPosition()<0.2)
+                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + 0.09);
+
         }
 
-        if (Gamepads.rulerAngleScorePose()){
+        if (Gamepads.rulerAngleColectPose()){
             Hardware.rulerAngle.setPosition(AutoRun.rulerAngle);
             Hardware.rulerBase.setPosition(AutoRun.rulerBase);
         }

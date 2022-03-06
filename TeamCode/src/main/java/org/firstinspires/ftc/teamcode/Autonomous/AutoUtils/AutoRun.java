@@ -15,9 +15,9 @@ public class AutoRun implements Runnable {
     private SampleMecanumDriveCancelable sampleMecanumDrive;
     AutoCases detectedCase;
     private LinearOpMode opMode;
-    public static int TMPosition;
-    public static double rulerAngle;
-    public static double rulerBase;
+    public static int TMPosition = 3;
+    public static double rulerAngle = 0.788;
+    public static double rulerBase = 0.61;
 
     public AutoRun(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         this.sampleMecanumDrive = sampleMecanumDrive;
@@ -26,34 +26,43 @@ public class AutoRun implements Runnable {
 
     @Override
     public void run() {
-        switch (ImageDetection.duckPosition){
+        //TODO: REFAACTOOOOOOOR!!!@!@#@#!!!!
+
+        // PENTRU PUS
+        // 0 ANGLE
+        // BASE 0.65
+
+
+        switch (ImageDetection.duckPosition) {
             case Left:
                 detectedCase = new A();
                 TMPosition = 1;
-                rulerAngle = 0.669;
-                rulerBase = 0.560;
+                rulerAngle = 0.932;
+                rulerBase = 0.707;
                 break;
             case Middle:
                 detectedCase = new B();
                 TMPosition = 2;
-                rulerAngle = 0.58;
-                rulerBase = 0.536;
+                rulerAngle = 0.842;
+                rulerBase = 0.644;
                 break;
             case Right:
                 detectedCase = new C();
                 TMPosition = 3;
-                rulerAngle = 0.48;
-                rulerBase = 0.545;
+                rulerAngle = 0.788;
+                rulerBase = 0.61;
                 break;
+
         }
 
         ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-
-        detectedCase.goToShippingHub(sampleMecanumDrive);
         detectedCase.spinCarusel(sampleMecanumDrive);
+        PoseStorage.armPosition = detectedCase.getArmPosition();
+        detectedCase.goToShippingHub(sampleMecanumDrive);
+        //detectedCase.spinCarusel(sampleMecanumDrive);
         opMode.sleep(350);
 
         for (int i = 0; i < 2; i++) {

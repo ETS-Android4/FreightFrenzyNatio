@@ -99,6 +99,9 @@ public class HardwareUtils {
     }
 
     public static void InitializePositions() {
+
+        Arm.armGoUpAfterColect = true;
+
         changeDirection(Hardware.slider_right);
         Hardware.slider_right.setTargetPosition(0);
         Hardware.slider_left.setTargetPosition(0);

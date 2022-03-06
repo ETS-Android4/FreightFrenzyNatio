@@ -20,6 +20,8 @@ public class Trajectories {
     public static Pose2d secondIntakeIncrementer;
     public static Pose2d warehouseParkSharedPose1;
     public static Pose2d warehouseParkSharedPose2;
+    public static Pose2d shippingHubCaruselSidePose;
+    public static Pose2d duckCollectPose;
     public static int incrementer = 0;
     ////
     public static Pose2d goOverPose;
@@ -31,6 +33,7 @@ public class Trajectories {
             caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
+        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-25, -40, java.lang.Math.toRadians(45)));
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.3, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.3, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(42.5, -60.3, Math.toRadians(0)));
@@ -40,10 +43,11 @@ public class Trajectories {
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
         warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
         warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(55, -37, Math.toRadians(270)));
+        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-50, -50, Math.toRadians(230)));
         /////
 
-        goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -40, Math.toRadians(0)));
-        warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(50, -40, Math.toRadians(0)));
+        goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -43, Math.toRadians(0)));
+        warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(50, -43, Math.toRadians(0)));
 
         ////
         incrementer = 0;
@@ -180,6 +184,54 @@ public class Trajectories {
     public static Trajectory sharedWarehouseTrajectory2(Pose2d pose2d){
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(warehouseParkSharedPose2)
+                .build();
+    }
+
+    public static Trajectory ShippingHubTrajectoryCaruselSide(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(shippingHubCaruselSidePose)
+                .addTemporalMarker(0.3, () -> {
+                    Hardware.intake.setPower(1);
+                })
+                .addTemporalMarker(0.0, () -> {
+                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                })
+                .build();
+    }
+    public static Trajectory CollectDuckTrajectory(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(duckCollectPose)
+                .addTemporalMarker(0.1, () -> {
+                    Hardware.boxAngle.setPosition(Positions.Box.Mid);
+                    Hardware.intake.setPower(-1);
+                })
+                .build();
+    }
+    public static Trajectory PlaceDuckTrajectory(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(shippingHubCaruselSidePose)
+                .addTemporalMarker(0.3, () -> {
+                    PoseStorage.armPosition = (int) Positions.Arm.Down-510;
+                    Hardware.boxAngle.setPosition(Positions.Box.Mid + 0.25);
+                })
+                .addTemporalMarker(1.2, () ->{
+                    Hardware.intake.setPower(1);
+                })
+                .build();
+    }
+    public static Trajectory GoOverBarriers1(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(goOverPose)
+                .addTemporalMarker(0.5, ()->{
+                    PoseStorage.armPosition=(int)Positions.Arm.Down;
+                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    Hardware.intake.setPower(0);
+                })
+                .build();
+    }
+    public static Trajectory GoOverBarriers2(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(warehouseOverPose)
                 .build();
     }
 }
