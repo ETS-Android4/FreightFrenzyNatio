@@ -8,7 +8,7 @@ public class Positions {
 
     public static final int basePoseCollect = 1410;
 
-    public static final GenericPosition BasePoseArm1 = new GenericPosition(basePoseCollect - 1240, basePoseCollect - 1000, basePoseCollect, basePoseCollect + 960, basePoseCollect + 700);
+    public static final GenericPosition BasePoseArm1 = new GenericPosition(basePoseCollect - 1240, basePoseCollect - 1000, basePoseCollect - 50, basePoseCollect + 960, basePoseCollect + 700);
 
     public static GenericPosition Arm = new GenericPosition(BasePoseArm1.Up + armCorrectionOffset + 150, BasePoseArm1.Mid + armCorrectionOffset, BasePoseArm1.Down + armCorrectionOffset, BasePoseArm1.Below + armCorrectionOffset, BasePoseArm1.Shared + armCorrectionOffset);
     ///-----------------------------------------------------
@@ -18,11 +18,11 @@ public class Positions {
     ///-----------------------------------------------------
 
     ///---------------BOX----------------------------------
-    public static GenericPosition Box = new GenericPosition(0.07, 0.25, 0.68, 0.4, 0.29);
+    public static GenericPosition Box = new GenericPosition(0.02, 0.25, 0.5, 0.4, 0.2);
     ///-----------------------------------------------------
 
     ///---------------RULER----------------------------------
-    public static double rulerBaseInit = 0.985; // 0.95
+    public static double rulerBaseInit = 0.791; // 0.95
     public static double rulerAngleInit = 0.5;
 
 }

@@ -10,13 +10,13 @@ import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 public class Carousel {
     public static OneTap rBumper = new OneTap();
     public static long startTime = 0;
-    private static final double maxVelCarusel = 45;
+    private static final double maxVelCarusel = 50;
     public static void run() {
         if (rBumper.onPress(Gamepads.carusel())){
             startTime = System.currentTimeMillis();
         }
         if (Gamepads.carusel()){
-            if (System.currentTimeMillis() - startTime < 950) {
+            if (System.currentTimeMillis() - startTime < 750) {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel, AngleUnit.RADIANS);
             } else {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel * 3, AngleUnit.RADIANS);

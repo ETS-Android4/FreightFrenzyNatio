@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Debug.PositionsDebug;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Rumble;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
@@ -42,7 +43,6 @@ public class MAIN extends LinearOpMode {
         drive.setPoseEstimate(PoseStorage.startPosition);
 
         while (!isStopRequested() && opModeIsActive()) {
-
             Arm.checkUpOrBelow();
 
             if (!SafetyFeatures.isOk) {
@@ -51,6 +51,7 @@ public class MAIN extends LinearOpMode {
                 SafetyFeatures.setZeroPower();
                 continue;
             }
+            telemetry.addData("rulerPower", Hardware.rulerSpin.getPower());
             if (Gamepads.resetSlidersPosition()) {
                 telemetry.addData("pulaaaaa", "");
             }
@@ -65,9 +66,9 @@ public class MAIN extends LinearOpMode {
             telemetry.addData("ServoRulerAngle", Hardware.rulerAngle.getPosition());
             telemetry.addData("BOXANGLE!!!!!", Hardware.boxAngle.getPosition());
 
-            telemetry.addData("TMPosition", AutoRun.TMPosition);
-            telemetry.addData("RulerTargetAngle", AutoRun.rulerAngle);
-            telemetry.addData("RulerTargetBase", AutoRun.rulerBase);
+            telemetry.addData("TMPosition", PoseStorageTeleOp.TMPosition);
+            telemetry.addData("RulerTargetAngle", PoseStorageTeleOp.rulerAngle);
+            telemetry.addData("RulerTargetBase", PoseStorageTeleOp.rulerBase);
 
             PositionsDebug.GetCaruselInfo(false);
             Gamepads.update(gamepad1, gamepad2);

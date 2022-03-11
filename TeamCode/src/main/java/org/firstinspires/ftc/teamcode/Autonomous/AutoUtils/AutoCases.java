@@ -83,6 +83,7 @@ public abstract class AutoCases {
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive){
+        drive.followTrajectory(Trajectories.CollectDuckIntermediatyTrajectory(drive.getPoseEstimate()));
         drive.followTrajectorySequence(Trajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
     }
     public void placeDuck(SampleMecanumDriveCancelable drive){

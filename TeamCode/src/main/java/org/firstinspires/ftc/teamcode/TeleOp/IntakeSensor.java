@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.ConditionAction;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.TeleUtils;
 import org.firstinspires.ftc.teamcode.Utilities.DelayedAction;
@@ -26,22 +27,22 @@ public class IntakeSensor {
     private static final DelayedAction delayedActionBoxDown = new DelayedAction(300);
 
     //asteapta sa se ridice glisierele pentru a trece bratul pe sub (pozitia de shared)
-    private static final DelayedAction delayedActionGoUnderShared = new DelayedAction(500);
+    private static final ConditionAction conditionActionGoUnderShared = new ConditionAction();
 
     //asteapta sa se duca cutia intr o pozitie in care bratul poate sa treaca pe sub robot. apeleaza delayedActionReturnSlidersArmBelow pentru a cobori glisierele dupa trecerea bratului
     private static final DelayedAction delayedActionArmReturnBelow = new DelayedAction(350);
 
     // asteapta sa treaca bratul pe sub robot pentru coborarea glisierelor
-    private static final DelayedAction delayedActionReturnSlidersArmBelow = new DelayedAction(700); ///TODO:
+    private static final ConditionAction conditionActionReturnSlidersArmBelow = new ConditionAction();
 
     //se apeleaza call action a lasat cubul si aveam brartul sus pe nivelu 3 si glisierele putin ridicate. Asteapta ca bratul sa se intoarca de deasupra shipping hub
-    private static final DelayedAction delayedActionReturnSlidersArmUp = new DelayedAction(500);
+    private static final ConditionAction conditionActionReturnSlidersArmUp = new ConditionAction();
 
     //variabila updatata la fiecare frame
     public static double distance = 0;
 
     public static void detectTeleOp() {
-        if (delayedActionReturnSlidersArmUp.runAction()) {
+        if (conditionActionReturnSlidersArmUp.runAction(Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Up + 300)) {
             Hardware.slider_right.setTargetPosition(0);
             Hardware.slider_left.setTargetPosition(0);
         }
@@ -59,14 +60,15 @@ public class IntakeSensor {
             Hardware.slider_left.setTargetPosition(150);
             Hardware.boxAngle.setPosition(Positions.Box.Down);
         }
-        if (delayedActionGoUnderShared.runAction()) {
+        if (conditionActionGoUnderShared.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up))) {
             Arm.armPid.setTarget((int) Positions.Arm.Shared);
         }
         if (delayedActionArmReturnBelow.runAction()) {
             Arm.armPid.setTarget((int) Positions.Arm.Down - 30);
-            delayedActionReturnSlidersArmBelow.callAction();
+            //delayedActionReturnSlidersArmBelow.callAction();
+            conditionActionReturnSlidersArmBelow.callAction();
         }
-        if (delayedActionReturnSlidersArmBelow.runAction()) {
+        if (conditionActionReturnSlidersArmBelow.runAction(TeleUtils.isArmAtPosition((int) Positions.Arm.Down))) {
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.boxAngle.setPosition(Positions.Box.Mid);
@@ -87,13 +89,15 @@ public class IntakeSensor {
                 Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
                 Hardware.intake.setPower(-1);
                 Box.power = 1;
-                delayedActionGoUnderShared.callAction();
+                //delayedActionGoUnderShared.callAction();
+                conditionActionGoUnderShared.callAction();
             }
         }
         if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 9)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             Arm.armPid.setTarget((int) Positions.Arm.Down + 60);
-            delayedActionReturnSlidersArmUp.callAction();
+            //delayedActionReturnSlidersArmUp.callAction();
+            conditionActionReturnSlidersArmUp.callAction();
             stopOutake.callAction();
         }
         if (outtakeBelow.onActionRun(Arm.isBelow && TeleUtils.isBoxAtPosition(Positions.Box.Shared) && distance > 9)) {

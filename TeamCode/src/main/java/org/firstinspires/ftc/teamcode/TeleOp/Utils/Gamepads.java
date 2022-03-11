@@ -132,6 +132,8 @@ public class Gamepads {
 
         public static boolean armBelow() { return gp1X; }
 
+        public static boolean armIntermediary() {return gp1Touchpad;}
+
         //NOT IMPLEMENTED
         public static boolean manualIncrement(){ return false; }
 
@@ -198,6 +200,10 @@ public class Gamepads {
     public static double rulerExtend() { return gp2TrgLeft; }
 
     public static double rulerRetract() { return gp2TrgRight; }
+
+    public static boolean rulerExtendSlow() { return gp2TrgLeft > 0.01 && gp2B; }
+
+    public static boolean rulerRetractSlow() { return gp2TrgRight > 0.01 && gp2B; }
 
     public static boolean reInitRuler(){ return gp2Touchpad; }
 

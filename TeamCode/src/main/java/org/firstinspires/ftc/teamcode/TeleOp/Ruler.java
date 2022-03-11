@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareDeclarations;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 
 public class Ruler {
@@ -39,7 +40,7 @@ public class Ruler {
     public static void controlRulerDpad(LinearOpMode opMode) {
         power = Math.pow(timer.seconds() + 3.5, exponent);
 
-        if(Gamepads.reInitRuler()){
+        if (Gamepads.reInitRuler()) {
             Hardware.rulerAngle.setPosition(rulerAngleInit);
             Hardware.rulerBase.setPosition(rulerBaseInit);
         }
@@ -51,17 +52,25 @@ public class Ruler {
         //TODO onetap REFACTOOOOOR
         if (Gamepads.deliverTM()) {
 
-            if (Hardware.rulerAngle.getPosition() > 0)
-                Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() - 0.09);
+            if (Hardware.rulerAngle.getPosition() > PoseStorageTeleOp.rulerAnglePlace)
+                Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() - 0.06);
+            else {
+                Hardware.rulerAngle.setPosition(PoseStorageTeleOp.rulerAnglePlace);
+            }
 
-            if (Hardware.rulerBase.getPosition() < 0.65 && Hardware.rulerAngle.getPosition()<0.2)
-                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + 0.09);
+            if (Hardware.rulerBase.getPosition() < PoseStorageTeleOp.rulerBasePlace - 0.011 && Hardware.rulerAngle.getPosition() < 0.15) {
+                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + 0.02);
+            } else if (Hardware.rulerBase.getPosition() > PoseStorageTeleOp.rulerBasePlace + 0.011 && Hardware.rulerAngle.getPosition() < 0.15) {
+                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() - 0.02);
+            } else if (Hardware.rulerAngle.getPosition() < 0.2) {
+                Hardware.rulerBase.setPosition(PoseStorageTeleOp.rulerBasePlace);
+            }
 
         }
 
-        if (Gamepads.rulerAngleColectPose()){
-            Hardware.rulerAngle.setPosition(AutoRun.rulerAngle);
-            Hardware.rulerBase.setPosition(AutoRun.rulerBase);
+        if (Gamepads.rulerAngleColectPose()) {
+            Hardware.rulerAngle.setPosition(PoseStorageTeleOp.rulerAngle);
+            Hardware.rulerBase.setPosition(PoseStorageTeleOp.rulerBase);
         }
 
         if (Gamepads.rulerSlow()) {
@@ -108,9 +117,17 @@ public class Ruler {
             }
         }
         if (Gamepads.rulerExtend() > 0.01) {
-            Hardware.rulerSpin.setPower(Gamepads.rulerExtend());
+            double power = Math.pow(Gamepads.rulerExtend(), 5);
+            if (power < 0.15) {
+                power = 0.15;
+            }
+            Hardware.rulerSpin.setPower(power);
         } else if (Gamepads.rulerRetract() > 0.01) {
-            Hardware.rulerSpin.setPower(-Gamepads.rulerRetract());
+            double power = Math.pow(Gamepads.rulerRetract(), 5);
+            if (power < 0.15) {
+                power = 0.15;
+            }
+            Hardware.rulerSpin.setPower(-power);
         } else {
             Hardware.rulerSpin.setPower(0);
         }
@@ -120,31 +137,29 @@ public class Ruler {
         powerX = Math.pow(timerX.seconds() + 3.5, exponent);
         powerY = Math.pow(timerY.seconds() + 3.5, exponent);
 
-            if (Math.abs(Gamepads.joystickXRulerControl())>0.05) {
-                if (firstTimeX) {
-                    timerX.startTime();
-                    firstTimeX = false;
-                }
-                Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + powerX * speed * Math.pow(Gamepads.joystickXRulerControl(),1));
+        if (Math.abs(Gamepads.joystickXRulerControl()) > 0.05) {
+            if (firstTimeX) {
+                timerX.startTime();
+                firstTimeX = false;
             }
-            else {
-                firstTimeX = true;
-                timerX.reset();
-                powerX = 0;
-            }
+            Hardware.rulerBase.setPosition(Hardware.rulerBase.getPosition() + powerX * speed * Math.pow(Gamepads.joystickXRulerControl(), 1));
+        } else {
+            firstTimeX = true;
+            timerX.reset();
+            powerX = 0;
+        }
 
-            if (Math.abs(Gamepads.joystickYRulerControl())>0.05) {
-                if (firstTimeY) {
-                    timerY.startTime();
-                    firstTimeY = false;
-                }
-                Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() + powerY * speed * Math.pow(Gamepads.joystickYRulerControl(),1));
+        if (Math.abs(Gamepads.joystickYRulerControl()) > 0.05) {
+            if (firstTimeY) {
+                timerY.startTime();
+                firstTimeY = false;
             }
-            else {
-                firstTimeY = true;
-                timerY.reset();
-                power = 0;
-            }
+            Hardware.rulerAngle.setPosition(Hardware.rulerAngle.getPosition() + powerY * speed * Math.pow(Gamepads.joystickYRulerControl(), 1));
+        } else {
+            firstTimeY = true;
+            timerY.reset();
+            power = 0;
+        }
 
         if (Gamepads.rulerExtend() > 0.01) {
             Hardware.rulerSpin.setPower(Gamepads.rulerExtend());
