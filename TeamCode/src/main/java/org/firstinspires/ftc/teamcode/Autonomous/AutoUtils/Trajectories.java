@@ -25,6 +25,7 @@ public class Trajectories {
     public static Pose2d duckCollectPose;
     public static Pose2d caruselPositionWithDuckCollect;
     public static Pose2d duckCollectPoseIntermediary;
+    public static Pose2d shippingHubWarehouseSidePose;
     public static int incrementer = 0;
     ////
     public static Pose2d goOverPose;
@@ -47,8 +48,14 @@ public class Trajectories {
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5, Math.toRadians(90)));
         warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
         warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(57, -37, Math.toRadians(270)));
+<<<<<<< HEAD
         duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-56, -55, Math.toRadians(226)));
         duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-41, -46, Math.toRadians(226)));
+=======
+        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-55.71, -60, Math.toRadians(226)));
+        duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-50, -55, Math.toRadians(226)));
+        shippingHubWarehouseSidePose = PoseColorNormalizer.calculate(new Pose2d(-1, -41, Math.toRadians(125)));
+>>>>>>> 9152fa389e1581050276b26ffbdce72fa2c582b6
         /////
 
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -44, Math.toRadians(0)));
@@ -213,8 +220,27 @@ public class Trajectories {
                 })
                 .build();
     }
+<<<<<<< HEAD
     public static Trajectory CollectDuckIntermediatyTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
+=======
+
+    public static Trajectory ShippingHubTrajectoryWarehouseSide(Pose2d pose2d) {
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(shippingHubWarehouseSidePose)
+                .addTemporalMarker(1.2, () -> {
+                    Hardware.intake.setPower(1);
+                })
+                .addTemporalMarker(0.0, () -> {
+                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                })
+                .build();
+    }
+
+
+    public static TrajectorySequence CollectDuckTrajectory(Pose2d pose2d) {
+        return drive.trajectorySequenceBuilder(pose2d)
+>>>>>>> 9152fa389e1581050276b26ffbdce72fa2c582b6
                 .lineToLinearHeading(duckCollectPoseIntermediary)
                 .addTemporalMarker(0.1, () -> {
                     Hardware.boxAngle.setPosition(Positions.Box.Mid);
