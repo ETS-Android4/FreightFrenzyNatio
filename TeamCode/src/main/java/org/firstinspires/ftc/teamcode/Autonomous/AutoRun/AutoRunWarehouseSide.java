@@ -1,10 +1,14 @@
-package org.firstinspires.ftc.teamcode.Autonomous.AutoUtils;
+package org.firstinspires.ftc.teamcode.Autonomous.AutoRun;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.sun.source.doctree.StartElementTree;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;

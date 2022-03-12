@@ -1,46 +1,52 @@
-package org.firstinspires.ftc.teamcode.Autonomous.AutoUtils;
+package org.firstinspires.ftc.teamcode.Autonomous.AutoRun;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.sun.source.doctree.StartElementTree;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
-public class AutoRun implements Runnable {
+public class AutoRunCollectDuck implements Runnable {
 
     private SampleMecanumDriveCancelable sampleMecanumDrive;
     AutoCases detectedCase;
     private LinearOpMode opMode;
 
-    public AutoRun(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
+    public AutoRunCollectDuck(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         this.sampleMecanumDrive = sampleMecanumDrive;
         this.opMode = opMode;
     }
 
     @Override
     public void run() {
-
-        // PENTRU PUS
-        // 0 ANGLE
-        // BASE 0.65
-
-        switch (ImageDetection.duckPosition){
+        switch (ImageDetection.duckPosition) {
             case Left:
                 detectedCase = new A();
                 PoseStorageTeleOp.TMPosition = 1;
+                PoseStorageTeleOp.rulerAngle = 0.669;
+                PoseStorageTeleOp.rulerBase = 0.560;
                 break;
             case Middle:
                 detectedCase = new B();
                 PoseStorageTeleOp.TMPosition = 2;
+                PoseStorageTeleOp.rulerAngle = 0.58;
+                PoseStorageTeleOp.rulerBase = 0.536;
                 break;
             case Right:
                 detectedCase = new C();
                 PoseStorageTeleOp.TMPosition = 3;
+                PoseStorageTeleOp.rulerAngle = 0.48;
+                PoseStorageTeleOp.rulerBase = 0.545;
                 break;
         }
         PoseStorageTeleOp.setRulerPositions(PoseStorageTeleOp.TMPosition);
@@ -49,19 +55,16 @@ public class AutoRun implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
-        detectedCase.spinCarusel(sampleMecanumDrive);
-        PoseStorage.armPosition = detectedCase.getArmPosition();
-        detectedCase.goToShippingHub(sampleMecanumDrive);
-        //detectedCase.spinCarusel(sampleMecanumDrive);
-        opMode.sleep(350);
 
-        for (int i = 0; i < 2; i++) {
-            detectedCase.intake(sampleMecanumDrive);
-            opMode.sleep(500);
-            detectedCase.place(sampleMecanumDrive);
-            opMode.sleep(800);
-        }
-        detectedCase.park(sampleMecanumDrive);
+        detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
+        opMode.sleep(350);
+        detectedCase.spinCaruselWithDuckCollect(sampleMecanumDrive);
+        detectedCase.collectDuck(sampleMecanumDrive);
+        opMode.sleep(500);
+        detectedCase.placeDuck(sampleMecanumDrive);
+        opMode.sleep(350);
+        opMode.sleep(500);//sa nu dea robotu in delta
+        detectedCase.parkAfterDuck(sampleMecanumDrive);
     }
 }
 

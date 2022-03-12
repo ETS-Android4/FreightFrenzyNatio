@@ -5,12 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.TestAuto;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.TestAutoRun;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.TeleOp.Debug.ControlsDebug;
 import org.firstinspires.ftc.teamcode.TeleOp.Debug.PositionsDebug;
@@ -18,7 +13,6 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
-import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Rumble;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 

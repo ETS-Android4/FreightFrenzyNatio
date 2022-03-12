@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.Utilities.DelayedAction;
 
 public class PoseStorage {
+    public static AutoCase autoCase = AutoCase.FullRed;
     public static Pose2d startPosition =  PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
     public static Vector2d cameraPosition = new Vector2d(0,0);
     public static int armPosition = (int) Positions.Arm.Down;

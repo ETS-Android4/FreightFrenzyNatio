@@ -5,15 +5,9 @@ import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerAngleIn
 import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerBaseInit;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.HardwareDeviceCloseOnTearDown;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoRun;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
-import org.firstinspires.ftc.teamcode.Hardware.HardwareDeclarations;
-import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
