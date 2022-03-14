@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -17,12 +19,15 @@ public class SelectAuto extends LinearOpMode {
 
     OneTap oneTapUp = new OneTap();
     OneTap oneTapDown = new OneTap();
+    private final FtcDashboard ftcDashboard = FtcDashboard.getInstance();
 
-    public void selectedCaseDisplay(AutoCase autoCase) {
+    public void selectedCaseDisplay(AutoCase autoCase, TelemetryPacket telemetryPacket) {
         if (autoCase == PoseStorage.autoCase) {
             this.telemetry.addLine("*****" + PoseStorage.autoCase.name());
+            telemetryPacket.addLine("*****" + PoseStorage.autoCase.name());
         } else {
             this.telemetry.addLine(autoCase.name());
+            telemetryPacket.addLine(autoCase.name());
         }
     }
 
@@ -43,21 +48,26 @@ public class SelectAuto extends LinearOpMode {
             increment = 1;
         }
         PoseStorage.autoCase = getCaseFromOrdinal(
-                (PoseStorage.autoCase.ordinal() == 0 || PoseStorage.autoCase.ordinal() == AutoCase.values().length) ? PoseStorage.autoCase.ordinal() :
+                ((PoseStorage.autoCase.ordinal() == 0 && increment == -1) || (PoseStorage.autoCase.ordinal() == AutoCase.values().length - 1 && increment == 1)) ? PoseStorage.autoCase.ordinal() :
                         PoseStorage.autoCase.ordinal() + increment);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        waitForStart();
+
         while (!isStopRequested() && opModeIsActive()) {
 
             changeCase();
 
+            TelemetryPacket telemetryPacket = new TelemetryPacket();
             for (AutoCase autoCase : AutoCase.values()) {
-                selectedCaseDisplay(autoCase);
+                selectedCaseDisplay(autoCase, telemetryPacket);
             }
 
             telemetry.update();
+            ftcDashboard.sendTelemetryPacket(telemetryPacket);
         }
     }
 

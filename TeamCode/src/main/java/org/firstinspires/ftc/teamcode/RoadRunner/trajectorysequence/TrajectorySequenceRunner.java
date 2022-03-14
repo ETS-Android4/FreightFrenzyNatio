@@ -17,6 +17,7 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.util.NanoClock;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
@@ -200,7 +201,8 @@ public class TrajectorySequenceRunner {
 
         packet.put("BATTERY VOLTAGE", Hardware.batteryVoltage.getVoltage());
 
-        packet.put("Potentiometer voltage", Hardware.potentiometer.getVoltage());
+        packet.put(" BOX Potentiometer voltage", Hardware.boxPotentiometer.getVoltage());
+        packet.put(" ARM Potentiometer voltage", Hardware.potentiometer.getVoltage());
 
         packet.put("Intake sensor distance", Hardware.intakeSensor.getDistance(DistanceUnit.CM));
 

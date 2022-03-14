@@ -25,7 +25,7 @@ public class Arm {
     private static final ConditionAction conditionActionGoUnder = new ConditionAction();
     private static final ConditionAction conditionActionGoUnderShared = new ConditionAction();
     private static final ConditionAction conditionActionReturnSliders = new ConditionAction();
-    private static final DelayedAction delayedActionArmReturn = new DelayedAction(250);
+    private static final ConditionAction conditionalActionArmReturn = new ConditionAction();
     public static boolean armGoUpAfterColect = true;
     public static boolean isBelow = false;
     private static OneTap oneTap = new OneTap();
@@ -35,27 +35,26 @@ public class Arm {
         if (delayedActionBoxAngleChange.runAction()) {
             Hardware.boxAngle.setPosition(Positions.Box.Down);
         }
-        if (conditionActionGoUnder.runAction(TeleUtils.isSlidersAtPosition((int)Positions.Sliders.Up))) {
+        if (conditionActionGoUnder.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up) && Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up)) {
             armPid.setTarget((int) Positions.Arm.Below);
         }
-        if (conditionActionGoUnderShared.runAction(TeleUtils.isSlidersAtPosition((int)Positions.Sliders.Up))) {
+        if (conditionActionGoUnderShared.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up))) {
             armPid.setTarget((int) Positions.Arm.Shared);
         }
-        if(delayedActionArmReturn.runAction()){
-            armPid.setTarget((int)Positions.Arm.Down);
+        if (conditionalActionArmReturn.runAction(Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up)) {
+            armPid.setTarget((int) Positions.Arm.Down);
             conditionActionReturnSliders.callAction();
         }
-        if (conditionActionReturnSliders.runAction(TeleUtils.isArmAtPosition((int)Positions.Arm.Down))) {
+        if (conditionActionReturnSliders.runAction(TeleUtils.isArmAtPosition((int) Positions.Arm.Down))) {
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
             isBelow = false;
         }
         if (Gamepads.armDown()) { //coboara bratul
-            if (isBelow){
+            if (isBelow) {
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
-                delayedActionArmReturn.callAction();
-            }
-            else{
+                conditionalActionArmReturn.callAction();
+            } else {
                 armPid.setTarget((int) Positions.Arm.Down);
             }
             Hardware.boxAngle.setPosition(Positions.Box.Up);
@@ -73,11 +72,10 @@ public class Arm {
             isBelow = true;
             conditionActionGoUnderShared.callAction();
         } else if (Gamepads.armUp()) {//urca bratul
-            if (isBelow){
+            if (isBelow) {
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
-                delayedActionArmReturn.callAction();
-            }
-            else{
+                conditionalActionArmReturn.callAction();
+            } else {
                 armPid.setTarget((int) Positions.Arm.Up);
             }
             armGoUpAfterColect = true;
@@ -99,12 +97,11 @@ public class Arm {
             Box.power = 1;
             isBelow = true;
             conditionActionGoUnder.callAction();
-        } else if (Gamepads.armIntermediary()){
-            if (isBelow){
+        } else if (Gamepads.armIntermediary()) {
+            if (isBelow) {
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
-                delayedActionArmReturn.callAction();
-            }
-            else{
+                conditionalActionArmReturn.callAction();
+            } else {
                 armPid.setTarget((int) Positions.Arm.Down - 400);
             }
             Hardware.boxAngle.setPosition(Positions.Box.Up);
@@ -114,9 +111,10 @@ public class Arm {
             }
         }
     }
-    public static void checkUpOrBelow(){
-        if(oneTap.onPress(Gamepads.changeArmGoUpAfterCollect())){
-            Arm.armGoUpAfterColect=!Arm.armGoUpAfterColect;
+
+    public static void checkUpOrBelow() {
+        if (oneTap.onPress(Gamepads.changeArmGoUpAfterCollect())) {
+            Arm.armGoUpAfterColect = !Arm.armGoUpAfterColect;
         }
     }
 

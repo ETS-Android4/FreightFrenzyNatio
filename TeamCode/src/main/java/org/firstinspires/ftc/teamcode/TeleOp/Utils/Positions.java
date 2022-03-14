@@ -19,6 +19,7 @@ public class Positions {
 
     ///---------------BOX----------------------------------
     public static GenericPosition Box = new GenericPosition(0.02, 0.19, 0.5, 0.4, 0.2);
+    public static GenericPosition PotentiometerBox = new GenericPosition(0.18, 0.5, 1.516, 1.4, 0.167);
     ///-----------------------------------------------------
 
     ///---------------RULER----------------------------------
