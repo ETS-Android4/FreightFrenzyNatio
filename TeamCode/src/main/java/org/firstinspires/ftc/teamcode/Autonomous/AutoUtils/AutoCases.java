@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.AutoUtils;
 
+import static org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories.CollectDuckTrajectory;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 
@@ -84,7 +86,7 @@ public abstract class AutoCases {
 
     public void collectDuck(SampleMecanumDriveCancelable drive){
         drive.followTrajectory(Trajectories.CollectDuckIntermediatyTrajectory(drive.getPoseEstimate()));
-        drive.followTrajectorySequence(Trajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectorySequence(CollectDuckTrajectory(drive.getPoseEstimate()));
     }
     public void placeDuck(SampleMecanumDriveCancelable drive){
         drive.followTrajectory(Trajectories.PlaceDuckTrajectory(drive.getPoseEstimate()));

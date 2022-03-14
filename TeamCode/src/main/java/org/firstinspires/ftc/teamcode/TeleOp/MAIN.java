@@ -64,6 +64,8 @@ public class MAIN extends LinearOpMode {
             telemetry.addData("RulerTargetAngle", PoseStorageTeleOp.rulerAngle);
             telemetry.addData("RulerTargetBase", PoseStorageTeleOp.rulerBase);
 
+            telemetry.addData("BoxANGLE POTENTIOMETER", Hardware.boxPotentiometer.getVoltage());
+
             PositionsDebug.GetCaruselInfo(false);
             Gamepads.update(gamepad1, gamepad2);
             Carousel.run();

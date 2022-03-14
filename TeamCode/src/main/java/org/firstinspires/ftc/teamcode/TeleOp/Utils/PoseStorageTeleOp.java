@@ -11,7 +11,6 @@ public class PoseStorageTeleOp {
     public static double rulerBasePlace;
 
     public static void setRulerPositions(int TMPosition) {
-        //TODO: POSITIONS FOR BLUE CASE
         if (PoseColorNormalizer.getColorCase()== PoseColorNormalizer.Color.RED) {
             if (TMPosition == 1) {
                 rulerBase = 0.52;
@@ -25,6 +24,17 @@ public class PoseStorageTeleOp {
             }
             rulerAnglePlace = 0.02;
             rulerBasePlace = 0.42;
+        } else {
+            if (TMPosition == 1) {
+                rulerBase = 0.54;
+                rulerAngle = 0.72;
+            } else if (TMPosition == 2) {
+                rulerBase = 0.61;
+                rulerAngle = 0.626;
+            } else if (TMPosition == 3) {
+                rulerBase = 0.65;
+                rulerAngle = 0.65 ;
+            }
         }
 
 

@@ -47,7 +47,7 @@ public class IntakeSensor {
             Hardware.slider_left.setTargetPosition(0);
         }
         if (lowPowerIntake.runAction()) {
-            Hardware.intake.setPower(-0.1);
+            Hardware.intake.setPower(-0.2);
             Box.power = 0;
         }
         if (stopOutake.runAction()) {
@@ -76,7 +76,7 @@ public class IntakeSensor {
             Box.power = 1;
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
-        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {
+        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 7)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             if (Arm.armGoUpAfterColect) {
                 Arm.armPid.setTarget((int) Positions.Arm.Up);
@@ -93,14 +93,14 @@ public class IntakeSensor {
                 conditionActionGoUnderShared.callAction();
             }
         }
-        if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 9)) {
+        if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 8)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             Arm.armPid.setTarget((int) Positions.Arm.Down + 60);
             //delayedActionReturnSlidersArmUp.callAction();
             conditionActionReturnSlidersArmUp.callAction();
             stopOutake.callAction();
         }
-        if (outtakeBelow.onActionRun(Arm.isBelow && TeleUtils.isBoxAtPosition(Positions.Box.Shared) && distance > 9)) {
+        if (outtakeBelow.onActionRun(Arm.isBelow && TeleUtils.isBoxAtPosition(Positions.Box.Shared) && distance > 11)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             delayedActionArmReturnBelow.callAction();
             stopOutake.callAction();

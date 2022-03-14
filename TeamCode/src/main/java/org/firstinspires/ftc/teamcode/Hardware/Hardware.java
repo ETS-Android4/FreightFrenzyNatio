@@ -17,6 +17,7 @@ public class Hardware extends HardwareDeclarations {
         back_left = getDc("back_left");
 
         potentiometer = getAnalogInput("potentiometer");
+        boxPotentiometer = getAnalogInput("boxPotentiometer");
 
         rulerBase = getServo("rulerLateral");
         rulerAngle = getServo("rulerLongitudinal");

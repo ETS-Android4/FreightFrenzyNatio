@@ -30,11 +30,12 @@ public class Box {
             power = 1;
         }
         if (startOuttake.runAction()){
-            Hardware.intake.setPower(0.25);
+            Hardware.intake.setPower(1);
+            Hardware.intake.setPower(0.2);
             power = 1;
         }
         if (Gamepads.releaseFreight()) {
-            Hardware.intake.setPower(0);
+//            Hardware.intake.setPower(0);
             power = 0;
             if (Hardware.potentiometer.getVoltage()*1000 > Positions.Arm.Below - 100){
                 Hardware.boxAngle.setPosition(Positions.Box.Below);

@@ -23,6 +23,7 @@ public class HardwareDeclarations {
 
     public static CRServo intake;
     public static Servo boxAngle;
+    public static AnalogInput boxPotentiometer;
 
     public static Servo rulerBase, rulerAngle;
     public static CRServo rulerSpin;

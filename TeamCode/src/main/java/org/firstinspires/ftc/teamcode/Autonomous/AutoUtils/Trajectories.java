@@ -27,7 +27,6 @@ public class Trajectories {
     public static Pose2d duckCollectPoseIntermediary;
     public static Pose2d shippingHubWarehouseSidePose;
     public static int incrementer = 0;
-    ////
     public static Pose2d goOverPose;
     public static Pose2d warehouseOverPose;
 
@@ -48,6 +47,7 @@ public class Trajectories {
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5, Math.toRadians(90)));
         warehouseParkSharedPose1 = PoseColorNormalizer.calculate(new Pose2d(43, -37, Math.toRadians(0)));
         warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(57, -37, Math.toRadians(270)));
+
         duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-55.71, -60, Math.toRadians(226)));
         duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-50, -55, Math.toRadians(226)));
         shippingHubWarehouseSidePose = PoseColorNormalizer.calculate(new Pose2d(-1, -41, Math.toRadians(125)));
@@ -55,7 +55,6 @@ public class Trajectories {
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -44, Math.toRadians(0)));
         warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(53, -43, Math.toRadians(0)));
 
-        ////
         incrementer = 0;
     }
 
@@ -154,7 +153,7 @@ public class Trajectories {
 
     public static Trajectory ReturnBackTrajectory2(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d, true)
-                .lineToLinearHeading(shippingHubReturnPose.plus(new Pose2d(1.5 * incrementer, 1 * incrementer, 0)))
+                .lineToLinearHeading(shippingHubReturnPose.plus(new Pose2d(1.5 * incrementer, incrementer, 0)))
                 .addDisplacementMarker(() -> {
                     Hardware.intake.setPower(0.35);
                 })
@@ -214,9 +213,11 @@ public class Trajectories {
                 })
                 .build();
     }
+
     public static Trajectory CollectDuckIntermediatyTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d).build();
     }
+
     public static Trajectory ShippingHubTrajectoryWarehouseSide(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubWarehouseSidePose)
@@ -230,7 +231,6 @@ public class Trajectories {
     }
 
 
-
     public static TrajectorySequence CollectDuckTrajectory(Pose2d pose2d) {
         return drive.trajectorySequenceBuilder(pose2d)
                 .lineToLinearHeading(duckCollectPose)
@@ -238,7 +238,6 @@ public class Trajectories {
                 .turn(Math.toRadians(50), 5, 4)
                 .build();
     }
-
 
 
     public static Trajectory PlaceDuckTrajectory(Pose2d pose2d) {
