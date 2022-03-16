@@ -13,41 +13,38 @@ public class Box {
     public static DelayedAction startIntake = new DelayedAction(100);
     public static DelayedAction startOuttake = new DelayedAction(300);
 
-    public static OneTap boxAngleAdjustPlus = new OneTap();
-    public static OneTap boxAngleAdjustMinus = new OneTap();
+    public static OneTap boxAngleAdjust = new OneTap();
 
     public static void toPosition() {
-        if (boxAngleAdjustPlus.onPress(Gamepads.boxSharedAdjustPlus())){
-            Positions.Box.Shared+=0.03;
-            Hardware.boxAngle.setPosition(Positions.Box.Shared);
-        }
-        if (boxAngleAdjustMinus.onPress(Gamepads.boxSharedAdjustMinus())){
-            Positions.Box.Shared-=0.03;
+        if (boxAngleAdjust.onPress(Gamepads.boxSharedAdjust())) {
+            if (Positions.Box.Shared == Positions.basePoseShared) {
+                Positions.Box.Shared = Positions.basePoseShared + 0.1;
+            }
+            else{
+                Positions.Box.Shared = Positions.basePoseShared;
+            }
             Hardware.boxAngle.setPosition(Positions.Box.Shared);
         }
         if (startIntake.runAction()) {
             Hardware.intake.setPower(-1);
             power = 1;
         }
-        if (startOuttake.runAction()){
-            Hardware.intake.setPower(1);
+        if (startOuttake.runAction()) {
             Hardware.intake.setPower(0.2);
             power = 1;
         }
         if (Gamepads.releaseFreight()) {
 //            Hardware.intake.setPower(0);
             power = 0;
-            if (Hardware.potentiometer.getVoltage()*1000 > Positions.Arm.Below - 100){
+            if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Below - 100) {
                 Hardware.boxAngle.setPosition(Positions.Box.Below);
                 Hardware.intake.setPower(1);
                 power = 1;
-            }
-            else if (Hardware.potentiometer.getVoltage()*1000 > Positions.Arm.Shared - 200){
+            } else if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Shared - 200) {
                 Hardware.boxAngle.setPosition(Positions.Box.Shared);
-                Hardware.intake.setPower(1);
+                Hardware.intake.setPower(0.5); //viteza outtake shared
                 power = 1;
-            }
-            else{
+            } else {
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
             }
             if ((int) (Hardware.potentiometer.getVoltage() * 1000) < Positions.Arm.Mid + 300) {

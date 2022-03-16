@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 public class TeleUtils {
 
     private static final int armThreshold = 100;
-    private static final int slidersThreshold = 30;
+    private static final int slidersThreshold = 40;
 
     public static boolean isArmAtPosition(int position) {
         return Math.abs((int) (Hardware.potentiometer.getVoltage() * 1000) - position) <= armThreshold;

@@ -16,8 +16,8 @@ public class AutoUtil {
         }
 
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - startTime <= 1750) {
-            if (System.currentTimeMillis() - startTime < 1000) {
+        while (System.currentTimeMillis() - startTime <= 2300) {
+            if (System.currentTimeMillis() - startTime <= 2300) {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel, AngleUnit.RADIANS);
             } else {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel * 3, AngleUnit.RADIANS);

@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.*;
 
+import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -28,6 +30,7 @@ public class Hardware extends HardwareDeclarations {
         arm = getDc("arm");
 
         intake = getCRServo("intake");
+        ((CRServoImplEx)(intake)).setPwmRange(new PwmControl.PwmRange(1000,2000));
         boxAngle = getServo("boxAngle");
 
         carusel = getDc("carusel");

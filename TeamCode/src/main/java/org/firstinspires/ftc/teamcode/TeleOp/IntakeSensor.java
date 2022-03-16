@@ -64,7 +64,7 @@ public class IntakeSensor {
             Arm.armPid.setTarget((int) Positions.Arm.Shared);
         }
         if (delayedActionArmReturnBelow.runAction()) {
-            Arm.armPid.setTarget((int) Positions.Arm.Down - 30);
+            Arm.armPid.setTarget((int) Positions.Arm.Down);
             //delayedActionReturnSlidersArmBelow.callAction();
             conditionActionReturnSlidersArmBelow.callAction();
         }
@@ -76,7 +76,7 @@ public class IntakeSensor {
             Box.power = 1;
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
-        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 7)) {
+        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 7.5)) {
             Hardware.boxAngle.setPosition(Positions.Box.Up);
             if (Arm.armGoUpAfterColect) {
                 Arm.armPid.setTarget((int) Positions.Arm.Up);
@@ -87,7 +87,7 @@ public class IntakeSensor {
                 Hardware.boxAngle.setPosition(Positions.Box.Up);
                 Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up + 15);
                 Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
-                Hardware.intake.setPower(-1);
+                Hardware.intake.setPower(-0.2);
                 Box.power = 1;
                 //delayedActionGoUnderShared.callAction();
                 conditionActionGoUnderShared.callAction();

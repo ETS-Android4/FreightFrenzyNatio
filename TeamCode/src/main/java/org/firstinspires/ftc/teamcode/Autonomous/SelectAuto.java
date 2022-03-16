@@ -55,6 +55,8 @@ public class SelectAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        telemetry.addLine("Select autonomous program using gamepad 1 DPAD_UP and DPAD_DOWN");
+        telemetry.update();
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {

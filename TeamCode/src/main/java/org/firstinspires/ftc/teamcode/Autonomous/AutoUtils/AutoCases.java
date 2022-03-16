@@ -3,11 +3,8 @@ package org.firstinspires.ftc.teamcode.Autonomous.AutoUtils;
 import static org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories.CollectDuckTrajectory;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.arcrobotics.ftclib.geometry.Vector2d;
 
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
@@ -25,7 +22,8 @@ public abstract class AutoCases {
     }
 
     public void spinCaruselWithDuckCollect(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(Trajectories.CaruselTrajectoryWithDuckCollect(drive.getPoseEstimate()));
+        drive.followTrajectorySequence(Trajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
+        drive.followTrajectory(Trajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
         PoseStorage.armPosition=(int)Positions.Arm.Down;
         Hardware.boxAngle.setPosition(Positions.Box.Up);
         long firstTime = System.currentTimeMillis();

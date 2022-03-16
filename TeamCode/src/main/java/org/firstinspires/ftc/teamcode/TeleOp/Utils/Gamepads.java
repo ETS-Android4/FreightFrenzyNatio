@@ -151,9 +151,7 @@ public class Gamepads {
 
         public static boolean overrideDistanceSensor(){ return gp1Back; }
 
-        public static boolean boxSharedAdjustPlus(){return gp1RightStickDown;}
-
-        public static boolean boxSharedAdjustMinus(){return gp1LeftStickDown;}
+        public static boolean boxSharedAdjust(){return gp1DpRight;}
 
         public static boolean boxCollect() {
             return gp2A && !gp2Start;

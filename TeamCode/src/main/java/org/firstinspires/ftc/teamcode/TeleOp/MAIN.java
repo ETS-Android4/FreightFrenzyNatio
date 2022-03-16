@@ -45,6 +45,8 @@ public class MAIN extends LinearOpMode {
                 SafetyFeatures.setZeroPower();
                 continue;
             }
+            telemetry.addData("intakePower", Hardware.intake.getPower());
+            telemetry.addData("intakePower state variable", Box.power);
             telemetry.addData("rulerPower", Hardware.rulerSpin.getPower());
             if (Gamepads.resetSlidersPosition()) {
                 telemetry.addData("pulaaaaa", "");
