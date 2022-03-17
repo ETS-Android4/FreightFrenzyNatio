@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
@@ -29,9 +28,8 @@ public class MainAuto extends LinearOpMode {
             PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.BLUE);
         }
 
-        Trajectories.InitTrajectories();
         sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
-        Trajectories.setDrive(sampleMecanumDrive);
+
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 

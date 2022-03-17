@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.AutoRun;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.AutoRunCollectDuck;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.AutoRunHalf;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.AutoRunWarehouseSide;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.Full.AutoRunFull;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck.AutoRunCollectDuck;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.Half.AutoRunHalf;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.AutoRunWarehouseSide;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
@@ -75,7 +75,7 @@ public class SelectAuto extends LinearOpMode {
 
     public static Runnable getAutoFromEnum(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         if (PoseStorage.autoCase == AutoCase.FullRed || PoseStorage.autoCase == AutoCase.FullBlue) {
-            return new AutoRun(sampleMecanumDrive, opMode);
+            return new AutoRunFull(sampleMecanumDrive, opMode);
         } else if (PoseStorage.autoCase == AutoCase.CollectDuckRed || PoseStorage.autoCase == AutoCase.CollectDuckBlue) {
             return new AutoRunCollectDuck(sampleMecanumDrive, opMode);
         } else if (PoseStorage.autoCase == AutoCase.HalfRed || PoseStorage.autoCase == AutoCase.HalfBlue) {

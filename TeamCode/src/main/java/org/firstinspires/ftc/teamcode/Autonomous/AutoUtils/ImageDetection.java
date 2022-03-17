@@ -107,8 +107,6 @@ public class  ImageDetection {
             }
 
             updatePosition(position);
-            Hardware.telemetry.addData("CaruselPositionX", Trajectories.caruselPosition);
-            Hardware.telemetry.addData("gapPose", Trajectories.gapPose);
             Hardware.telemetry.addData("startPose", PoseStorage.startPosition);
             Hardware.telemetry.addData("Left Green Amount", leftMeanGreen);
             Hardware.telemetry.addData("Middle Green Amount", middleMeanGreen);

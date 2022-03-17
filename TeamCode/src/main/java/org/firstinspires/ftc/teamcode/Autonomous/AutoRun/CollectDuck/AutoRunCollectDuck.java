@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.Autonomous.AutoRun;
+package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.sun.source.doctree.StartElementTree;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
@@ -25,6 +24,8 @@ public class AutoRunCollectDuck implements Runnable {
     public AutoRunCollectDuck(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         this.sampleMecanumDrive = sampleMecanumDrive;
         this.opMode = opMode;
+        CollectDuckTrajectories.setDrive(sampleMecanumDrive);
+        CollectDuckTrajectories.InitTrajectories();
     }
 
     @Override
@@ -54,17 +55,50 @@ public class AutoRunCollectDuck implements Runnable {
         ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
-        Trajectories.shippingHubPose = detectedCase.getShippingHubPose();
+        CollectDuckTrajectories.shippingHubPose = detectedCase.getShippingHubPose();
 
-        detectedCase.goToShippingHubCaruselSide(sampleMecanumDrive);
+        goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
-        detectedCase.spinCaruselWithDuckCollect(sampleMecanumDrive);
-        detectedCase.collectDuck(sampleMecanumDrive);
+        spinCaruselWithDuckCollect(sampleMecanumDrive);
+        collectDuck(sampleMecanumDrive);
         opMode.sleep(500);
-        detectedCase.placeDuck(sampleMecanumDrive);
+        placeDuck(sampleMecanumDrive);
         opMode.sleep(350);
         opMode.sleep(500);//sa nu dea robotu in delta
-        detectedCase.parkAfterDuck(sampleMecanumDrive);
+        parkAfterDuck(sampleMecanumDrive);
     }
+
+    public void goToShippingHubCaruselSide(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectory(CollectDuckTrajectories.ShippingHubTrajectoryCaruselSide(drive.getPoseEstimate()));
+    }
+
+    public void spinCaruselWithDuckCollect(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectorySequence(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
+        drive.followTrajectory(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
+        PoseStorage.armPosition = (int) Positions.Arm.Down;
+        Hardware.boxAngle.setPosition(Positions.Box.Up);
+        long firstTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - firstTime < 300) {
+        }
+        AutoUtil.spinCarusel();
+    }
+
+    public void collectDuck(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectory(CollectDuckTrajectories.CollectDuckIntermediatyTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectorySequence(CollectDuckTrajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
+    }
+
+    public void placeDuck(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectory(CollectDuckTrajectories.PlaceDuckTrajectory(drive.getPoseEstimate()));
+    }
+
+    public void parkAfterDuck(SampleMecanumDriveCancelable drive) {
+        drive.followTrajectory(CollectDuckTrajectories.GoOverBarriers1(drive.getPoseEstimate()));
+        drive.followTrajectory(CollectDuckTrajectories.GoOverBarriers2(drive.getPoseEstimate()));
+        drive.followTrajectory(CollectDuckTrajectories.sharedWarehouseTrajectory2(drive.getPoseEstimate()));
+    }
+
 }
+
+
 
