@@ -33,9 +33,11 @@ public class Hardware extends HardwareDeclarations {
         arm = getDc("arm");
 
         intake = getCRServo("intake");
-        ((CRServoImplEx)(intake)).setPwmRange(new PwmControl.PwmRange(1000,2000));
+        ((CRServoImplEx) (intake)).setPwmRange(new PwmControl.PwmRange(1000, 2000));
         boxAngle = getServo("boxAngle");
-        ((ServoImplEx)(boxAngle)).setPwmRange(new PwmControl.PwmRange(500,2500));
+        boxAngleMirror = getServo("boxAngleMirror");
+        ((ServoImplEx) (boxAngle)).setPwmRange(new PwmControl.PwmRange(500, 2500));
+        ((ServoImplEx) (boxAngleMirror)).setPwmRange(new PwmControl.PwmRange(500, 2500));
 
 
         carusel = getDc("carusel");
@@ -71,7 +73,7 @@ public class Hardware extends HardwareDeclarations {
 
     }
 
-    public static void autoInit(HardwareMap hm, Telemetry telemetry){
+    public static void autoInit(HardwareMap hm, Telemetry telemetry) {
         HardwareDeclarations.telemetry = telemetry;
         HardwareDeclarations.hardwareMap = hm;
         HardwareDeclarations.telemetry.addLine("Initializing robot...");

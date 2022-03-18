@@ -22,7 +22,7 @@ public class HardwareDeclarations {
     public static DcMotor arm;
 
     public static CRServo intake;
-    public static Servo boxAngle;
+    protected static Servo boxAngle,boxAngleMirror;
     public static AnalogInput boxPotentiometer;
 
     public static Servo rulerBase, rulerAngle;

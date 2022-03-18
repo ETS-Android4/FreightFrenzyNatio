@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class CollectDuckTrajectories {
@@ -58,7 +59,7 @@ public class CollectDuckTrajectories {
                     Hardware.intake.setPower(-1);
                 })
                 .addTemporalMarker(0.2, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.8, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down + 100;
@@ -91,7 +92,7 @@ public class CollectDuckTrajectories {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.7, () -> {
-                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                    BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
     }
@@ -106,7 +107,7 @@ public class CollectDuckTrajectories {
     public static TrajectorySequence CollectDuckTrajectory(Pose2d pose2d) {
         return drive.trajectorySequenceBuilder(pose2d)
                 .addTemporalMarker(0, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Mid);
+                    BoxAngle.setPosition(Positions.Box.Mid);
                     Hardware.intake.setPower(-1);
                 })
                 .lineToLinearHeading(duckCollectPose)
@@ -123,7 +124,7 @@ public class CollectDuckTrajectories {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(placeDuckPose)
                 .addTemporalMarker(0, ()->{
-                    Hardware.boxAngle.setPosition(Positions.Box.Mid + 0.25);
+                    BoxAngle.setPosition(Positions.Box.Mid + 0.25);
                 })
                 .addTemporalMarker(0.2, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down - 510;
@@ -139,7 +140,7 @@ public class CollectDuckTrajectories {
                 .lineToSplineHeading(goOverPose)
                 .addDisplacementMarker(() -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down - 200;
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                     Hardware.intake.setPower(0);
                 })
                 .build();

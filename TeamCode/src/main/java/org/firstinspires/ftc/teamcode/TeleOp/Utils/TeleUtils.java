@@ -12,7 +12,7 @@ public class TeleUtils {
     }
 
     public static boolean isBoxAtPosition(double position) {
-        return (int) (Hardware.boxAngle.getPosition() * 100) == (int) (position * 100);
+        return (int) (BoxAngle.getPositionBoxAngle() * 100) == (int) (position * 100);
     }
 
     public static boolean isSlidersAtPosition(int position) {

@@ -7,7 +7,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
 import org.firstinspires.ftc.teamcode.TeleOp.Arm;
+import org.firstinspires.ftc.teamcode.TeleOp.Box;
 import org.firstinspires.ftc.teamcode.TeleOp.MAIN;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 
 public class PositionsDebug {
 
@@ -58,7 +60,8 @@ public class PositionsDebug {
     }
 
     public static void GetBoxPosition() {
-        Hardware.telemetry.addData("Current box position is: ", Hardware.boxAngle.getPosition());
+        Hardware.telemetry.addData("Current boxAngle position is: ", BoxAngle.getPositionBoxAngle());
+        Hardware.telemetry.addData("Current boxAngleMirror position is: ", BoxAngle.getPositionBoxAngleMirror());
     }
 
 

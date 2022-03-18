@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.TeleOp.Debug.ControlsDebug;
 import org.firstinspires.ftc.teamcode.TeleOp.Debug.PositionsDebug;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -48,9 +49,10 @@ public class MAIN extends LinearOpMode {
                 continue;
             }
 
-            telemetry.addData("pwm coefs low", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseLower);
-            telemetry.addData("pwm coefs up", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseUpper);
-            telemetry.addData("boxposition", Hardware.boxAngle.getPosition());
+            //telemetry.addData("pwm coefs low", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseLower);
+            //telemetry.addData("pwm coefs up", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseUpper);
+            telemetry.addData("boxposition", BoxAngle.getPositionBoxAngle());
+            telemetry.addData("boxpositionMirror", BoxAngle.getPositionBoxAngleMirror());
             telemetry.addData("intakePower", Hardware.intake.getPower());
             telemetry.addData("intakePower state variable", Box.power);
             telemetry.addData("rulerPower", Hardware.rulerSpin.getPower());
@@ -66,7 +68,7 @@ public class MAIN extends LinearOpMode {
             telemetry.addData("front_right", Hardware.front_right.getCurrentPosition());
             telemetry.addData("ServoRulerBase", Hardware.rulerBase.getPosition());
             telemetry.addData("ServoRulerAngle", Hardware.rulerAngle.getPosition());
-            telemetry.addData("BOXANGLE!!!!!", Hardware.boxAngle.getPosition());
+            //telemetry.addData("BOXANGLE!!!!!", Hardware.boxAngle.getPosition());
 
             telemetry.addData("TMPosition", PoseStorageTeleOp.TMPosition);
             telemetry.addData("RulerTargetAngle", PoseStorageTeleOp.rulerAngle);

@@ -6,10 +6,8 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class HalfTrajectories {
@@ -56,7 +54,7 @@ public class HalfTrajectories {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.0, () -> {
-                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                    BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
     }
@@ -66,7 +64,7 @@ public class HalfTrajectories {
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15

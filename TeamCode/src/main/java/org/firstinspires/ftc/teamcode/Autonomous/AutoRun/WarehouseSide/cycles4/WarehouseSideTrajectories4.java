@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class WarehouseSideTrajectories4 {
                         SampleMecanumDrive.getAccelerationConstraint(90))
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.3, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
@@ -77,7 +78,7 @@ public class WarehouseSideTrajectories4 {
                         SampleMecanumDrive.getVelocityConstraint(85, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(85))
                 .addTemporalMarker(0, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Mid - 0.01);
+                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
                 })
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(-1);
@@ -95,11 +96,11 @@ public class WarehouseSideTrajectories4 {
                 .lineToLinearHeading(gapPose, SampleMecanumDrive.getVelocityConstraint(75, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(70))
                 .addTemporalMarker(0, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })
@@ -139,7 +140,7 @@ public class WarehouseSideTrajectories4 {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.0, () -> {
-                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                    BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
     }

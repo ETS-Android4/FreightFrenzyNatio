@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.ConditionAction;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.TeleUtils;
@@ -72,7 +73,7 @@ public class IntakeSensor {
             //se ridica glisierele pentru a ajunge in pozitita de pus sus
             Hardware.slider_right.setTargetPosition(300);
             Hardware.slider_left.setTargetPosition(300);
-            Hardware.boxAngle.setPosition(Positions.Box.Down);
+            BoxAngle.setPosition(Positions.Box.Down);
         }
         if (conditionActionGoUnderShared.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up)
                 && Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up)) { //TODO: asteapta si box
@@ -86,13 +87,13 @@ public class IntakeSensor {
         if (conditionActionReturnSlidersArmBelow.runAction(TeleUtils.isArmAtPosition((int) Positions.Arm.Down))) {
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
-            Hardware.boxAngle.setPosition(Positions.Box.Mid);
+            BoxAngle.setPosition(Positions.Box.Mid);
             Hardware.intake.setPower(-1);
             Box.power = 1;
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
         if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             if (Arm.armGoUpAfterColect) {
                 Arm.armPid.setTarget((int) Positions.Arm.Up);
                 delayedActionBoxDown.callAction();
@@ -108,14 +109,14 @@ public class IntakeSensor {
             }
         }
         if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 9)) {
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             Arm.armPid.setTarget((int) Positions.Arm.Down + 60);
             //delayedActionReturnSlidersArmUp.callAction();
             conditionActionReturnSlidersArmUp.callAction();
             stopOutake.callAction();
         }
         if (outtakeBelow.onActionRun(Arm.isBelow && TeleUtils.isBoxAtPosition(Positions.Box.Shared) && distance > 11)) {
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             delayedActionArmReturnBelow.callAction();
             stopOutake.callAction();
         }

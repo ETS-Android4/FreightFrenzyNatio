@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
-import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
@@ -76,7 +76,7 @@ public class AutoRunCollectDuck implements Runnable {
         drive.followTrajectorySequence(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
         drive.followTrajectory(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
         PoseStorage.armPosition = (int) Positions.AutoArm.Down;
-        Hardware.boxAngle.setPosition(Positions.Box.Up);
+        BoxAngle.setPosition(Positions.Box.Up);
         long firstTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - firstTime < 300) {
         }

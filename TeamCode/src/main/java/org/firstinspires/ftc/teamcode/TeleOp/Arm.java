@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.ConditionAction;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
@@ -33,7 +34,7 @@ public class Arm {
     public static void toPosition() {
         ((DcMotorEx) Hardware.arm).setVelocity(armPid.control((int) (Hardware.potentiometer.getVoltage() * 1000)), AngleUnit.RADIANS);
         if (delayedActionBoxAngleChange.runAction()) {
-            Hardware.boxAngle.setPosition(Positions.Box.Down);
+            BoxAngle.setPosition(Positions.Box.Down);
         }
         if (conditionActionGoUnder.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up) && Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up)) {
             armPid.setTarget((int) Positions.Arm.Below);
@@ -52,19 +53,19 @@ public class Arm {
         }
         if (Gamepads.armDown()) { //coboara bratul
             if (isBelow) {
-                Hardware.boxAngle.setPosition(Positions.Box.Up);
+                BoxAngle.setPosition(Positions.Box.Up);
                 conditionalActionArmReturn.callAction();
             } else {
                 armPid.setTarget((int) Positions.Arm.Down);
             }
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             if (armGoUpAfterColect) {
                 Hardware.slider_left.setTargetPosition(0);
                 Hardware.slider_right.setTargetPosition(0);
             }
         } else if (Gamepads.armShared()) { // mid bratul
             armGoUpAfterColect = false;
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up + 15);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
             Hardware.intake.setPower(-1);
@@ -73,7 +74,7 @@ public class Arm {
             conditionActionGoUnderShared.callAction();
         } else if (Gamepads.armUp()) {//urca bratul
             if (isBelow) {
-                Hardware.boxAngle.setPosition(Positions.Box.Up);
+                BoxAngle.setPosition(Positions.Box.Up);
                 conditionalActionArmReturn.callAction();
             } else {
                 armPid.setTarget((int) Positions.Arm.Up);
@@ -81,7 +82,7 @@ public class Arm {
             armGoUpAfterColect = true;
             armPid.setTarget((int) Positions.Arm.Up);
             if (Math.abs((int) (Hardware.potentiometer.getVoltage() * 1000) - (int) Positions.Arm.Mid + 700) <= 200) {
-                Hardware.boxAngle.setPosition(Positions.Box.Down);
+                BoxAngle.setPosition(Positions.Box.Down);
             }
             delayedActionBoxAngleChange.callAction();
             if (armGoUpAfterColect) {
@@ -90,7 +91,7 @@ public class Arm {
             }
         } else if (Gamepads.armBelow()) {
             armGoUpAfterColect = false;
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up + 15);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
             Hardware.intake.setPower(-1);
@@ -99,12 +100,12 @@ public class Arm {
             conditionActionGoUnder.callAction();
         } else if (Gamepads.armIntermediary()) {
             if (isBelow) {
-                Hardware.boxAngle.setPosition(Positions.Box.Up);
+                BoxAngle.setPosition(Positions.Box.Up);
                 conditionalActionArmReturn.callAction();
             } else {
                 armPid.setTarget((int) Positions.Arm.Down - 400);
             }
-            Hardware.boxAngle.setPosition(Positions.Box.Up);
+            BoxAngle.setPosition(Positions.Box.Up);
             if (armGoUpAfterColect) {
                 Hardware.slider_left.setTargetPosition(0);
                 Hardware.slider_right.setTargetPosition(0);

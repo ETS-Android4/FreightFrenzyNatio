@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class FullTrajectories {
@@ -63,7 +63,7 @@ public class FullTrajectories {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.0, () -> {
-                    Hardware.boxAngle.setPosition(PoseStorage.servoPosition);
+                    BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
     }
@@ -73,7 +73,7 @@ public class FullTrajectories {
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
@@ -88,7 +88,7 @@ public class FullTrajectories {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(warehousePose)
                 .addTemporalMarker(0.7, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Mid - 0.01);
+                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
                 })
                 .build();
     }
@@ -113,11 +113,11 @@ public class FullTrajectories {
         return drive.trajectoryBuilder(pose2d, true)
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
-                    Hardware.boxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
-                    Hardware.boxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.Box.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })
