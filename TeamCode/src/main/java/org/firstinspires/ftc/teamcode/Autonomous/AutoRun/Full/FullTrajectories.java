@@ -76,7 +76,7 @@ public class FullTrajectories {
                     Hardware.boxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
-                    PoseStorage.armPosition = (int) Positions.Arm.Down; // -15
+                    PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
 
                     Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
@@ -116,7 +116,7 @@ public class FullTrajectories {
                     Hardware.boxAngle.setPosition(Positions.Box.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
-                    PoseStorage.armPosition = (int) Positions.Arm.Up - 50;
+                    PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
                     Hardware.boxAngle.setPosition(Positions.Box.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);

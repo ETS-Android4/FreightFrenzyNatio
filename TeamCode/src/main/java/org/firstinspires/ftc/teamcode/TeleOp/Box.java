@@ -30,7 +30,7 @@ public class Box {
             power = 1;
         }
         if (startOuttake.runAction()) {
-            Hardware.intake.setPower(0.2);
+            Hardware.intake.setPower(0.35); //viteza outtake sus
             power = 1;
         }
         if (Gamepads.releaseFreight()) {

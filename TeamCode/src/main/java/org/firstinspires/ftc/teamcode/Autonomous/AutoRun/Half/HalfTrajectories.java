@@ -69,7 +69,7 @@ public class HalfTrajectories {
                     Hardware.boxAngle.setPosition(Positions.Box.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
-                    PoseStorage.armPosition = (int) Positions.Arm.Down; // -15
+                    PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
 
                     Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);

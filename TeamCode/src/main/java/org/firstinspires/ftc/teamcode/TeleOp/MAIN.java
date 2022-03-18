@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
@@ -45,6 +47,10 @@ public class MAIN extends LinearOpMode {
                 SafetyFeatures.setZeroPower();
                 continue;
             }
+
+            telemetry.addData("pwm coefs low", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseLower);
+            telemetry.addData("pwm coefs up", ((ServoImplEx)Hardware.boxAngle).getPwmRange().usPulseUpper);
+            telemetry.addData("boxposition", Hardware.boxAngle.getPosition());
             telemetry.addData("intakePower", Hardware.intake.getPower());
             telemetry.addData("intakePower state variable", Box.power);
             telemetry.addData("rulerPower", Hardware.rulerSpin.getPower());

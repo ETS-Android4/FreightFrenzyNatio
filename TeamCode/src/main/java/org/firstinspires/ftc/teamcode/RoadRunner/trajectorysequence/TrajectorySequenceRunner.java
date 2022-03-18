@@ -219,6 +219,9 @@ public class TrajectorySequenceRunner {
         packet.put("slider right target: ", Hardware.slider_right.getTargetPosition());
         packet.put("slider left target: ", Hardware.slider_left.getTargetPosition());
 
+        packet.put("servo1 debugger voltage", Hardware.servoDebug1.getVoltage());
+        packet.put("servo2 debugger voltage", Hardware.servoDebug2.getVoltage());
+
 
         draw(fieldOverlay, currentTrajectorySequence, currentSegment, targetPose, poseEstimate);
         dashboard.sendTelemetryPacket(packet);

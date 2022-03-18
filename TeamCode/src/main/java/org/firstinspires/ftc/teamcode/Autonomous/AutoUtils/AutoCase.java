@@ -5,8 +5,10 @@ public enum AutoCase {
     FullBlue,
     HalfRed,
     HalfBlue,
-    WarehouseRed,
-    WarehouseBlue,
+    Warehouse3Red,
+    Warehouse3Blue,
     CollectDuckRed,
     CollectDuckBlue,
+    Warehouse4Red,
+    Warehouse4Blue
 }

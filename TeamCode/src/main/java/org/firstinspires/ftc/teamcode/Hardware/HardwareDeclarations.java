@@ -30,6 +30,8 @@ public class HardwareDeclarations {
 
     public static DcMotor carusel;
     public static AnalogInput potentiometer;
+    public static AnalogInput servoDebug1;
+    public static AnalogInput servoDebug2;
 
     public static VoltageSensor batteryVoltage;
 

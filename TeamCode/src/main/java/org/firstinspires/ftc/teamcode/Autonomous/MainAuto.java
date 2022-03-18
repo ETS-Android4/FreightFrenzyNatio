@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
@@ -17,9 +19,19 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
 @Autonomous(name = "Main Auto")
 public class MainAuto extends LinearOpMode {
+    public static long firstTime;
+    public static double duration = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        SampleMecanumDriveCancelable sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap);
+
+        SampleMecanumDriveCancelable sampleMecanumDrive;
+        if(PoseStorage.autoCase==AutoCase.Warehouse4Blue||PoseStorage.autoCase==AutoCase.Warehouse4Red){
+            sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap,0.01);
+        }else{
+            sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap);
+        }
+
         Initializations.AutoInitialization(telemetry, hardwareMap);
 
         if (PoseStorage.autoCase.name().contains("Red")) {
@@ -28,16 +40,18 @@ public class MainAuto extends LinearOpMode {
             PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.BLUE);
         }
 
-        sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
 
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
         Thread linearAuto = new Thread(SelectAuto.getAutoFromEnum(sampleMecanumDrive, this));
 
+        sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
+
         waitForStart();
 
         linearAuto.start();
+        firstTime = System.currentTimeMillis();
 
         SafetyFeatures.isOk = true;
 
@@ -47,6 +61,14 @@ public class MainAuto extends LinearOpMode {
                 SafetyFeatures.setZeroPower();
                 continue;
             }
+
+            if (!linearAuto.isAlive()) {
+                if (duration == 0) {
+                    duration = (System.currentTimeMillis() - firstTime) / (1000.0);
+                }
+                Hardware.telemetry.addData("----AUTO LASTED----", duration);
+            }
+
             SafetyFeatures.check();
             armPid.setTarget(PoseStorage.armPosition);
             ((DcMotorEx) Hardware.arm).setVelocity(armPid.control((int) (Hardware.potentiometer.getVoltage() * 1000)), AngleUnit.RADIANS);

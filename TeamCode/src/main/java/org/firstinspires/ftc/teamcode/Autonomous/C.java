@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class C extends AutoCases {
-    public int armPosition = (int) Positions.Arm.Down-510;
+    public int armPosition = (int) Positions.AutoArm.Down-550;
     public double servoPosition = Positions.Box.Mid + 0.25;
     public Pose2d shippingHubPose = new Pose2d(-11, -42.5, java.lang.Math.toRadians(90));
 

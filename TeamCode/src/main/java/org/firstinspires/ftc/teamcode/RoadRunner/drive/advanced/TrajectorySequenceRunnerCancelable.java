@@ -19,6 +19,7 @@ import com.acmerobotics.roadrunner.util.NanoClock;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
+import org.firstinspires.ftc.teamcode.Autonomous.MainAuto;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.SequenceSegment;
@@ -189,6 +190,7 @@ public class TrajectorySequenceRunnerCancelable {
             poseHistory.removeFirst();
         }
 
+        packet.put("AUTO LASTED", MainAuto.duration);
         packet.put("x", poseEstimate.getX());
         packet.put("y", poseEstimate.getY());
         packet.put("heading (deg)", Math.toDegrees(poseEstimate.getHeading()));

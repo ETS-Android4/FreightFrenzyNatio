@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,6 +21,8 @@ public class Hardware extends HardwareDeclarations {
 
         potentiometer = getAnalogInput("potentiometer");
         boxPotentiometer = getAnalogInput("boxPotentiometer");
+        servoDebug1 = getAnalogInput("servo_debug1");
+        servoDebug2 = getAnalogInput("servo_debug2");
 
         rulerBase = getServo("rulerLateral");
         rulerAngle = getServo("rulerLongitudinal");
@@ -32,6 +35,8 @@ public class Hardware extends HardwareDeclarations {
         intake = getCRServo("intake");
         ((CRServoImplEx)(intake)).setPwmRange(new PwmControl.PwmRange(1000,2000));
         boxAngle = getServo("boxAngle");
+        ((ServoImplEx)(boxAngle)).setPwmRange(new PwmControl.PwmRange(500,2500));
+
 
         carusel = getDc("carusel");
 

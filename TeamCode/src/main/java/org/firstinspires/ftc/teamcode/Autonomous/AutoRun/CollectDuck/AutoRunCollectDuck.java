@@ -75,12 +75,12 @@ public class AutoRunCollectDuck implements Runnable {
     public void spinCaruselWithDuckCollect(SampleMecanumDriveCancelable drive) {
         drive.followTrajectorySequence(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
         drive.followTrajectory(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
-        PoseStorage.armPosition = (int) Positions.Arm.Down;
+        PoseStorage.armPosition = (int) Positions.AutoArm.Down;
         Hardware.boxAngle.setPosition(Positions.Box.Up);
         long firstTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - firstTime < 300) {
         }
-        AutoUtil.spinCarusel();
+        AutoUtil.spinCaruselDuckColect();
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive) {

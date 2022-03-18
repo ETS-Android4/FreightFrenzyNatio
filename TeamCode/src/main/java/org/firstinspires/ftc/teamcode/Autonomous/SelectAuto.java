@@ -5,11 +5,12 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles3.AutoRunWarehouseSide3;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.Full.AutoRunFull;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck.AutoRunCollectDuck;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.Half.AutoRunHalf;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.AutoRunWarehouseSide;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles4.AutoRunWarehouseSide4;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
@@ -80,8 +81,10 @@ public class SelectAuto extends LinearOpMode {
             return new AutoRunCollectDuck(sampleMecanumDrive, opMode);
         } else if (PoseStorage.autoCase == AutoCase.HalfRed || PoseStorage.autoCase == AutoCase.HalfBlue) {
             return new AutoRunHalf(sampleMecanumDrive, opMode);
+        } else if (PoseStorage.autoCase == AutoCase.Warehouse4Red || PoseStorage.autoCase == AutoCase.Warehouse3Blue) {
+            return new AutoRunWarehouseSide4(sampleMecanumDrive, opMode);
         } else {
-            return new AutoRunWarehouseSide(sampleMecanumDrive, opMode);
+            return new AutoRunWarehouseSide3(sampleMecanumDrive, opMode);
         }
     }
 }

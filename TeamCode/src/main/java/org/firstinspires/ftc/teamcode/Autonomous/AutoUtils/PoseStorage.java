@@ -10,7 +10,7 @@ public class PoseStorage {
     public static AutoCase autoCase = AutoCase.FullRed;
     public static Pose2d startPosition =  PoseColorNormalizer.calculate(new Pose2d(-36, -60.5,Math.toRadians(90)));
     public static Vector2d cameraPosition = new Vector2d(0,0);
-    public static int armPosition = (int) Positions.Arm.Down;
+    public static int armPosition = (int) Positions.AutoArm.Down;
     public static double servoPosition = Positions.Box.Mid;
     public static final DelayedAction delayedActionGoUnder = new DelayedAction(500);
     public static final DelayedAction delayedActionReturnSliders = new DelayedAction(1500);

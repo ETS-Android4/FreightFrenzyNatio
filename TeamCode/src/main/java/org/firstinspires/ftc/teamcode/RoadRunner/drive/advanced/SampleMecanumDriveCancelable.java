@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.LynxModuleUtil;
@@ -50,6 +51,7 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
 
     public static double LATERAL_MULTIPLIER = 1.15;
 
+
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
@@ -67,11 +69,12 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
-    public SampleMecanumDriveCancelable(HardwareMap hardwareMap) {
+
+    public SampleMecanumDriveCancelable(HardwareMap hardwareMap, double trajectoryPause) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(1.0)), 0.1);
+                new Pose2d(0.5, 0.5, Math.toRadians(1.0)), trajectoryPause);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -142,6 +145,10 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
 
         trajectorySequenceRunner = new TrajectorySequenceRunnerCancelable(follower, HEADING_PID);
+    }
+
+    public SampleMecanumDriveCancelable(HardwareMap hardwareMap) {
+        this(hardwareMap, 0.1);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
