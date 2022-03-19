@@ -21,8 +21,8 @@ public class Positions {
 
     ///---------------BOX----------------------------------
     public static final double basePoseShared = 0.2;
-    public static GenericPosition Box = new GenericPosition(0, 0.23, 0.5, 0.4, basePoseShared);
-    public static GenericPosition PotentiometerBox = new GenericPosition(0.2, 0.5, 1.516, 1.4, 0.167);
+    public static GenericPosition Box = new GenericPosition(0, 0.24, 0.5, 0.4, basePoseShared);
+    public static GenericPosition PotentiometerBox = new GenericPosition(0.33, 0.5, 1.516, 1.4, 0.31);
     ///-----------------------------------------------------
 
     ///---------------RULER----------------------------------

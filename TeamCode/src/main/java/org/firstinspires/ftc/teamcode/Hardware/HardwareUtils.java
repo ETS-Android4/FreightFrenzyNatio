@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.Arm;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 @Config
@@ -111,7 +112,7 @@ public class HardwareUtils {
         Hardware.slider_left.setPower(1);
         Hardware.slider_right.setPower(1);
 
-        Hardware.boxAngle.setPosition(Positions.Box.Up);
+        BoxAngle.setPosition(Positions.Box.Up);
 
         Hardware.rulerAngle.setPosition(rulerAngleInit);
         long currentTime = System.currentTimeMillis();
@@ -127,7 +128,7 @@ public class HardwareUtils {
         Hardware.slider_left.setPower(1);
         Hardware.slider_right.setPower(1);
 
-        Hardware.boxAngle.setPosition(Positions.Box.Up);
+        BoxAngle.setPosition(Positions.Box.Up);
         ((DcMotorEx) (Hardware.arm)).setVelocity(0);
 
         Hardware.rulerAngle.setPosition(rulerAngleInit);
