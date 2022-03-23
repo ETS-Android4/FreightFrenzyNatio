@@ -27,10 +27,6 @@ public class AutoRunFull implements Runnable {
 
     @Override
     public void run() {
-        // PENTRU PUS
-        // 0 ANGLE
-        // BASE 0.65
-
         switch (ImageDetection.duckPosition) {
             case Left:
                 detectedCase = new A();
@@ -53,12 +49,12 @@ public class AutoRunFull implements Runnable {
 
 
         FullTrajectories.shippingHubPose = detectedCase.getShippingHubPose();
-        spinCarusel(sampleMecanumDrive);
 
         PoseStorage.armPosition = detectedCase.getArmPosition();
         goToShippingHub(sampleMecanumDrive);
+        spinCarusel(sampleMecanumDrive);
 
-        opMode.sleep(350);
+        opMode.sleep(2000);
 
         for (int i = 0; i < 2; i++) {
             intake(sampleMecanumDrive);
@@ -72,8 +68,7 @@ public class AutoRunFull implements Runnable {
     public void spinCarusel(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(FullTrajectories.CaruselTrajectory(drive.getPoseEstimate()));
         long firstTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - firstTime < 300) {
-        }
+        while (System.currentTimeMillis() - firstTime < 300);
         AutoUtil.spinCarusel();
     }
 
@@ -83,7 +78,7 @@ public class AutoRunFull implements Runnable {
 
     public void intake(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(FullTrajectories.WarehouseTrajectory1(drive.getPoseEstimate()));
-        drive.followTrajectory(FullTrajectories.WarehouseTrajectory2(drive.getPoseEstimate()));
+        //drive.followTrajectory(FullTrajectories.WarehouseTrajectory2(drive.getPoseEstimate()));
         drive.followTrajectory(FullTrajectories.IntakeTrajectory(drive.getPoseEstimate()));
     }
 

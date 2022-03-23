@@ -20,8 +20,7 @@ public class Box {
         if (boxAngleAdjust.onPress(Gamepads.boxSharedAdjust())) {
             if (Positions.Box.Shared == Positions.basePoseShared) {
                 Positions.Box.Shared = Positions.basePoseShared + 0.1;
-            }
-            else{
+            } else {
                 Positions.Box.Shared = Positions.basePoseShared;
             }
             BoxAngle.setPosition(Positions.Box.Shared);
@@ -31,20 +30,22 @@ public class Box {
             power = 1;
         }
         if (startOuttake.runAction()) {
-            Hardware.intake.setPower(0.35); //viteza outtake sus
+            Hardware.intake.setPower(0.4); //viteza outtake sus
             power = 1;
         }
         if (Gamepads.releaseFreight()) {
 //            Hardware.intake.setPower(0);
-            power = 0;
-            if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Below - 100) {
-                BoxAngle.setPosition(Positions.Box.Below);
-                Hardware.intake.setPower(1);
-                power = 1;
-            } else if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Shared - 200) {
+//            power = 0;
+            if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Shared - 150) {
                 BoxAngle.setPosition(Positions.Box.Shared);
                 Hardware.intake.setPower(0.5); //viteza outtake shared
                 power = 1;
+            } else if (Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Below - 100) {
+                BoxAngle.setPosition(Positions.Box.Below);
+                Hardware.intake.setPower(1);
+                power = 1;
+            } else if (Hardware.potentiometer.getVoltage() * 1000 < Positions.Arm.Shared - 150 && Hardware.potentiometer.getVoltage() * 1000 > Positions.Arm.Down + 80) {
+
             } else {
                 BoxAngle.setPosition(Positions.Box.Up);
             }

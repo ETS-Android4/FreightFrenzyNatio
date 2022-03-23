@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerAngleIn
 import static org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions.rulerBaseInit;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.Arm;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
@@ -46,6 +48,15 @@ public class HardwareUtils {
     public static DistanceSensor getDistanceSensor(String name) {
         return Hardware.hardwareMap.get(DistanceSensor.class, name);
     }
+
+    public static BNO055IMU getImu(String name){
+        return Hardware.hardwareMap.get(BNO055IMU.class, name);
+    }
+
+    public static TouchSensor getTouchSensor(String name) {
+        return Hardware.hardwareMap.get(TouchSensor.class, name);
+    }
+
 
     public static void changeDirection(DcMotor... dcMotors) {
         for (DcMotor dcMotor : dcMotors) {

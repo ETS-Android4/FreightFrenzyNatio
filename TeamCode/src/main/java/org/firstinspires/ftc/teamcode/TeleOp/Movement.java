@@ -4,8 +4,10 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class Movement {
 
@@ -23,6 +25,20 @@ public class Movement {
 
     public static void driving() {
         slowMovement(2.5);
+//        if (Hardware.potentiometer.getVoltage() * 1000 < Positions.Arm.Up + 300) {
+//            if (Math.abs(Hardware.imu.getAngularOrientation().secondAngle) > 4) { // FU 3 DAR NU II PLACE LUI RADU NEGRI GABITZU
+//                Arm.armPid.setTarget((int)Positions.Arm.Down - 300);
+//                drive.setWeightedDrivePower(new Pose2d(-1, 0, 0));
+//                drive.update();
+//                return;
+//            }
+//        } else {
+//            if (Math.abs(Hardware.imu.getAngularOrientation().secondAngle) > 15) {
+//                drive.setWeightedDrivePower(new Pose2d(-1, 0, 0));
+//                drive.update();
+//                return;
+//            }
+//        }
         drive.setWeightedDrivePower(
                 new Pose2d(
                         -Gamepads.getGp1StickRightY() / slowFactor,

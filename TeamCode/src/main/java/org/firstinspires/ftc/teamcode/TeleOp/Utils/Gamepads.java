@@ -210,6 +210,10 @@ public class Gamepads {
 
     public static boolean rulerAngleColectPose(){ return gp2LeftStickDown; }
 
+    public static boolean rulerColectTSEClose(){
+        return gp2RightStickDown;
+    }
+
     //NOT IMPLEMENTED IMPORTANT
     public static boolean rulerAngleScorePose(){
         return false;

@@ -29,6 +29,7 @@ public class Ruler {
     private static OneTap rulerBaseDownTap = new OneTap();
     private static OneTap rulerAngleLeftTap = new OneTap();
     private static OneTap rulerAngleRightTap = new OneTap();
+    private static OneTap rulerColectTSEClose = new OneTap();
     private static double DeliverTMPosition = 0.32;
 
     public static void controlRulerDpad(LinearOpMode opMode) {
@@ -60,6 +61,16 @@ public class Ruler {
                 Hardware.rulerBase.setPosition(PoseStorageTeleOp.rulerBasePlace);
             }
 
+        }
+
+        if (rulerColectTSEClose.onPress(Gamepads.rulerColectTSEClose())){
+            if ((int)(Hardware.rulerBase.getPosition()*100)!=77) {
+                Hardware.rulerBase.setPosition(0.77);
+                Hardware.rulerAngle.setPosition(0.82);
+            }
+            else{
+                Hardware.rulerAngle.setPosition(0.64);
+            }
         }
 
         if (Gamepads.rulerAngleColectPose()) {

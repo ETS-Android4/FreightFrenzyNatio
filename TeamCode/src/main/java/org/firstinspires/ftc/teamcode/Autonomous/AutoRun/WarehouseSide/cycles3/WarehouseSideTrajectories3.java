@@ -25,13 +25,13 @@ public class WarehouseSideTrajectories3 {
     public static int incrementer = 0;
 
     public static void InitTrajectories() {
-        shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-6, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
+        shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-6, -45, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.7, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.7, Math.toRadians(0)));
-        intakePose = PoseColorNormalizer.calculate(new Pose2d(40, -60.7, Math.toRadians(0)));
-        parkPose = PoseColorNormalizer.calculate(new Pose2d(45, -60.7, Math.toRadians(0)));
+        intakePose = PoseColorNormalizer.calculate(new Pose2d(45, -60.7, Math.toRadians(0)));
+        parkPose = PoseColorNormalizer.calculate(new Pose2d(48, -60.7, Math.toRadians(0)));
         shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(2, -39, Math.toRadians(180 + 135)));
-        secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(5, 0, 0));
+        secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6, 0, 0));
 
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(12, -60.5, Math.toRadians(90)));
 
@@ -102,9 +102,10 @@ public class WarehouseSideTrajectories3 {
                     BoxAngle.setPosition(Positions.Box.Mid - 0.01);
                     Hardware.intake.setPower(-1);
                 })
-                .addDisplacementMarker(() -> {
+                .addTemporalMarker(2,() -> {
                     intakePose = intakePose.plus(secondIntakeIncrementer);
                     PoseStorage.isIntakeTrajectory = false;
+                    incrementer++;
                 })
                 .build();
     }
@@ -126,10 +127,9 @@ public class WarehouseSideTrajectories3 {
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })
-                .lineToSplineHeading(shippingHubReturnPose.plus(new Pose2d(1.5 * incrementer, incrementer, 0)))
+                .lineToSplineHeading(shippingHubReturnPose.plus(new Pose2d(2.25 * incrementer, incrementer, 0)))
                 .addTemporalMarker(2.7, () -> {
                     Hardware.intake.setPower(0.35);
-                    incrementer++;
                 })
                 .setReversed(false)
                 .build();

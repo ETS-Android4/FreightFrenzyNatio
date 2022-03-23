@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import static org.firstinspires.ftc.teamcode.Hardware.HardwareUtils.*;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -44,6 +45,10 @@ public class Hardware extends HardwareDeclarations {
 
         intakeSensor = getDistanceSensor("intakeSensor");
 
+        touchSensor = getTouchSensor("touchSensor");
+
+        imu = getImu("imu1");
+
         batteryVoltage = hardwareMap.voltageSensor.iterator().next();
     }
 
@@ -69,6 +74,11 @@ public class Hardware extends HardwareDeclarations {
         changeDirection(carusel);
         carusel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         carusel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        imu.initialize(parameters);
+
         HardwareDeclarations.telemetry.addLine("Direction changing done!");
 
     }

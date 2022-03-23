@@ -92,7 +92,9 @@ public class IntakeSensor {
             Box.power = 1;
         }
         distance = Hardware.intakeSensor.getDistance(DistanceUnit.CM);
-        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 8)) {
+        Hardware.telemetry.addData("sliders arrived", TeleUtils.isSlidersAtPosition((int)Positions.Sliders.Up));
+        Hardware.telemetry.addData("box arrived", Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up);
+        if (intake.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Down) && TeleUtils.isBoxAtPosition(Positions.Box.Mid) && distance < 6.5)) {
             BoxAngle.setPosition(Positions.Box.Up);
             if (Arm.armGoUpAfterColect) {
                 Arm.armPid.setTarget((int) Positions.Arm.Up);
@@ -104,11 +106,10 @@ public class IntakeSensor {
                 Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
                 Hardware.intake.setPower(-0.4);
                 Box.power = 1;
-                //delayedActionGoUnderShared.callAction();
                 conditionActionGoUnderShared.callAction();
             }
         }
-        if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 9)) {
+        if (outtakeUp.onActionRun(TeleUtils.isArmAtPosition((int) Positions.Arm.Up) && TeleUtils.isBoxAtPosition(Positions.Box.Up) && distance > 7.5)) {
             BoxAngle.setPosition(Positions.Box.Up);
             Arm.armPid.setTarget((int) Positions.Arm.Down + 60);
             //delayedActionReturnSlidersArmUp.callAction();

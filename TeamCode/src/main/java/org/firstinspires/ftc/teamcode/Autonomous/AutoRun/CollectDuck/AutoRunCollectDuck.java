@@ -56,7 +56,7 @@ public class AutoRunCollectDuck implements Runnable {
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         CollectDuckTrajectories.shippingHubPose = detectedCase.getShippingHubPose();
-
+        opMode.sleep(1750);
         goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
         spinCaruselWithDuckCollect(sampleMecanumDrive);
@@ -84,7 +84,7 @@ public class AutoRunCollectDuck implements Runnable {
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(CollectDuckTrajectories.CollectDuckIntermediatyTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectory(CollectDuckTrajectories.CollectDuckIntermediaryTrajectory(drive.getPoseEstimate()));
         drive.followTrajectorySequence(CollectDuckTrajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
     }
 

@@ -38,8 +38,8 @@ public class MAIN extends LinearOpMode {
         SafetyFeatures.isOk = true;
         SafetyFeatures.isSensorOverriden = false;
         drive.setPoseEstimate(PoseStorage.startPosition);
-
         while (!isStopRequested() && opModeIsActive()) {
+            long firstTime=System.currentTimeMillis();
             Arm.checkUpOrBelow();
 
             if (!SafetyFeatures.isOk) {
@@ -94,7 +94,14 @@ public class MAIN extends LinearOpMode {
             PositionsDebug.GetBoxPosition();
             PositionsDebug.GetArmPosition();
             PositionsDebug.GetSensors();
-            PositionsDebug.GetSlidersPosition(true);
+            PositionsDebug.GetSlidersPosition(false);
+            long lastTime=System.currentTimeMillis();
+            telemetry.addData("imu angle 1?", Hardware.imu.getAngularOrientation().firstAngle);
+            telemetry.addData("imu angle 2?", Hardware.imu.getAngularOrientation().secondAngle);
+            telemetry.addData("imu angle 3?", Hardware.imu.getAngularOrientation().thirdAngle);
+            telemetry.addData("Touch Sensor:", Hardware.touchSensor.getValue());
+            telemetry.addData("fps:", 60.0/(1.0*(lastTime-firstTime)/1000));
+            telemetry.update();
         }
     }
 }

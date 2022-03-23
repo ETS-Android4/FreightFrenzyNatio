@@ -6,7 +6,7 @@ public class Positions {
     //Arm is used to store the actual positions and BasePoseArm1 is used to generate Arm
     public static final double armCorrectionOffset = -20;
 
-    public static final int basePoseCollect = 1580;
+    public static final int basePoseCollect = 1610;
 
     public static final GenericPosition AutoArm = new GenericPosition(basePoseCollect - 1240, basePoseCollect - 1000, basePoseCollect - 80);
 
@@ -21,8 +21,8 @@ public class Positions {
 
     ///---------------BOX----------------------------------
     public static final double basePoseShared = 0.2;
-    public static GenericPosition Box = new GenericPosition(0, 0.24, 0.5, 0.4, basePoseShared);
-    public static GenericPosition PotentiometerBox = new GenericPosition(0.33, 0.5, 1.516, 1.4, 0.31);
+    public static GenericPosition Box = new GenericPosition(0, 0.23, 0.5, 0.4, basePoseShared);
+    public static GenericPosition PotentiometerBox = new GenericPosition(0.5, 0.5, 1.516, 1.4, 0.31);
     ///-----------------------------------------------------
 
     ///---------------RULER----------------------------------

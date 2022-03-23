@@ -21,20 +21,22 @@ public class FullTrajectories {
     public static Pose2d parkPose;
     public static Pose2d shippingHubReturnPose;
     public static Pose2d secondIntakeIncrementer;
+    public static Pose2d gapPoseIncrementer;
     public static int incrementer = 0;
 
     public static void InitTrajectories() {
-        caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-58.6, -53.9, java.lang.Math.toRadians(90)));
+        caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-59, -48, java.lang.Math.toRadians(90)));
         if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
             caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
-        gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.3, Math.toRadians(0)));
-        warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.3, Math.toRadians(0)));
-        intakePose = PoseColorNormalizer.calculate(new Pose2d(42.5, -60.3, Math.toRadians(0)));
-        parkPose = PoseColorNormalizer.calculate(new Pose2d(42, -60.3, Math.toRadians(0)));
-        shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(8.4, -39.6, Math.toRadians(180 + 135)));
+        gapPose = PoseColorNormalizer.calculate(new Pose2d(11, -62.9, Math.toRadians(0)));
+        warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -61.3, Math.toRadians(0)));
+        intakePose = PoseColorNormalizer.calculate(new Pose2d(48, -61.3, Math.toRadians(0)));
+        parkPose = PoseColorNormalizer.calculate(new Pose2d(50, -61.3, Math.toRadians(0)));
+        shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(8, -37, Math.toRadians(180 + 135)));
         secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6.5, 0, 0));
+        gapPoseIncrementer = PoseColorNormalizer.calculate(new Pose2d(0, 1.7, 0));
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5, Math.toRadians(90)));
 
         incrementer = 0;
@@ -47,8 +49,8 @@ public class FullTrajectories {
     }
 
     public static Trajectory CaruselTrajectory(Pose2d pose2d) {
-        return drive.trajectoryBuilder(pose2d)
-                .lineToLinearHeading(caruselPosition)
+        return drive.trajectoryBuilder(pose2d, true)
+                .splineToLinearHeading(caruselPosition, Math.toRadians(PoseColorNormalizer.calculateAngleDegrees(220)))
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(-0.7);
                 })
@@ -59,10 +61,10 @@ public class FullTrajectories {
     public static Trajectory ShippingHubTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubPose)
-                .addTemporalMarker(1.8, () -> {
+                .addTemporalMarker(1.5, () -> {
                     Hardware.intake.setPower(1);
                 })
-                .addTemporalMarker(0.0, () -> {
+                .addTemporalMarker(0.8, () -> {
                     BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
@@ -81,29 +83,25 @@ public class FullTrajectories {
                     Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
                 })
-                .build();
-    }
-
-    public static Trajectory WarehouseTrajectory2(Pose2d pose2d) {
-        return drive.trajectoryBuilder(pose2d)
-                .lineToLinearHeading(warehousePose)
-                .addTemporalMarker(0.7, () -> {
-                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
+                .addTemporalMarker(1.5, ()->{
+                    BoxAngle.setPosition(Positions.Box.Mid);
                 })
                 .build();
     }
+
 
     public static Trajectory IntakeTrajectory(Pose2d pose2d) {
         PoseStorage.isIntakeTrajectory = true;
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(intakePose,
                         SampleMecanumDrive.getVelocityConstraint(60, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35))
+                        SampleMecanumDrive.getAccelerationConstraint(60))
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(-1);
                 })
                 .addDisplacementMarker(() -> {
                     intakePose = intakePose.plus(secondIntakeIncrementer);
+                    gapPose = gapPose.plus(gapPoseIncrementer);
                     PoseStorage.isIntakeTrajectory = false;
                 })
                 .build();
@@ -128,7 +126,7 @@ public class FullTrajectories {
         return drive.trajectoryBuilder(pose2d, true)
                 .lineToLinearHeading(shippingHubReturnPose.plus(new Pose2d(1.5 * incrementer, incrementer, 0)))
                 .addDisplacementMarker(() -> {
-                    Hardware.intake.setPower(0.35);
+                    Hardware.intake.setPower(0.45);
                 })
                 .addDisplacementMarker(() -> {
                     incrementer++;
@@ -138,7 +136,9 @@ public class FullTrajectories {
 
     public static Trajectory ParkTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
-                .lineToLinearHeading(parkPose)
+                .lineToLinearHeading(parkPose,
+                        SampleMecanumDrive.getVelocityConstraint(100, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(100))
                 .build();
     }
 

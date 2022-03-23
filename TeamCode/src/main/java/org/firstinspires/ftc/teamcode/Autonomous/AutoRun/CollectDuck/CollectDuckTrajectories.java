@@ -29,16 +29,16 @@ public class CollectDuckTrajectories {
 
     public static void InitTrajectories() {
         caruselPositionWithDuckCollect1 = PoseColorNormalizer.calculate(new Pose2d(-50, -50, java.lang.Math.toRadians(55.75)));
-        caruselPositionWithDuckCollect2 = PoseColorNormalizer.calculate(new Pose2d(-56.2, -53, java.lang.Math.toRadians(55.75)));
+        caruselPositionWithDuckCollect2 = PoseColorNormalizer.calculate(new Pose2d(-56, -51, java.lang.Math.toRadians(55.75)));
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
-        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-20, -43, java.lang.Math.toRadians(70)));
-        placeDuckPose = PoseColorNormalizer.calculate(new Pose2d(-17.5, -40, java.lang.Math.toRadians(70)));
+        shippingHubCaruselSidePose = PoseColorNormalizer.calculate(new Pose2d(-17, -40, java.lang.Math.toRadians(70)));
+        placeDuckPose = PoseColorNormalizer.calculate(new Pose2d(-16, -39, java.lang.Math.toRadians(70)));
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5, Math.toRadians(90)));
         warehouseParkSharedPose2 = PoseColorNormalizer.calculate(new Pose2d(63, -35, Math.toRadians(270)));
 
-        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-50, -53.2, Math.toRadians(260))); ///y:-53
-        duckCollectPose2 = PoseColorNormalizer.calculate(new Pose2d(-55, -52, Math.toRadians(200)));
-        duckCollectPose3 = PoseColorNormalizer.calculate(new Pose2d(-55, -49.5, Math.toRadians(260)));
+        duckCollectPose = PoseColorNormalizer.calculate(new Pose2d(-50, -53.2, Math.toRadians(260)));
+        duckCollectPose2 = PoseColorNormalizer.calculate(new Pose2d(-56, -53, Math.toRadians(200)));
+        duckCollectPose3 = PoseColorNormalizer.calculate(new Pose2d(-55, -49.8, Math.toRadians(260)));
         duckCollectPoseIntermediary = PoseColorNormalizer.calculate(new Pose2d(-45, -50, Math.toRadians(55)));
 
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -38, Math.toRadians(0)));
@@ -88,16 +88,16 @@ public class CollectDuckTrajectories {
     public static Trajectory ShippingHubTrajectoryCaruselSide(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubCaruselSidePose)
-                .addTemporalMarker(1.3, () -> {
+                .addTemporalMarker(1.4, () -> {
                     Hardware.intake.setPower(1);
                 })
-                .addTemporalMarker(0.7, () -> {
+                .addTemporalMarker(1, () -> {
                     BoxAngle.setPosition(PoseStorage.servoPosition);
                 })
                 .build();
     }
 
-    public static Trajectory CollectDuckIntermediatyTrajectory(Pose2d pose2d) {
+    public static Trajectory CollectDuckIntermediaryTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(duckCollectPoseIntermediary)
                 .build();
@@ -111,11 +111,11 @@ public class CollectDuckTrajectories {
                     Hardware.intake.setPower(-1);
                 })
                 .lineToLinearHeading(duckCollectPose)
-                .turn(Math.toRadians(-100), 1, 1)
+                .turn(Math.toRadians(-75), 1.5, 1)
                 .lineToLinearHeading(duckCollectPose2)
-                .turn(Math.toRadians(60), 0.4, 0.5)
+                .turn(Math.toRadians(60), 1.5, 1)
                 .lineToLinearHeading(duckCollectPose3)
-                .turn(Math.toRadians(40), 0.4, 0.5)
+                .turn(Math.toRadians(15), 2, 1)
                 .build();
     }
 
@@ -123,11 +123,11 @@ public class CollectDuckTrajectories {
     public static Trajectory PlaceDuckTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(placeDuckPose)
-                .addTemporalMarker(0, ()->{
-                    BoxAngle.setPosition(Positions.Box.Mid + 0.25);
+                .addTemporalMarker(0.5, ()->{
+                    BoxAngle.setPosition(Positions.Box.Mid + 0.15);
                 })
                 .addTemporalMarker(0.2, () -> {
-                    PoseStorage.armPosition = (int) Positions.AutoArm.Down - 510;
+                    PoseStorage.armPosition = (int) Positions.AutoArm.Down - 560;
                 })
                 .addTemporalMarker(2, () -> {
                     Hardware.intake.setPower(1);

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 public class C extends AutoCases {
     public int armPosition = (int) Positions.AutoArm.Down-550;
     public double servoPosition = Positions.Box.Mid + 0.25;
-    public Pose2d shippingHubPose = new Pose2d(-11, -42.5, java.lang.Math.toRadians(90));
+    public Pose2d shippingHubPose = new Pose2d(-13, -39, java.lang.Math.toRadians(90));
 
     @Override
     public int getArmPosition (){

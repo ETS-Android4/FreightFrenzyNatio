@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 
 @Config
 public class AutoUtil {
-    public static double maxVelCarusel = 40;
+    public static double maxVelCarusel = 44;
 
     public static void spinCarusel() {
         if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            maxVelCarusel = -40;
+            maxVelCarusel = -maxVelCarusel;
         }
 
         long startTime = System.currentTimeMillis();
@@ -28,12 +28,12 @@ public class AutoUtil {
 
     public static void spinCaruselDuckColect() {
         if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            maxVelCarusel = -40;
+            maxVelCarusel = -maxVelCarusel;
         }
 
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - startTime <= 1700) {
-            if (System.currentTimeMillis() - startTime < 1500) {
+        while (System.currentTimeMillis() - startTime <= 2000) {
+            if (System.currentTimeMillis() - startTime < 1800) {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel, AngleUnit.RADIANS);
             } else {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel / 4 , AngleUnit.RADIANS);
