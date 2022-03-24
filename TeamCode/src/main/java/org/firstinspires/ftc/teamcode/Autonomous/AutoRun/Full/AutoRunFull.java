@@ -78,7 +78,6 @@ public class AutoRunFull implements Runnable {
 
     public void intake(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(FullTrajectories.WarehouseTrajectory1(drive.getPoseEstimate()));
-        //drive.followTrajectory(FullTrajectories.WarehouseTrajectory2(drive.getPoseEstimate()));
         drive.followTrajectory(FullTrajectories.IntakeTrajectory(drive.getPoseEstimate()));
     }
 

@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck;
+package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.StorageUnit;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck.CollectDuckTrajectories;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
@@ -16,17 +17,17 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
-public class AutoRunCollectDuck implements Runnable {
+public class AutoRunStorageUnit implements Runnable {
 
     private SampleMecanumDriveCancelable sampleMecanumDrive;
     AutoCases detectedCase;
     private LinearOpMode opMode;
 
-    public AutoRunCollectDuck(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
+    public AutoRunStorageUnit(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
         this.sampleMecanumDrive = sampleMecanumDrive;
         this.opMode = opMode;
-        CollectDuckTrajectories.setDrive(sampleMecanumDrive);
-        CollectDuckTrajectories.InitTrajectories();
+        StorageUnitTrajectories.setDrive(sampleMecanumDrive);
+        StorageUnitTrajectories.InitTrajectories();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class AutoRunCollectDuck implements Runnable {
         ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
-        CollectDuckTrajectories.shippingHubCaruselSidePose = detectedCase.getShippingHubCaruselSidePose();
+        StorageUnitTrajectories.shippingHubCaruselSidePose = detectedCase.getShippingHubCaruselSidePose();
         opMode.sleep(1750);
         goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
@@ -67,39 +68,35 @@ public class AutoRunCollectDuck implements Runnable {
         opMode.sleep(500);
         placeDuck(sampleMecanumDrive);
         opMode.sleep(850);//sa nu dea robotu in delta
-        parkAfterDuck(sampleMecanumDrive);
+        parkAfterDuck(sampleMecanumDrive); ///TODO: Park in storage unit
     }
 
     public void goToShippingHubCaruselSide(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(CollectDuckTrajectories.ShippingHubTrajectoryCaruselSide(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.ShippingHubTrajectoryCaruselSide(drive.getPoseEstimate()));
     }
 
     public void spinCaruselWithDuckCollect(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectorySequence(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
-        drive.followTrajectory(CollectDuckTrajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
+        drive.followTrajectorySequence(StorageUnitTrajectories.CaruselTrajectoryWithDuckCollect1(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.CaruselTrajectoryWithDuckCollect2(drive.getPoseEstimate()));
         PoseStorage.armPosition = (int) Positions.AutoArm.Down;
         BoxAngle.setPosition(Positions.BoxAuto.Up);
-        long firstTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - firstTime < 300) {
-        }
+        opMode.sleep(300);
         AutoUtil.spinCaruselDuckColect();
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(CollectDuckTrajectories.CollectDuckIntermediaryTrajectory(drive.getPoseEstimate()));
-        drive.followTrajectorySequence(CollectDuckTrajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.CollectDuckIntermediaryTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectorySequence(StorageUnitTrajectories.CollectDuckTrajectory(drive.getPoseEstimate()));
     }
 
     public void placeDuck(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(CollectDuckTrajectories.PlaceDuckTrajectory(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.PlaceDuckTrajectory(drive.getPoseEstimate()));
     }
 
     public void parkAfterDuck(SampleMecanumDriveCancelable drive) {
-        drive.followTrajectory(CollectDuckTrajectories.GoOverBarriers1(drive.getPoseEstimate()));
-        drive.followTrajectory(CollectDuckTrajectories.GoOverBarriers2(drive.getPoseEstimate()));
-        drive.followTrajectory(CollectDuckTrajectories.sharedWarehouseTrajectory2(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.ParkTrajectory1(drive.getPoseEstimate()));
+        drive.followTrajectory(StorageUnitTrajectories.ParkTrajectory2(drive.getPoseEstimate()));
     }
-
 }
 
 

@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.BoxAngle;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Positions;
 
 public class WarehouseSideTrajectories3 {
-    public static Pose2d shippingHubPose;
     public static Pose2d gapPose;
     public static Pose2d warehousePose;
     public static Pose2d intakePose;
@@ -25,18 +24,16 @@ public class WarehouseSideTrajectories3 {
     public static int incrementer = 0;
 
     public static void InitTrajectories() {
-        shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-6, -45, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
         gapPose = PoseColorNormalizer.calculate(new Pose2d(12, -60.7, Math.toRadians(0)));
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -60.7, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(45, -60.7, Math.toRadians(0)));
         parkPose = PoseColorNormalizer.calculate(new Pose2d(48, -60.7, Math.toRadians(0)));
         shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(2, -39, Math.toRadians(180 + 135)));
-        secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6, 0, 0));
+        secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6, 0, Math.toRadians(5)));
 
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(12, -60.5, Math.toRadians(90)));
 
-        shippingHubWarehouseSidePose = PoseColorNormalizer.calculate(new Pose2d(-5, -40.5, Math.toRadians(110)));
-
+        shippingHubWarehouseSidePose = PoseColorNormalizer.calculate(new Pose2d(-5, -40.5, Math.toRadians(110))); // suprascris in initializare A/B/C
 
         incrementer = 0;
     }
@@ -47,13 +44,12 @@ public class WarehouseSideTrajectories3 {
         drive = Drive;
     }
 
-
     public static Trajectory WarehouseTrajectory1(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
@@ -71,7 +67,7 @@ public class WarehouseSideTrajectories3 {
                         SampleMecanumDrive.getVelocityConstraint(60, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(35))
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
+                    BoxAngle.setPosition(Positions.BoxAuto.Mid - 0.01);
                     Hardware.intake.setPower(-1);
                 })
                 .addDisplacementMarker(() -> {
@@ -81,28 +77,30 @@ public class WarehouseSideTrajectories3 {
                 .build();
     }
 
-    public static TrajectorySequence IntakeTrajectorySequence(Pose2d pose2d){
+    public static TrajectorySequence IntakeTrajectorySequence(Pose2d pose2d) {
         return drive.trajectorySequenceBuilder(pose2d)
-                .lineToLinearHeading(gapPose)
-                .addTemporalMarker(0, () -> {
+                .lineToLinearHeading(gapPose,
+                        SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(75))
+                .addTemporalMarker(0.4, () -> {
                     Hardware.intake.setPower(0);
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                 })
-                .addTemporalMarker(0.35, () -> {
+                .addTemporalMarker(0.5, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
 
                     Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
                 })
                 .lineToSplineHeading(intakePose,
-                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(75))
                 .addTemporalMarker(1.5, () -> {
                     PoseStorage.isIntakeTrajectory = true;
-                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
+                    BoxAngle.setPosition(Positions.BoxAuto.Mid); // 0.01
                     Hardware.intake.setPower(-1);
                 })
-                .addTemporalMarker(2,() -> {
+                .addTemporalMarker(2, () -> {
                     intakePose = intakePose.plus(secondIntakeIncrementer);
                     PoseStorage.isIntakeTrajectory = false;
                     incrementer++;
@@ -110,24 +108,24 @@ public class WarehouseSideTrajectories3 {
                 .build();
     }
 
-    public static TrajectorySequence PlaceTrajectorySequence(Pose2d pose2d){
+    public static TrajectorySequence PlaceTrajectorySequence(Pose2d pose2d) {
         return drive.trajectorySequenceBuilder(pose2d)
                 .setReversed(true)
                 .lineToSplineHeading(gapPose)
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up - 0.04);
                 })
-                .addTemporalMarker(0.3, ()->{
+                .addTemporalMarker(0.3, () -> {
                     Hardware.intake.setPower(-0.2);
 
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up;
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })
-                .lineToSplineHeading(shippingHubReturnPose.plus(new Pose2d(2.25 * incrementer, incrementer, 0)))
+                .lineToSplineHeading(shippingHubReturnPose.plus(new Pose2d(2.25 * incrementer, 0.9 * incrementer, 0)))
                 .addTemporalMarker(2.7, () -> {
                     Hardware.intake.setPower(0.35);
                 })
@@ -139,11 +137,11 @@ public class WarehouseSideTrajectories3 {
         return drive.trajectoryBuilder(pose2d, true)
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })

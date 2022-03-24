@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 public class Arm {
     public static CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, ArmPositionKi, ArmPositionKd, armMaxVelocity);
     private static final DelayedAction delayedActionBoxAngleChange = new DelayedAction(300);
+    private static final DelayedAction delayedActionBoxAngleUpChange = new DelayedAction(200);
     private static final ConditionAction conditionActionGoUnder = new ConditionAction();
     private static final ConditionAction conditionActionGoUnderShared = new ConditionAction();
     private static final ConditionAction conditionActionReturnSliders = new ConditionAction();
@@ -35,6 +36,9 @@ public class Arm {
         ((DcMotorEx) Hardware.arm).setVelocity(armPid.control((int) (Hardware.potentiometer.getVoltage() * 1000)), AngleUnit.RADIANS);
         if (delayedActionBoxAngleChange.runAction()) {
             BoxAngle.setPosition(Positions.Box.Down);
+        }
+        if (delayedActionBoxAngleUpChange.runAction()) {
+            BoxAngle.setPosition(Positions.Box.Up);
         }
         if (conditionActionGoUnder.runAction(TeleUtils.isSlidersAtPosition((int) Positions.Sliders.Up) && Hardware.boxPotentiometer.getVoltage() < Positions.PotentiometerBox.Up)) {
             armPid.setTarget((int) Positions.Arm.Below);
@@ -99,18 +103,14 @@ public class Arm {
             isBelow = true;
             conditionActionGoUnder.callAction();
         } else if (Gamepads.armIntermediary()) {
-            if (isBelow) {
-                BoxAngle.setPosition(Positions.Box.Up);
-                conditionalActionArmReturn.callAction();
-            } else {
-                armPid.setTarget((int) Positions.Arm.Down - 400);
-            }
-            BoxAngle.setPosition(Positions.Box.Up);
+            armPid.setTarget((int) Positions.Arm.Down - 400);
+            delayedActionBoxAngleUpChange.callAction();
             if (armGoUpAfterColect) {
                 Hardware.slider_left.setTargetPosition(0);
                 Hardware.slider_right.setTargetPosition(0);
             }
         }
+        Hardware.telemetry.addData("is below state:", isBelow);
     }
 
     public static void checkUpOrBelow() {

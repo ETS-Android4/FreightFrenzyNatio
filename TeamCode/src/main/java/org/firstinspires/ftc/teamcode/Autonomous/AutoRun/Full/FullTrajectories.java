@@ -75,7 +75,7 @@ public class FullTrajectories {
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                 })
                 .addTemporalMarker(0.35, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
@@ -84,7 +84,7 @@ public class FullTrajectories {
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
                 })
                 .addTemporalMarker(1.5, ()->{
-                    BoxAngle.setPosition(Positions.Box.Mid);
+                    BoxAngle.setPosition(Positions.BoxAuto.Mid);
                 })
                 .build();
     }
@@ -111,11 +111,11 @@ public class FullTrajectories {
         return drive.trajectoryBuilder(pose2d, true)
                 .lineToLinearHeading(gapPose)
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })

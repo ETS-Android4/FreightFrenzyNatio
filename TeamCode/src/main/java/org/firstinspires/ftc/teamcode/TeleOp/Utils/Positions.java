@@ -10,9 +10,9 @@ public class Positions {
 
     public static final GenericPosition AutoArm = new GenericPosition(basePoseCollect - 1240, basePoseCollect - 1000, basePoseCollect - 80);
 
-    public static final GenericPosition BasePoseArm1 = new GenericPosition(basePoseCollect - 1370, basePoseCollect - 1000, basePoseCollect - 80, basePoseCollect + 960, basePoseCollect + 700);
+    public static final GenericPosition BasePoseArm1 = new GenericPosition(basePoseCollect - 1370, basePoseCollect - 1000, basePoseCollect - 30, basePoseCollect + 960, basePoseCollect + 700);
 
-    public static GenericPosition Arm = new GenericPosition(BasePoseArm1.Up + armCorrectionOffset + 150, BasePoseArm1.Mid + armCorrectionOffset, BasePoseArm1.Down + armCorrectionOffset, BasePoseArm1.Below + armCorrectionOffset, BasePoseArm1.Shared + armCorrectionOffset);
+    public static final GenericPosition Arm = new GenericPosition(BasePoseArm1.Up + armCorrectionOffset + 150, BasePoseArm1.Mid + armCorrectionOffset, BasePoseArm1.Down + armCorrectionOffset, BasePoseArm1.Below + armCorrectionOffset, BasePoseArm1.Shared + armCorrectionOffset);
     ///-----------------------------------------------------
 
     ///---------------SLIDERS----------------------------------
@@ -21,7 +21,8 @@ public class Positions {
 
     ///---------------BOX----------------------------------
     public static final double basePoseShared = 0.2;
-    public static GenericPosition Box = new GenericPosition(0, 0.23, 0.5, 0.4, basePoseShared);
+    public static GenericPosition Box = new GenericPosition(0, 0.19, 0.5, 0.4, basePoseShared);
+    public static GenericPosition BoxAuto = new GenericPosition(0, 0.23, 0.5, 0.4, basePoseShared);
     public static GenericPosition PotentiometerBox = new GenericPosition(0.5, 0.5, 1.516, 1.4, 0.31);
     ///-----------------------------------------------------
 

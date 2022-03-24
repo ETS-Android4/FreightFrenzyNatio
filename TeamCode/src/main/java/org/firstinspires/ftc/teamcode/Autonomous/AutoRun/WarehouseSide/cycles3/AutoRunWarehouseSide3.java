@@ -46,7 +46,7 @@ public class AutoRunWarehouseSide3 implements Runnable {
         ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
-        WarehouseSideTrajectories3.shippingHubPose = detectedCase.getShippingHubPose();
+        WarehouseSideTrajectories3.shippingHubWarehouseSidePose = detectedCase.getShippingHubWarehouseSidePose();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         goToShippingHubWarehouseSide(sampleMecanumDrive);
         opMode.sleep(350);

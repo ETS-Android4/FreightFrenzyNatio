@@ -15,5 +15,9 @@ public abstract class AutoCases {
 
     public abstract Pose2d getShippingHubPose();
 
+    public abstract Pose2d getShippingHubWarehouseSidePose();
+
+    public abstract Pose2d getShippingHubCaruselSidePose();
+
 
 }

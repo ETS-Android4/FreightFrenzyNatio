@@ -54,7 +54,7 @@ public class WarehouseSideTrajectories4 {
                         SampleMecanumDrive.getAccelerationConstraint(90))
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(0);
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                 })
                 .addTemporalMarker(0.3, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Down; // -15
@@ -78,7 +78,7 @@ public class WarehouseSideTrajectories4 {
                         SampleMecanumDrive.getVelocityConstraint(85, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(85))
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Mid - 0.01);
+                    BoxAngle.setPosition(Positions.BoxAuto.Mid - 0.01);
                 })
                 .addTemporalMarker(0, () -> {
                     Hardware.intake.setPower(-1);
@@ -96,11 +96,11 @@ public class WarehouseSideTrajectories4 {
                 .lineToLinearHeading(gapPose, SampleMecanumDrive.getVelocityConstraint(75, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(70))
                 .addTemporalMarker(0, () -> {
-                    BoxAngle.setPosition(Positions.Box.Up - 0.04);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up - 0.04);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up - 50;
-                    BoxAngle.setPosition(Positions.Box.Up);
+                    BoxAngle.setPosition(Positions.BoxAuto.Up);
                     Hardware.slider_left.setTargetPosition(250);
                     Hardware.slider_right.setTargetPosition(250);
                 })
