@@ -102,7 +102,7 @@ public class IntakeSensor {
                 lowPowerIntake.callAction();
             } else {
                 Arm.isBelow = true;
-                Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up + 15);
+                Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up );
                 Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
                 Hardware.intake.setPower(-0.4);
                 Box.power = 1;

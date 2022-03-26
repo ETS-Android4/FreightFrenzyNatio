@@ -27,7 +27,8 @@ public class HardwareUtils {
 
     public static double CarouselKp = 0.1, CarouselKi = 0.01, CarouselKd = 0, CarouselKf = 1;
 
-    public static double SliderKp = 1.2, SliderKi = 0.12, SliderKd = 0, SliderKf = 12;
+    public static double SliderVelocityKp = 1.2, SliderVelocityKi = 0.12, SliderVelocityKd = 0, SliderVelocityKf = 12;
+    public static double SliderPositionKp = 12;
 
     public static DcMotor getDc(String name) {
         return Hardware.hardwareMap.get(DcMotor.class, name);
@@ -99,8 +100,8 @@ public class HardwareUtils {
     }
 
     public static void SetPIDCoefficients() {
-        ((DcMotorEx) Hardware.slider_left).setVelocityPIDFCoefficients(SliderKp, SliderKi, SliderKd, SliderKf);
-        ((DcMotorEx) Hardware.slider_right).setVelocityPIDFCoefficients(1.2, 0.12, 0, 12);
+        ((DcMotorEx) Hardware.slider_right).setVelocityPIDFCoefficients(SliderVelocityKp, SliderVelocityKi, SliderVelocityKd, SliderVelocityKf);
+        ((DcMotorEx) Hardware.slider_right).setPositionPIDFCoefficients(SliderPositionKp);
 
         ((DcMotorEx) Hardware.slider_left).setTargetPositionTolerance(10);
         ((DcMotorEx) Hardware.slider_right).setTargetPositionTolerance(10);

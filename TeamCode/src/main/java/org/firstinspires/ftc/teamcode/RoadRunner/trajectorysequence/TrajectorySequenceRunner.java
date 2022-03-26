@@ -15,12 +15,15 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.util.NanoClock;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
+import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.TrajectorySegment;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.TurnSegment;
@@ -218,6 +221,11 @@ public class TrajectorySequenceRunner {
 
         packet.put("slider right target: ", Hardware.slider_right.getTargetPosition());
         packet.put("slider left target: ", Hardware.slider_left.getTargetPosition());
+
+        packet.put("slider right PID POSITION COEFICIENTS", ((DcMotorEx)Hardware.slider_right).getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).toString());
+        packet.put("slider left PID POSITION COEFICIENTS", ((DcMotorEx)Hardware.slider_left).getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).toString());
+
+
 
         packet.put("servo1 debugger voltage", Hardware.servoDebug1.getVoltage());
         packet.put("servo2 debugger voltage", Hardware.servoDebug2.getVoltage());

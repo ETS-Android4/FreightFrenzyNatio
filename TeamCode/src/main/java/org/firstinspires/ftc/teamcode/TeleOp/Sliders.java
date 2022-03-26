@@ -14,11 +14,11 @@ public class Sliders {
     public static void toPosition() {
         if (Gamepads.slidersUp()) {
             Hardware.slider_left.setTargetPosition((int)Positions.Sliders.Up);
-            Hardware.slider_right.setTargetPosition((int)Positions.Sliders.Up-10);
+            Hardware.slider_right.setTargetPosition((int)Positions.Sliders.Up);
             changePidf(Hardware.slider_left.getCurrentPosition(), Hardware.slider_left.getTargetPosition());
         } else if (Gamepads.slidersMid()) {
             Hardware.slider_left.setTargetPosition((int)Positions.Sliders.Mid);
-            Hardware.slider_right.setTargetPosition((int)Positions.Sliders.Mid-5);
+            Hardware.slider_right.setTargetPosition((int)Positions.Sliders.Mid);
             changePidf(Hardware.slider_left.getCurrentPosition(), Hardware.slider_left.getTargetPosition());
         } else if (Gamepads.slidersDown()) {
             Hardware.slider_left.setTargetPosition((int)Positions.Sliders.Down);
