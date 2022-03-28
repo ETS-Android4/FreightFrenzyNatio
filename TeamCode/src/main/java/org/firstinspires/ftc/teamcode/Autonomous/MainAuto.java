@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles3.WarehouseSideTrajectories3;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCase;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
@@ -32,23 +33,22 @@ public class MainAuto extends LinearOpMode {
             sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap);
         }
 
-        Initializations.AutoInitialization(telemetry, hardwareMap);
-
         if (PoseStorage.autoCase.name().contains("Red")) {
             PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.RED);
         } else {
             PoseColorNormalizer.setColorCase(PoseColorNormalizer.Color.BLUE);
         }
 
+        Initializations.AutoInitialization(telemetry, hardwareMap);
 
         ImageDetection.initialize();
         CustomPid armPid = new CustomPid(HardwareUtils.ArmPositionKp, HardwareUtils.ArmPositionKi, HardwareUtils.ArmPositionKd, HardwareUtils.armMaxVelocity);
 
         Thread linearAuto = new Thread(SelectAuto.getAutoFromEnum(sampleMecanumDrive, this));
 
-        sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
 
         waitForStart();
+        sampleMecanumDrive.setPoseEstimate(PoseStorage.startPosition);
 
         linearAuto.start();
         firstTime = System.currentTimeMillis();
