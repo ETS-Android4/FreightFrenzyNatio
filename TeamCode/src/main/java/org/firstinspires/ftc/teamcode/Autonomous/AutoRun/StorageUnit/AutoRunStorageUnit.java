@@ -81,7 +81,7 @@ public class AutoRunStorageUnit implements Runnable {
         PoseStorage.armPosition = (int) Positions.AutoArm.Down;
         BoxAngle.setPosition(Positions.BoxAuto.Up);
         opMode.sleep(300);
-        AutoUtil.spinCaruselDuckColect();
+        AutoUtil.spinCaruselDuckColect(drive);
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive) {

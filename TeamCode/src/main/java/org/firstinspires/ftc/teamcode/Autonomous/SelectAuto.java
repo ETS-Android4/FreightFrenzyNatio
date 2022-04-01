@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck.AutoRunColl
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles4.AutoRunWarehouseSide4;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.TeleOp.Arm;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 
 @Autonomous(name = "!!SELECT AUTO!!")
@@ -68,10 +69,33 @@ public class SelectAuto extends LinearOpMode {
             for (AutoCase autoCase : AutoCase.values()) {
                 selectedCaseDisplay(autoCase, telemetryPacket);
             }
-
+            selectedState(telemetryPacket);
             telemetry.update();
             ftcDashboard.sendTelemetryPacket(telemetryPacket);
         }
+    }
+
+    public void selectedState(TelemetryPacket telemetryPacket) {
+        if (gamepad1.a) {
+            Arm.armGoUpAfterColect = true;
+        } else if (gamepad1.b) {
+            Arm.armGoUpAfterColect = false;
+        }
+
+        this.telemetry.addLine("PRESS X for UP");
+        this.telemetry.addLine("PRESS CIRCLE for BELOW");
+
+        telemetryPacket.addLine("PRESS X for UP");
+        telemetryPacket.addLine("PRESS CIRCLE for BELOW");
+
+        if (Arm.armGoUpAfterColect) {
+            this.telemetry.addLine("----ARM GOES UP AFTER COLLECT----");
+            telemetryPacket.addLine("----ARM GOES UP AFTER COLLECT----");
+        } else {
+            this.telemetry.addLine("----ARM GOES BELOW AFTER COLLECT----");
+            telemetryPacket.addLine("----ARM GOES BELOW AFTER COLLECT----");
+        }
+
     }
 
     public static Runnable getAutoFromEnum(SampleMecanumDriveCancelable sampleMecanumDrive, LinearOpMode opMode) {
@@ -81,7 +105,7 @@ public class SelectAuto extends LinearOpMode {
             return new AutoRunCollectDuck(sampleMecanumDrive, opMode);
         } else if (PoseStorage.autoCase == AutoCase.StorageUnitRed || PoseStorage.autoCase == AutoCase.StorageUnitBlue) {
             return new AutoRunStorageUnit(sampleMecanumDrive, opMode);
-        } else if (PoseStorage.autoCase == AutoCase.Warehouse4Red || PoseStorage.autoCase == AutoCase.Warehouse3Blue) {
+        } else if (PoseStorage.autoCase == AutoCase.Warehouse4Red || PoseStorage.autoCase == AutoCase.Warehouse4Blue) {
             return new AutoRunWarehouseSide4(sampleMecanumDrive, opMode);
         } else {
             return new AutoRunWarehouseSide3(sampleMecanumDrive, opMode);

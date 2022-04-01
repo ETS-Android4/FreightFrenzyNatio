@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.Full;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
@@ -41,9 +43,9 @@ public class AutoRunFull implements Runnable {
                 PoseStorageTeleOp.TMPosition = 3;
                 break;
         }
+        ImageDetection.camera.stopStreaming();
         PoseStorageTeleOp.setRulerPositions(PoseStorageTeleOp.TMPosition);
 
-        ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
 
@@ -51,6 +53,13 @@ public class AutoRunFull implements Runnable {
         FullTrajectories.shippingHubPose = detectedCase.getShippingHubPose();
 
         PoseStorage.armPosition = detectedCase.getArmPosition();
+
+        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE && PoseStorageTeleOp.TMPosition == 1) {
+            FullTrajectories.shippingHubPose = FullTrajectories.shippingHubPose.plus(new Pose2d(3, 0, 0));
+            PoseStorage.armPosition -= 80;
+            FullTrajectories.shippingHubPose = FullTrajectories.shippingHubPose.plus(new Pose2d(0, 2, 0));
+        }
+
         goToShippingHub(sampleMecanumDrive);
         spinCarusel(sampleMecanumDrive);
 
@@ -67,13 +76,16 @@ public class AutoRunFull implements Runnable {
 
     public void spinCarusel(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(FullTrajectories.CaruselTrajectory(drive.getPoseEstimate()));
-        long firstTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - firstTime < 300);
-        AutoUtil.spinCarusel();
+        if (PoseColorNormalizer.getColorCase()== PoseColorNormalizer.Color.BLUE) {
+            drive.followTrajectory(FullTrajectories.CaruselTrajectory2(drive.getPoseEstimate()));
+        }
+        opMode.sleep(300);
+        AutoUtil.spinCarusel(drive);
     }
 
     public void goToShippingHub(SampleMecanumDriveCancelable drive) {
         drive.followTrajectory(FullTrajectories.ShippingHubTrajectory(drive.getPoseEstimate()));
+        opMode.sleep(300);
     }
 
     public void intake(SampleMecanumDriveCancelable drive) {

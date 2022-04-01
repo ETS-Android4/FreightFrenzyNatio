@@ -25,13 +25,13 @@ public class PoseStorageTeleOp {
             rulerAnglePlace = 0.02;
             rulerBasePlace = 0.42;
         } else {
-            if (TMPosition == 1) {
+            if (TMPosition == 3) {
                 rulerBase = 0.58;
                 rulerAngle = 0.642;
             } else if (TMPosition == 2) {
                 rulerBase = 0.58;
                 rulerAngle = 0.642;
-            } else if (TMPosition == 3) {
+            } else if (TMPosition == 1) {
                 rulerBase = 0.61;
                 rulerAngle = 0.635;
             }

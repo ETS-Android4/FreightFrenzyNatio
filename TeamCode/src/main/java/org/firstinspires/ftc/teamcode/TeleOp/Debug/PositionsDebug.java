@@ -52,6 +52,7 @@ public class PositionsDebug {
 
         Hardware.telemetry.addData("Current Velocity COEF : ", ((DcMotorEx) Hardware.arm).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
 
+        Hardware.telemetry.addData("Target velocity", Arm.armPid.targetVelocity);
     }
 
     public static void GetSensors() {

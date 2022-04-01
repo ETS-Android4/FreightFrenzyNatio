@@ -56,14 +56,14 @@ public class  ImageDetection {
 
     static class Pipeline extends OpenCvPipeline {
         int yOffset = 20;
-        Point leftRegionTopLeft = new Point(0+10,60 + yOffset);
-        Point leftRegionBottomRight = new Point(105-50,100 + yOffset);
+        Point leftRegionTopLeft = new Point(0,35 + yOffset);
+        Point leftRegionBottomRight = new Point(105-60,75 + yOffset);
 
         Point middleRegionTopLeft = new Point(106+30, 38 + yOffset);
         Point middleRegionBottomRight = new Point(210-30, 78 + yOffset);
 
-        Point rightRegionTopLeft = new Point(211+55, 22 + yOffset);
-        Point rightRegionBottomRight = new Point(319-5, 62 + yOffset);
+        Point rightRegionTopLeft = new Point(211+55, 32 + yOffset);
+        Point rightRegionBottomRight = new Point(319-5, 72 + yOffset);
 
         Mat leftSubmat;
         Mat middleSubmat;
@@ -86,7 +86,7 @@ public class  ImageDetection {
 
         @Override
         public Mat processFrame(Mat input) {
-
+            
             Imgproc.rectangle(input, leftRegionTopLeft, leftRegionBottomRight, new Scalar(0, 255, 0), 4);
             Imgproc.rectangle(input, middleRegionTopLeft, middleRegionBottomRight, new Scalar(0, 255, 0), 4);
             Imgproc.rectangle(input, rightRegionTopLeft, rightRegionBottomRight, new Scalar(0, 255, 0), 4);

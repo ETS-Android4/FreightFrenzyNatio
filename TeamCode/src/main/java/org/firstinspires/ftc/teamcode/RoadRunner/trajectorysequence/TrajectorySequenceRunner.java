@@ -29,6 +29,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegm
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.TurnSegment;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.sequencesegment.WaitSegment;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.DashboardUtil;
+import org.firstinspires.ftc.teamcode.TeleOp.Arm;
 
 
 import java.util.ArrayList;
@@ -198,21 +199,17 @@ public class TrajectorySequenceRunner {
         packet.put("y", poseEstimate.getY());
         packet.put("heading (deg)", Math.toDegrees(poseEstimate.getHeading()));
 
-        packet.put("xError", getLastPoseError().getX());
-        packet.put("yError", getLastPoseError().getY());
-        packet.put("headingError (deg)", Math.toDegrees(getLastPoseError().getHeading()));
 
-        packet.put("BATTERY VOLTAGE", Hardware.batteryVoltage.getVoltage());
+        //packet.put("BATTERY VOLTAGE", Hardware.batteryVoltage.getVoltage());
 
         packet.put(" BOX Potentiometer voltage", Hardware.boxPotentiometer.getVoltage());
         packet.put(" ARM Potentiometer voltage", Hardware.potentiometer.getVoltage());
-
         packet.put("Intake sensor distance", Hardware.intakeSensor.getDistance(DistanceUnit.CM));
-
-        packet.put("Front_Right", Hardware.front_right.getCurrentPosition());
-        packet.put("Front_Left", Hardware.front_left.getCurrentPosition());
-        packet.put("Back_Right", Hardware.back_right.getCurrentPosition());
-        packet.put("Back_Left", Hardware.back_left.getCurrentPosition());
+//
+//        packet.put("Front_Right", Hardware.front_right.getCurrentPosition());
+//        packet.put("Front_Left", Hardware.front_left.getCurrentPosition());
+//        packet.put("Back_Right", Hardware.back_right.getCurrentPosition());
+//        packet.put("Back_Left", Hardware.back_left.getCurrentPosition());
 
         packet.put("arm encoder value: ", Hardware.arm.getCurrentPosition());
 
@@ -225,11 +222,8 @@ public class TrajectorySequenceRunner {
         packet.put("slider right PID POSITION COEFICIENTS", ((DcMotorEx)Hardware.slider_right).getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).toString());
         packet.put("slider left PID POSITION COEFICIENTS", ((DcMotorEx)Hardware.slider_left).getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).toString());
 
-
-
-        packet.put("servo1 debugger voltage", Hardware.servoDebug1.getVoltage());
-        packet.put("servo2 debugger voltage", Hardware.servoDebug2.getVoltage());
-
+        packet.put("Arm curent position:", Hardware.potentiometer.getVoltage()*1000);
+        packet.put("Arm target Position:", Arm.armPid.getTargetPosition());
 
         draw(fieldOverlay, currentTrajectorySequence, currentSegment, targetPose, poseEstimate);
         dashboard.sendTelemetryPacket(packet);

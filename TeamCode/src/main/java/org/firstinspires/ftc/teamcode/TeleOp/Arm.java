@@ -96,7 +96,7 @@ public class Arm {
         } else if (Gamepads.armBelow()) {
             armGoUpAfterColect = false;
             BoxAngle.setPosition(Positions.Box.Up);
-            Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up );
+            Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Up);
             Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Up);
             Hardware.intake.setPower(-1);
             Box.power = 1;

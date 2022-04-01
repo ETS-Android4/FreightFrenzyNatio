@@ -20,6 +20,7 @@ public class FullTrajectories {
     public static Pose2d intakePose;
     public static Pose2d parkPose;
     public static Pose2d shippingHubReturnPose;
+    public static Pose2d shippingHubReturnPoseIncrementer;
     public static Pose2d secondIntakeIncrementer;
     public static Pose2d gapPoseIncrementer;
     public static int incrementer = 0;
@@ -27,16 +28,27 @@ public class FullTrajectories {
     public static void InitTrajectories() {
         caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-59, -48, java.lang.Math.toRadians(90)));
         if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-56, -58, java.lang.Math.toRadians(0)));
+            caruselPosition = PoseColorNormalizer.calculate(new Pose2d(-53.6, -52, java.lang.Math.toRadians(0)));
         }
         shippingHubPose = PoseColorNormalizer.calculate(new Pose2d(-11, -44, java.lang.Math.toRadians(90))); /// suprascris dupa initializare, e in fiecare a b c alta pozitie
+
         gapPose = PoseColorNormalizer.calculate(new Pose2d(11, -62.9, Math.toRadians(0)));
+
         warehousePose = PoseColorNormalizer.calculate(new Pose2d(25, -61.3, Math.toRadians(0)));
         intakePose = PoseColorNormalizer.calculate(new Pose2d(48, -61.3, Math.toRadians(0)));
         parkPose = PoseColorNormalizer.calculate(new Pose2d(50, -61.3, Math.toRadians(0)));
         shippingHubReturnPose = PoseColorNormalizer.calculate(new Pose2d(8, -37, Math.toRadians(180 + 135)));
         secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(6.5, 0, 0));
         gapPoseIncrementer = PoseColorNormalizer.calculate(new Pose2d(0, 1.7, 0));
+        shippingHubReturnPoseIncrementer = PoseColorNormalizer.calculate(new Pose2d(0, 0, 0));
+
+        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            gapPoseIncrementer = PoseColorNormalizer.calculate(new Pose2d(-1.5, -4.5, 0));
+            secondIntakeIncrementer = PoseColorNormalizer.calculate(new Pose2d(4, -4.5, 0));
+            shippingHubReturnPoseIncrementer = PoseColorNormalizer.calculate(new Pose2d(-1, -2, 0));
+            parkPose = parkPose.plus(new Pose2d(-3.5, 7, 0));
+            intakePose = intakePose.plus(new Pose2d(0, 2, 0));
+        }
         PoseStorage.startPosition = PoseColorNormalizer.calculate(new Pose2d(-36, -60.5, Math.toRadians(90)));
 
         incrementer = 0;
@@ -57,6 +69,11 @@ public class FullTrajectories {
                 .build();
     }
 
+    public static Trajectory CaruselTrajectory2(Pose2d pose2d){
+        return drive.trajectoryBuilder(pose2d)
+                .lineToLinearHeading(caruselPosition.plus(new Pose2d(0, 2, 0)))
+                .build();
+    }
 
     public static Trajectory ShippingHubTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
@@ -83,7 +100,7 @@ public class FullTrajectories {
                     Hardware.slider_left.setTargetPosition((int) Positions.Sliders.Down);
                     Hardware.slider_right.setTargetPosition((int) Positions.Sliders.Down);
                 })
-                .addTemporalMarker(1.5, ()->{
+                .addTemporalMarker(1.5, () -> {
                     BoxAngle.setPosition(Positions.BoxAuto.Mid);
                 })
                 .build();
@@ -102,6 +119,7 @@ public class FullTrajectories {
                 .addDisplacementMarker(() -> {
                     intakePose = intakePose.plus(secondIntakeIncrementer);
                     gapPose = gapPose.plus(gapPoseIncrementer);
+                    shippingHubReturnPose = shippingHubReturnPose.plus(shippingHubReturnPoseIncrementer);
                     PoseStorage.isIntakeTrajectory = false;
                 })
                 .build();
@@ -137,8 +155,8 @@ public class FullTrajectories {
     public static Trajectory ParkTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(parkPose,
-                        SampleMecanumDrive.getVelocityConstraint(100, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(100))
+                        SampleMecanumDrive.getVelocityConstraint(300, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(300))
                 .build();
     }
 

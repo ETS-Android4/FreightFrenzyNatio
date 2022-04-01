@@ -21,9 +21,7 @@ public class TestCarusel extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
-            if (gamepad1.y) {
-                AutoUtil.spinCarusel();
-            }
+
         }
     }
 }

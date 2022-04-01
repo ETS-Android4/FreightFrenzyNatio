@@ -48,6 +48,9 @@ public class Box {
 
             } else {
                 BoxAngle.setPosition(Positions.Box.Up);
+                Hardware.intake.setPower(0.2); //viteza outtake
+                power = 1;
+
             }
             if ((int) (Hardware.potentiometer.getVoltage() * 1000) < Positions.Arm.Mid + 300) {
                 startOuttake.callAction();

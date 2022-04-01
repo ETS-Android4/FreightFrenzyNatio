@@ -27,28 +27,6 @@ public class ControlsDebug {
     private static final String rulerRetract = "TriggerLeft";
 
     public static void getControls(boolean update) {
-        Hardware.telemetry.addData("---------GAMEPAD1---------", "");
-        Hardware.telemetry.addData("glisiereSus", glisiereSus);
-        Hardware.telemetry.addData("glisiereMid", glisiereMid);
-        Hardware.telemetry.addData("glisiereJos", glisiereJos);
-        Hardware.telemetry.addData("bratColect", bratColect);
-        Hardware.telemetry.addData("bratMid", bratMid);
-        Hardware.telemetry.addData("bratSus", bratSus);
-        Hardware.telemetry.addData("bratBelow", bratBelow);
-        Hardware.telemetry.addData("mersIncet", mersIncet);
-        Hardware.telemetry.addData("carusel", carusel);
-        Hardware.telemetry.addData("---------GAMEPAD2---------", "");
-        Hardware.telemetry.addData("cutieColect", cutieColect);
-        Hardware.telemetry.addData("cutieSus", cutieSus);
-        Hardware.telemetry.addData("cutieJos", cutieJos);
-        Hardware.telemetry.addData("intakeToggle", intakeToggle);
-        Hardware.telemetry.addData("outtake", outtake);
-        Hardware.telemetry.addData("rulerLateralLeft", rulerLateralLeft);
-        Hardware.telemetry.addData("rulerLateralRight", rulerLateralRight);
-        Hardware.telemetry.addData("rulerLongitudinalUp", rulerLongitudinalUp);
-        Hardware.telemetry.addData("rulerLongitudinalDown", rulerLongitudinalDown);
-        Hardware.telemetry.addData("rulerExtend", rulerExtend);
-        Hardware.telemetry.addData("rulerRetract", rulerRetract);
         if (update) {
             Hardware.telemetry.update();
         }

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 import org.firstinspires.ftc.teamcode.Utilities.OneTap;
 
 public class Ruler {
-    private static final double speed = 0.00005;
+    private static final double speed = 0.00007;
     private static double power = 0;
     private static double powerX = 0;
     private static double powerY = 0;

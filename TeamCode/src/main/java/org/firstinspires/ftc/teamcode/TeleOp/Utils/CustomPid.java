@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp.Utils;
 import android.widget.TableRow;
 
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
+import org.firstinspires.ftc.teamcode.TeleOp.Arm;
 
 public class CustomPid {
     private double kp;

@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles3;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles3.WarehouseSideTrajectories3;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
+import org.firstinspires.ftc.teamcode.Autonomous.MainAuto;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.PoseStorageTeleOp;
 
@@ -41,13 +44,19 @@ public class AutoRunWarehouseSide3 implements Runnable {
                 PoseStorageTeleOp.TMPosition = 3;
                 break;
         }
+        ImageDetection.camera.stopStreaming();
         PoseStorageTeleOp.setRulerPositions(PoseStorageTeleOp.TMPosition);
 
-        ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
         WarehouseSideTrajectories3.shippingHubWarehouseSidePose = detectedCase.getShippingHubWarehouseSidePose();
         PoseStorage.armPosition = detectedCase.getArmPosition();
+        if (PoseStorageTeleOp.TMPosition == 2) {
+            PoseStorage.armPosition += 80;
+        }
+        if(PoseStorageTeleOp.TMPosition == 3 && PoseColorNormalizer.getColorCase()== PoseColorNormalizer.Color.BLUE) {
+            WarehouseSideTrajectories3.shippingHubWarehouseSidePose = WarehouseSideTrajectories3.shippingHubWarehouseSidePose.plus(new Pose2d( -4.5, 0, 0));
+        }
         goToShippingHubWarehouseSide(sampleMecanumDrive);
         opMode.sleep(350);
         for (int i = 0; i < 3; i++) {

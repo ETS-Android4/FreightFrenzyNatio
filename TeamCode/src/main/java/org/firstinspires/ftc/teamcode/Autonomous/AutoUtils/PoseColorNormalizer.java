@@ -24,6 +24,13 @@ public class PoseColorNormalizer {
         return angleDeg;
     }
 
+    public static double calculateTurnAngleDegrees(double angleDeg) {
+        if (color == Color.BLUE) {
+            return  - angleDeg;
+        }
+        return angleDeg;
+    }
+
     public static void setColorCase(Color _color) {
         color = _color;
     }

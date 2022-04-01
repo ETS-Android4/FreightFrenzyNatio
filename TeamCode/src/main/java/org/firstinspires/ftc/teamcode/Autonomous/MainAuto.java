@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoRun.WarehouseSide.cycles3.WarehouseSideTrajectories3;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Hardware;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareUtils;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.CustomPid;
+import org.firstinspires.ftc.teamcode.TeleOp.Utils.Gamepads;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.Initializations;
 import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 
@@ -22,14 +24,15 @@ import org.firstinspires.ftc.teamcode.TeleOp.Utils.SafetyFeatures;
 public class MainAuto extends LinearOpMode {
     public static long firstTime;
     public static double duration = 0;
+    public static boolean isAPressed = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         SampleMecanumDriveCancelable sampleMecanumDrive;
-        if(PoseStorage.autoCase==AutoCase.Warehouse4Blue||PoseStorage.autoCase==AutoCase.Warehouse4Red){
-            sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap,0.01);
-        }else{
+        if (PoseStorage.autoCase == AutoCase.Warehouse4Blue || PoseStorage.autoCase == AutoCase.Warehouse4Red) {
+            sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap, 0.01);
+        } else {
             sampleMecanumDrive = new SampleMecanumDriveCancelable(hardwareMap);
         }
 
@@ -56,6 +59,7 @@ public class MainAuto extends LinearOpMode {
         SafetyFeatures.isOk = true;
 
         while (!isStopRequested() && opModeIsActive()) {
+            isAPressed = gamepad1.a;
             if (!SafetyFeatures.isOk) {
                 linearAuto.interrupt();
                 SafetyFeatures.setZeroPower();
@@ -75,6 +79,7 @@ public class MainAuto extends LinearOpMode {
             Hardware.telemetry.addData("PID target Pos", armPid.targetVelocity);
             Hardware.telemetry.addData("PID current Pos", ((DcMotorEx) Hardware.arm).getVelocity(AngleUnit.RADIANS));
             Hardware.telemetry.addData("DetectedCase", PoseStorage.detectedCase);
+            Hardware.telemetry.addData("is a pressed", isAPressed);
             Hardware.telemetry.update();
 //            if (PoseStorage.delayedActionGoUnder.runAction()) {
 //                PoseStorage.armPosition = (int) Positions.BasePoseArm1.Below - 150;

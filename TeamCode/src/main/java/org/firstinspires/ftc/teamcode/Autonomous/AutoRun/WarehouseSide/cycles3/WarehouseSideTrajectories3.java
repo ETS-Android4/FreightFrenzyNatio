@@ -19,7 +19,10 @@ public class WarehouseSideTrajectories3 {
     public static Pose2d intakePose;
     public static Pose2d parkPose;
     public static Pose2d shippingHubReturnPose;
+    public static Pose2d shippingHubReturnPoseIncrementer;
     public static Pose2d secondIntakeIncrementer;
+    public static Pose2d thirdIntakeIncrementer;
+    public static Pose2d gapPoseIncrementer;
     public static Pose2d shippingHubWarehouseSidePose;
     public static int incrementer = 0;
 
@@ -31,16 +34,12 @@ public class WarehouseSideTrajectories3 {
         intakePose = new Pose2d(45, -60.7, Math.toRadians(0));
         intakePose = PoseColorNormalizer.calculate(intakePose);
         parkPose = new Pose2d(48, -60.7, Math.toRadians(0));
-        parkPose=PoseColorNormalizer.calculate(parkPose);
+        parkPose = PoseColorNormalizer.calculate(parkPose);
         shippingHubReturnPose = new Pose2d(2, -39, Math.toRadians(180 + 135));
         shippingHubReturnPose = PoseColorNormalizer.calculate(shippingHubReturnPose);
 
-        secondIntakeIncrementer = new Pose2d(6, 0, Math.toRadians(5));
+        secondIntakeIncrementer = new Pose2d(6, 0, Math.toRadians(0));
         secondIntakeIncrementer = PoseColorNormalizer.calculate(secondIntakeIncrementer);
-
-        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            secondIntakeIncrementer = new Pose2d(20, 0, Math.toRadians(5));
-        }
 
         PoseStorage.startPosition = new Pose2d(12, -60.5, Math.toRadians(90));
         PoseStorage.startPosition = PoseColorNormalizer.calculate(PoseStorage.startPosition);
@@ -48,10 +47,24 @@ public class WarehouseSideTrajectories3 {
         shippingHubWarehouseSidePose = PoseColorNormalizer.calculate(new Pose2d(-5, -40.5, Math.toRadians(110))); // suprascris in initializare A/B/C
 
         incrementer = 0;
+
+        gapPoseIncrementer = new Pose2d(0, 0, 0);
+        shippingHubReturnPoseIncrementer = new Pose2d(0, 0, 0);
+        thirdIntakeIncrementer = new Pose2d(0, 0, 0);
+
+        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            //pula
+            gapPose = new Pose2d(8, 66, Math.toRadians(0));
+            intakePose = new Pose2d(42.5, 66, Math.toRadians(0));
+            gapPoseIncrementer = new Pose2d(-1, 6.5, Math.toRadians(0));
+            secondIntakeIncrementer = new Pose2d(4.5, 6.5, Math.toRadians(0));
+            thirdIntakeIncrementer = new Pose2d(0, 3, Math.toRadians(0));
+            shippingHubReturnPoseIncrementer = new Pose2d(0, 7.5, 0);
+            parkPose = new Pose2d(48, 90, 0);
+        }
     }
 
-    private static SampleMecanumDriveCancelable drive;
-
+    public static SampleMecanumDriveCancelable drive;
 
     public static void setDrive(SampleMecanumDriveCancelable Drive) {
         drive = Drive;
@@ -113,8 +126,10 @@ public class WarehouseSideTrajectories3 {
                     BoxAngle.setPosition(Positions.BoxAuto.Mid); // 0.01
                     Hardware.intake.setPower(-1);
                 })
-                .addTemporalMarker(1.5, () -> {
+                .addTemporalMarker(2, () -> {
+                    gapPose = gapPose.plus(gapPoseIncrementer);
                     intakePose = intakePose.plus(secondIntakeIncrementer);
+                    shippingHubReturnPose = shippingHubReturnPose.plus(shippingHubReturnPoseIncrementer);
                     PoseStorage.isIntakeTrajectory = false;
                     incrementer++;
                 })
@@ -130,7 +145,7 @@ public class WarehouseSideTrajectories3 {
                 })
                 .addTemporalMarker(0.3, () -> {
                     Hardware.intake.setPower(-0.2);
-
+                    intakePose = intakePose.plus(thirdIntakeIncrementer);
                 })
                 .addTemporalMarker(1, () -> {
                     PoseStorage.armPosition = (int) Positions.AutoArm.Up;
@@ -139,7 +154,7 @@ public class WarehouseSideTrajectories3 {
                     Hardware.slider_right.setTargetPosition(250);
                 })
                 .lineToSplineHeading(shippingHubReturnPose.plus(PoseColorNormalizer.calculate(new Pose2d(2.25 * incrementer, 0.9 * incrementer, 0))))
-                .addTemporalMarker(2.7, () -> {
+                .addTemporalMarker(2.9, () -> {
                     Hardware.intake.setPower(0.35);
                 })
                 .setReversed(false)

@@ -42,6 +42,17 @@ public class CollectDuckTrajectories {
         goOverPose = PoseColorNormalizer.calculate(new Pose2d(5, -38, Math.toRadians(0)));
         warehouseOverPose = PoseColorNormalizer.calculate(new Pose2d(51, -38, Math.toRadians(0)));
 
+        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            caruselPositionWithDuckCollect1 = new Pose2d(-55, 48, java.lang.Math.toRadians(304.25));
+            caruselPositionWithDuckCollect2 = new Pose2d(-65, 50, java.lang.Math.toRadians(315));
+            duckCollectPose2 = new Pose2d(-58, 53, Math.toRadians(160));
+            duckCollectPose3 = new Pose2d(-55, 53.5, Math.toRadians(100));
+
+            goOverPose = new Pose2d(5, 42, Math.toRadians(0));
+            warehouseOverPose = new Pose2d(51, 42, Math.toRadians(0));
+            placeDuckPose = new Pose2d(-16, 36, java.lang.Math.toRadians(290));
+        }
+
     }
 
     private static SampleMecanumDriveCancelable drive;
@@ -86,7 +97,7 @@ public class CollectDuckTrajectories {
     public static Trajectory ShippingHubTrajectoryCaruselSide(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(shippingHubCaruselSidePose)
-                .addTemporalMarker(1.4, () -> {
+                .addTemporalMarker(1.3, () -> {
                     Hardware.intake.setPower(1);
                 })
                 .addTemporalMarker(0.5, () -> {
@@ -98,6 +109,9 @@ public class CollectDuckTrajectories {
     public static Trajectory CollectDuckIntermediaryTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(duckCollectPoseIntermediary)
+                .addTemporalMarker(0, () -> {
+                    PoseStorage.armPosition =(int) Positions.AutoArm.Down;
+                })
                 .build();
     }
 
@@ -109,11 +123,11 @@ public class CollectDuckTrajectories {
                     Hardware.intake.setPower(-1);
                 })
                 .lineToLinearHeading(duckCollectPose)
-                .turn(Math.toRadians(-75), 1.5, 1)
+                .turn(Math.toRadians(PoseColorNormalizer.calculateTurnAngleDegrees(-75)), 1.5, 1)
                 .lineToLinearHeading(duckCollectPose2)
-                .turn(Math.toRadians(60), 1.5, 1)
+                .turn(Math.toRadians(PoseColorNormalizer.calculateTurnAngleDegrees(60)), 1.5, 1)
                 .lineToLinearHeading(duckCollectPose3)
-                .turn(Math.toRadians(15), 2, 1)
+                .turn(Math.toRadians(PoseColorNormalizer.calculateTurnAngleDegrees(15)), 2, 1)
                 .build();
     }
 
@@ -121,7 +135,7 @@ public class CollectDuckTrajectories {
     public static Trajectory PlaceDuckTrajectory(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToLinearHeading(placeDuckPose)
-                .addTemporalMarker(0.65, ()->{
+                .addTemporalMarker(0.65, () -> {
                     BoxAngle.setPosition(Positions.BoxAuto.Mid + 0.15);
                 })
                 .addTemporalMarker(0.5, () -> {
@@ -136,7 +150,7 @@ public class CollectDuckTrajectories {
     public static Trajectory GoOverBarriers1(Pose2d pose2d) {
         return drive.trajectoryBuilder(pose2d)
                 .lineToSplineHeading(goOverPose)
-                .addTemporalMarker(0, ()-> {
+                .addTemporalMarker(0, () -> {
                     BoxAngle.setPosition(Positions.BoxAuto.Up);
                 })
                 .addDisplacementMarker(() -> {

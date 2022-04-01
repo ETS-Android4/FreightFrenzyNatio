@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.Autonomous.AutoRun.CollectDuck;
 
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.A;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoCases;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.AutoUtil;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.ImageDetection;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseColorNormalizer;
 import org.firstinspires.ftc.teamcode.Autonomous.AutoUtils.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.B;
 import org.firstinspires.ftc.teamcode.Autonomous.C;
@@ -54,11 +56,19 @@ public class AutoRunCollectDuck implements Runnable {
                 break;
         }
         PoseStorageTeleOp.setRulerPositions(PoseStorageTeleOp.TMPosition);
-        Arm.armGoUpAfterColect=false;
         ImageDetection.camera.stopStreaming();
         PoseStorage.armPosition = detectedCase.getArmPosition();
         PoseStorage.servoPosition = detectedCase.getServoPosition();
+        if (PoseStorageTeleOp.TMPosition == 2) {
+            PoseStorage.armPosition += 70;
+        }
         CollectDuckTrajectories.shippingHubCaruselSidePose = detectedCase.getShippingHubCaruselSidePose();
+        if (PoseStorageTeleOp.TMPosition == 2 && PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            CollectDuckTrajectories.shippingHubCaruselSidePose = CollectDuckTrajectories.shippingHubCaruselSidePose.plus(new Pose2d(0, 2, 0));
+        }
+        if (PoseStorageTeleOp.TMPosition == 3 && PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
+            CollectDuckTrajectories.shippingHubCaruselSidePose = CollectDuckTrajectories.shippingHubCaruselSidePose.plus(new Pose2d(5, 0, 0));
+        }
         opMode.sleep(1750);
         goToShippingHubCaruselSide(sampleMecanumDrive);
         opMode.sleep(350);
@@ -82,7 +92,7 @@ public class AutoRunCollectDuck implements Runnable {
         long firstTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - firstTime < 300) {
         }
-        AutoUtil.spinCaruselDuckColect();
+        AutoUtil.spinCaruselDuckColect(drive);
     }
 
     public void collectDuck(SampleMecanumDriveCancelable drive) {

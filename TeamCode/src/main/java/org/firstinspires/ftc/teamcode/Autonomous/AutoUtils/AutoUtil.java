@@ -5,16 +5,17 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Hardware.Hardware;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.advanced.SampleMecanumDriveCancelable;
 
 @Config
 public class AutoUtil {
     public static double maxVelCarusel = 44;
 
-    public static void spinCarusel() {
-        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            maxVelCarusel = -maxVelCarusel;
+    public static void spinCarusel(SampleMecanumDriveCancelable drive) {
+        if (drive.getPoseEstimate().getY() > 0) {
+            maxVelCarusel = -44;
         }
-
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime <= 2300) {
             if (System.currentTimeMillis() - startTime <= 2000) {
@@ -26,9 +27,9 @@ public class AutoUtil {
         Hardware.carusel.setPower(0);
     }
 
-    public static void spinCaruselDuckColect() {
-        if (PoseColorNormalizer.getColorCase() == PoseColorNormalizer.Color.BLUE) {
-            maxVelCarusel = -maxVelCarusel;
+    public static void spinCaruselDuckColect(SampleMecanumDriveCancelable drive) {
+        if (drive.getPoseEstimate().getY() > 0) {
+            maxVelCarusel = -44;
         }
 
         long startTime = System.currentTimeMillis();
@@ -36,7 +37,7 @@ public class AutoUtil {
             if (System.currentTimeMillis() - startTime < 1800) {
                 ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel, AngleUnit.RADIANS);
             } else {
-                ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel / 4 , AngleUnit.RADIANS);
+                ((DcMotorEx) Hardware.carusel).setVelocity(maxVelCarusel / 4, AngleUnit.RADIANS);
             }
         }
         Hardware.carusel.setPower(0);
